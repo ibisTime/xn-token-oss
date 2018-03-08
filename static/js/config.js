@@ -2,15 +2,15 @@ var OSS = {};
 // mainUrl
 OSS.mainUrl = '/mainUrl';
 // system
-OSS.system = 'CD-COIN000017';
+OSS.system = 'CD-TOKEN00018';
 // companyCode
-OSS.company = 'CD-COIN000017';
+OSS.company = 'CD-TOKEN00018';
 // system name
-OSS.systemName = '数字资产交易管理';
+OSS.systemName = 'ORC钱包管理平台';
 // company name
-OSS.companyName = '倍可盈';
+OSS.companyName = '橙袋科技';
 // menuCode
-OSS.menuRoot = 'COINSM201700000000000000';
+OSS.menuRoot = 'TOKENSM201700000000000000';
 // picUrl
 OSS.picBaseUrl = sessionStorage.getItem('qiniuUrl');
 // picShow
@@ -19,5 +19,5 @@ OSS.picShow = '?imageMogr2/auto-orient/interlace/1';
 OSS.userValidTime = 30;
 //系统userid
 OSS.SYS_USER = 'sysAdmin';
-//是否测试环境
-OSS.ISTEST = '1';
+//币种及单位
+OSS.coin={"OGC":"1e8"}

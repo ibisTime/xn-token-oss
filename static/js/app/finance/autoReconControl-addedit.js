@@ -95,48 +95,6 @@ $(function() {
             },
             readonly: true
         }, {
-            field: 'ethCollection',
-            title: '归集订单:',
-            readonly: true,
-            type: 'o2m',
-            useData: collectionData,
-            columns: [{
-                field: 'amountString',
-                title: '归集数量',
-                formatter: moneyFormat
-            }, {
-                field: 'txFeeString',
-                title: '矿工费',
-                formatter: moneyFormat
-            }, {
-                field: 'refNo',
-                title: '关联充值订单号'
-            }, {
-                field: 'fromAddress',
-                title: 'from'
-            }, {
-                field: 'toAddress',
-                title: 'to'
-            }, {
-                field: 'txHash',
-                title: '交易Hash'
-            }, {
-                field: 'status',
-                title: '状态',
-                type: 'select',
-                key: 'collection_status',
-                formatter: Dict.getNameForList('collection_status'),
-                search: true
-            }, {
-                field: 'createDatetime',
-                title: '归集发起时间',
-                formatter: dateTimeFormat
-            }, {
-				field: 'confirmDatetime',
-				title: '区块确认时间',
-				formatter: dateTimeFormat
-            }]
-        }, {
             field: 'jourList',
             title: '本地流水:',
             readonly: true,

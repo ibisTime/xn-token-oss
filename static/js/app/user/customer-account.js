@@ -75,13 +75,7 @@ $(function() {
             toastr.info("请选择记录");
             return;
         }
-        if(selRecords[0].currency=="SC"){
-    		window.location.href = "../SC-finance/partner_ledger.html?&a=1&accountNumber=" + selRecords[0].accountNumber + "&kind=0";
-    	}else if(selRecords[0].currency=="BTC"){
-    		window.location.href = "../BTC-finance/partner_ledger.html?&a=1&accountNumber=" + selRecords[0].accountNumber + "&kind=0";
-    	}else{
-    		window.location.href = "../finance/partner_ledger.html?&a=1&accountNumber=" + selRecords[0].accountNumber + "&kind=0";
-    	}
+		window.location.href = "../finance/partner_ledger.html?&a=1&accountNumber=" + selRecords[0].accountNumber + "&kind=0";
     });
     
     $('#ledgerFrozenBtn').click(function() {

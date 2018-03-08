@@ -48,9 +48,6 @@ $(function() {
         	return moneyFormat(kgPrice);
         }
     }, {
-        field: 'refNo',
-        title: '关联订单号',
-    }, {
         field: 'creates',
         title: '网络记账时间',
         formatter: dateTimeFormat

@@ -58,8 +58,9 @@ $(function() {
                 sync: true
             }).then(function(data) {
             	hideLoading()
-                // console.log(data.list[0].cvalue);
-                window.sessionStorage.setItem('qiniuUrl', 'http://' + data.list[0].cvalue);
+            	if(data.list.length>0){
+                	window.sessionStorage.setItem('qiniuUrl', 'http://' + data.list[0].cvalue);
+            	}
             },hideLoading);
 			
 			

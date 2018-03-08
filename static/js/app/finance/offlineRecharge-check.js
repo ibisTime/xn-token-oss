@@ -91,7 +91,9 @@ $(function() {
     }, {
         field: 'amountString',
         title: '金额',
-        formatter: moneyFormat
+        formatter: function(v,data){
+        	return moneyFormat(v,'',data.currency)
+        }
     }, {
         field: 'currency',
         title: '币种',
