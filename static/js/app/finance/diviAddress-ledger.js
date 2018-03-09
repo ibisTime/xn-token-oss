@@ -9,10 +9,10 @@ $(function() {
         title: "交易HASH",
         field: 'hash'
     }, {
-        field: 'value',
+        field: 'tokenValue',
         title: '交易金额',
         formatter: function(v,data){
-        	if(data.from==address){
+        	if(data.tokenFrom==address){
         		return '-'+moneyFormat(v);
         	}else{
         		return moneyFormat(v);
@@ -22,10 +22,10 @@ $(function() {
         field: 'fromTo',
         title: '对方地址',
         formatter: function(v,data){
-        	if(data.from==address){
-        		return data.to;
+        	if(data.tokenFrom==address){
+        		return data.tokenTo;
         	}else{
-        		return data.from;
+        		return data.tokenFrom;
         	}
         }
     }, {
@@ -34,7 +34,9 @@ $(function() {
     }, {
         title: "gas价格",
         field: 'gasPrice',
-        formatter:moneyFormat
+        formatter: function(v, data){
+        	return moneyFormat(v,'',"ETH");
+        },
     }, {
         title: "消耗gas",
         field: 'gasUsed'
@@ -45,7 +47,7 @@ $(function() {
         	var gasPrice = new BigDecimal(data.gasPrice);
         	var gasUsed = new BigDecimal(data.gasUsed);
         	kgPrice =  gasPrice.multiply(gasUsed).toString();
-        	return moneyFormat(kgPrice);
+        	return moneyFormat(kgPrice,'',"ETH");
         }
     }, {
         field: 'creates',
@@ -57,7 +59,7 @@ $(function() {
         pageCode: '802107',
         searchParams: {
             kind:'0',
-            address: address,
+            tokenAddress: address,
         }
     });
     $(".tools .toolbar").html('<li style="display:block;" id="goBackBtn"><span><img src="/static/images/t01.png"></span>返回</li>')

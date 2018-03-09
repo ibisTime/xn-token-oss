@@ -6,7 +6,7 @@ OSS.system = 'CD-TOKEN00018';
 // companyCode
 OSS.company = 'CD-TOKEN00018';
 // system name
-OSS.systemName = 'ORC钱包管理平台';
+OSS.systemName = 'OGC钱包管理平台';
 // company name
 OSS.companyName = '橙袋科技';
 // menuCode
@@ -20,4 +20,4 @@ OSS.userValidTime = 30;
 //系统userid
 OSS.SYS_USER = 'sysAdmin';
 //币种及单位
-OSS.coin={"OGC":"1e8"}
+OSS.coin={"OGC":"1e8","ETH":"1e18"}

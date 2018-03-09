@@ -55,15 +55,6 @@ $(function() {
             return data.realName?data.realName:'-'
         }
     },  {
-        field: 'divRate1',
-        title: '普通分成',
-    }, {
-        field: 'divRate2',
-        title: '代理人分成',
-    }, {
-        field: 'tradeRate',
-        title: '广告费率',
-    }, {
         field: 'createDatetime',
         title: '注册时间',
         formatter: dateTimeFormat,

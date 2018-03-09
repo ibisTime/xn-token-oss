@@ -90,10 +90,10 @@ $(function() {
 		                reqApi({
 		                    code: '802120',
 		                    json: data
-		                }).done(function(data) {
+		                }).then(function(data) {
                     		dw.close().remove();
 		                	hideLoading()
-		                });
+		                },hideLoading);
                     }
                 }
             }, {
