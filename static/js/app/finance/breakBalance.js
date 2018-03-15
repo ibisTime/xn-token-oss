@@ -13,7 +13,6 @@ $(function() {
         },
         sync: true
     }).then(function(data) {
-    	hideLoading()
     	var lists = data.list;
         lists.forEach(function(d){
         	//平台盈亏账户
@@ -23,6 +22,8 @@ $(function() {
         	}
         })
         
+    	hideLoading()
+        
     }, hideLoading);
     
     reqApi({
@@ -30,8 +31,11 @@ $(function() {
         json: {},
         sync: true
     }).then(function(data) {
-    	hideLoading()
 		$("#amount-OGC").text(moneyFormat(data.balance));
+		$("#useBalance").text(moneyFormat(data.useBalance));
+		$("#useRate").text(data.useRate);
+		
+    	hideLoading()
 		addressOGC = data.address
     }, hideLoading);
     
@@ -45,28 +49,29 @@ $(function() {
         location.href = "ledgerOGC.html?address=" + addressOGC;
     });
 	
-	$("#zhuanzhangBtn").click(function(){
+	$("#sendBtn").click(function(){
 		var dw = dialog({
     		fixed: true,
             content: '<form class="pop-form" id="popForm" novalidate="novalidate">' +
-                '<ul class="form-info" id="formContainer"><li style="text-align:center;font-size: 15px;">发送地址</li></ul>' +
+                '<ul class="form-info" id="formContainer"><li style="text-align:center;font-size: 15px;">发送</li></ul>' +
                 '</form>'
         });
 
         dw.showModal();
         buildDetail({
             fields: [{
-		        field: 'toAddress',
-		        title: '发送地址',
+		        field: 'toUserId',
+		        title: '发送用户',
 		        required: true,
 		        type: 'select',
-		        pageCode: '802105',
+		        pageCode: '805120',
 		        params: {
-            		type: 'X',
+            		kind: 'C',
+            		updater:''
 		        },
-		        keyName: 'address',
-		        valueName: '{{address.DATA}} - {{userMobile.DATA}}',
-		        searchName: 'address',
+		        keyName: 'userId',
+		        valueName: '{{mobile.DATA}} - {{nickname.DATA}}',
+		        searchName: 'mobile',
 		    },{
 		        field: 'quantity',
 		        title: '发送数量',
