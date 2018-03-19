@@ -77,8 +77,8 @@ $(function() {
         buildDetail({
             container: $('#formContainer'),
             fields: [{
-		        field: 'fromUserId',
-		        title: '来方',
+		        field: 'toUserId',
+		        title: '接收用户',
 		        required: true,
 		        type: 'select',
 		        pageCode: '805120',
@@ -107,7 +107,7 @@ $(function() {
                 handler: function() {
                     if ($('#popForm').valid()) {
                         var data = $('#popForm').serializeObject();
-                        data.toUserId = selRecords[0].userId
+                        data.fromUserId = selRecords[0].userId
                         showLoading()
 		                reqApi({
 		                    code: '802121',

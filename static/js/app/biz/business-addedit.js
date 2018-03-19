@@ -17,6 +17,15 @@ $(function() {
     },{
         title: "主人电话(登录手机号)",
         field: "mobile",
+        type: 'select',
+        pageCode: '805120',
+        params:{
+            kind: 'C',
+            updater:''
+        },
+        keyName: 'mobile',
+        valueName: '{{mobile.DATA}}--{{nickname.DATA}}',
+        searchName: 'mobile',
         required: true,
     }, {
         title: "联系电话",

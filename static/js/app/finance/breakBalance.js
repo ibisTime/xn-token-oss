@@ -97,7 +97,8 @@ $(function() {
 		                    json: data
 		                }).then(function(data) {
                     		dw.close().remove();
-		                	hideLoading()
+		                	hideLoading();
+            				toastr.info("发送成功");
 		                },hideLoading);
                     }
                 }
