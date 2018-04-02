@@ -556,9 +556,10 @@ textarea {
 }
 
 .form-info span {
+	max-width: 600px;
 	line-height: 33px;
 	display: table;
-	white-space: normal;
+	word-break: break-all;
 }
 
 .form-info span.error {

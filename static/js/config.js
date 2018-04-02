@@ -19,5 +19,5 @@ OSS.picShow = '?imageMogr2/auto-orient/interlace/1';
 OSS.userValidTime = 30;
 //系统userid
 OSS.SYS_USER = 'sysAdmin';
-//币种及单位
-OSS.coin={"OGC":"1e8","ETH":"1e18"}
+//是否测试环境
+OSS.ISTEST = '1';

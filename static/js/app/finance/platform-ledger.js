@@ -31,21 +31,15 @@ $(function() {
     }, {
         field: 'transAmountString',
         title: '变动金额',
-        formatter: function(v,data){
-        	return moneyFormat(v,'',data.currency)
-        }
+        formatter: moneyFormat
     }, {
         field: 'preAmountString',
         title: '变动前金额',
-        formatter: function(v,data){
-        	return moneyFormat(v,'',data.currency)
-        }
+        formatter: moneyFormat
     }, {
         field: 'postAmountString',
         title: '变动后金额',
-        formatter: function(v,data){
-        	return moneyFormat(v,'',data.currency)
-        }
+        formatter: moneyFormat
     }, {
         field: 'status',
         title: '状态',

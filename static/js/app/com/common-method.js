@@ -84,7 +84,7 @@ Number.prototype.toFixed = function(length) {
  * @param coin 币种
  */
 function moneyFormat(money, format, coin) {
-    var unit = OSS.coin[coin] || "1e8";
+    var unit = coin&&getCoinList()[coin]?getCoinUnit(coin):"1e18";
     if (isNaN(money)) {
         return '-';
     }
@@ -99,6 +99,41 @@ function moneyFormat(money, format, coin) {
 //  money = money.replace(/(-?\d+)\.0+$/, '$1').replace(/(.+[^0]+)0+$/, '$1');
     return money;
 }
+//SC
+function moneyFormatSC(money, format) {
+    var unit = "1e24";
+    if (isNaN(money)) {
+        return '-';
+    }
+    if (format == '' || format == null || format == undefined || typeof format == 'object') {
+        format = 8;
+    }
+    //钱除以1000并保留两位小数
+    money = new BigDecimal(money);
+    money = money.divide(new BigDecimal(unit), format, MathContext.ROUND_DOWN).toString();
+    
+    //去掉小数点后多余的0
+//  money = money.replace(/(-?\d+)\.0+$/, '$1').replace(/(.+[^0]+)0+$/, '$1');
+    return money;
+}
+//BTC
+function moneyFormatBTC(money, format) {
+    var unit = "1e8";
+    if (isNaN(money)) {
+        return '-';
+    }
+    if (format == '' || format == null || format == undefined || typeof format == 'object') {
+        format = 8;
+    }
+    //钱除以1000并保留两位小数
+    money = new BigDecimal(money);
+    money = money.divide(new BigDecimal(unit), format, MathContext.ROUND_DOWN).toString();
+    
+    //去掉小数点后多余的0
+//  money = money.replace(/(-?\d+)\.0+$/, '$1').replace(/(.+[^0]+)0+$/, '$1');
+    return money;
+}
+
 /**
  * 提交时金额放大
  * @param money
@@ -106,13 +141,72 @@ function moneyFormat(money, format, coin) {
  * @param coin 币种
  */
 function moneyParse(money, rate, coin) {
-	var unit = OSS.coin[coin] || "1e8";
-	
+    var unit = coin&&getCoinList()[coin]?getCoinUnit(coin):"1e18";
+    if(!getCoinList()[coin]){
+        return '-';
+    }
     rate = rate || new BigDecimal(unit);
 	money = new BigDecimal(money);
 	money = money.multiply(rate).toString();
     return money;
 }
+/**
+ * 币种
+ */
+//请求更新币种
+function getCoinUpdate(){
+	reqApi({
+        code: '802267',
+        json: {
+            updater:''
+        },
+        sync: true
+    }).then(function(data) {
+    	hideLoading()
+		var coinList = {};
+		for(var i = 0; i < data.length ; i ++){
+			coinList[data[i].symbol]={
+				'coin':data[i].symbol,
+				'unit':'1e'+data[i].unit,
+				'name':data[i].cname,
+				'type':data[i].type
+			}
+		}
+		window.sessionStorage.setItem("coinList",JSON.stringify(coinList))
+    },hideLoading);
+}
+//获取币种列表
+function getCoinList(){
+	return JSON.parse(sessionStorage.getItem('coinList'));
+}
+//获取币种名字
+function getCoinName(coin){
+	var n = getCoinList()[coin].name
+	return n;
+}
+//获取币种unit
+function getCoinUnit(coin){
+	var n = getCoinList()[coin].unit
+	return n;
+}
+//获取币种type  1是token币
+function getCoinType(coin){
+	var n = getCoinList()[coin].type
+	return n;
+}
+//请求已发布币种
+function getCoinReq(status){
+	return reqApi({
+        code: '802267',
+        json: {
+            updater:'',
+            status: status||'0'
+        },
+        sync: true
+   })
+}
+
+
 /**
  * 编辑金额格式转化
  * @param money
@@ -312,7 +406,11 @@ $.fn.serializeObject = function() {
             //入参判断是金额则金额放大,
             if ($('#' + this.name).parent('li').attr('type') == 'amount') {
             	//不同币种放大
-        		value = moneyParse(value,"",$('#' + this.name).parent('li').attr('data-coin'));
+            	if($('#' + this.name).parent('li').attr('data-coin')){
+            		value = moneyParse(value,"",$('#' + this.name).parent('li').attr('data-coin'));
+            	}else{
+            		value = moneyParse(value);
+            	}
             }
             if ($('#' + this.name).attr('multiple')) {
                 var values = [];
@@ -347,6 +445,7 @@ $.fn.renderDropdown = function(data, keyName, valueName, defaultOption, filter) 
         defaultOption = data.defaultOption;
         beforeData = data.beforeData;
         dict = data.dict;
+        dataDict = data.dictData;
         valueFormatter = data.valueFormatter;
     }
     if (listCode) {
@@ -361,7 +460,9 @@ $.fn.renderDropdown = function(data, keyName, valueName, defaultOption, filter) 
         dict.forEach(function(item) {
             if (keyCode1) {
                 var dictData = Dict.getName2(item[1], keyCode1);
-            } else {
+            } else if(dataDict){
+    			var dictData = dataDict;
+            }else{
                 var dictData = Dict.getName(item[1]);
             }
 
@@ -656,6 +757,7 @@ function buildList(options) {
 	showLoading();
     options = options || {};
     var searchs = JSON.parse(sessionStorage.getItem('listSearchs') || '{}')[location.pathname];
+    var tableName = options.tableName || "tableList";
 
     if (options.type != 'o2m') {
         showPermissionControl();
@@ -677,6 +779,15 @@ function buildList(options) {
     }
     for (var i = 0, len = columns.length; i < len; i++) {
         var item = columns[i];
+        if (item.amount) {
+        	if(item.coin=="SC"){
+        		item.formatter = moneyFormatSC
+        	}else if(item.coin=="BTC"){
+        		item.formatter = moneyFormatBTC
+        	}else {
+        		item.formatter = moneyFormat;
+        	}
+        }
         if (item.search) {
             if (item.key || item.type == 'select') {
                 html += '<li class="search-form-li"><label>' + item.title + '</label><select ' + (item.multiple ?
@@ -839,7 +950,7 @@ function buildList(options) {
     $('#searchBtn').click(function() {
     	showLoading();
         updateListSearch();
-        $('#tableList').bootstrapTable('refresh', { url: $('#tableList').bootstrapTable('getOptions').url });
+        $('#'+tableName).bootstrapTable('refresh', { url: $('#'+tableName).bootstrapTable('getOptions').url });
     });
 
     if ($('.search-form').find('li').length == 1) {
@@ -855,7 +966,7 @@ function buildList(options) {
     });
 
     $('#editBtn').click(function() {
-        var selRecords = $('#tableList').bootstrapTable('getSelections');
+        var selRecords = $('#'+tableName).bootstrapTable('getSelections');
         if (selRecords.length <= 0) {
             toastr.info("请选择记录");
             return;
@@ -878,7 +989,7 @@ function buildList(options) {
     });
 
     $('#deleteBtn').click(function() {
-        var selRecords = $('#tableList').bootstrapTable('getSelections');
+        var selRecords = $('#'+tableName).bootstrapTable('getSelections');
         if (selRecords.length <= 0) {
             toastr.info("请选择记录");
             return;
@@ -918,7 +1029,7 @@ function buildList(options) {
     }
 
     $('#detailBtn').click(function() {
-        var selRecords = $('#tableList').bootstrapTable('getSelections');
+        var selRecords = $('#'+tableName).bootstrapTable('getSelections');
         if (selRecords.length <= 0) {
             toastr.info("请选择记录");
             return;
@@ -959,7 +1070,7 @@ function buildList(options) {
     });
     // 审批
     $('#checkBtn').click(function() {
-        var selRecords = $('#tableList').bootstrapTable('getSelections');
+        var selRecords = $('#'+tableName).bootstrapTable('getSelections');
         if (selRecords.length <= 0) {
             toastr.info("请选择记录");
             return;
@@ -1002,7 +1113,7 @@ function buildList(options) {
     if ('sortOrder' in options) {
         sortOrder = options['sortOrder'];
     }
-    var tableEl = $('#tableList');
+    var tableEl = $('#'+tableName);
 	
     if (options.tableId) {
         tableEl = $('#' + options.tableId);
@@ -1368,6 +1479,8 @@ function buildDetail(options) {
                         options.editCode : options.addCode,
                     json: data
                 }).then(function(data) {
+                	//请求成功后
+                	options.submitSuccess&&options.submitSuccess();
                     sucDetail();
                 },hideLoading);
             };
@@ -1440,6 +1553,7 @@ function buildDetail(options) {
                 keyName: item.keyName,
                 valueName: item.valueName,
                 dict: item.dict,
+                dictData: item.dictData,
                 valueFormatter: item.valueFormatter
             }, (item.defaultOption ? { defaultOption: '<option value="0">' + item.defaultOption + '</option>' } : {})));
             $('#' + item.field)[0].pageOptions = {
@@ -1448,6 +1562,7 @@ function buildDetail(options) {
                 keyName: item.keyName,
                 valueName: item.valueName,
                 dict: item.dict,
+                dictData: item.dictData,
                 searchName: item.searchName
             };
             $('#' + item.field)[0].pageParams = pageParams;
@@ -1809,10 +1924,18 @@ function buildDetail(options) {
                         data.area && $('#area').html(data.area);
                     } else {
                         if (item.field && item.field.indexOf('-') > -1) {
-							$('#' + item.field).html(((item.amount || item.amount1) ? moneyFormat(displayValue,'',item.coin?item.coin:'') : displayValue) || '-');
+                        	if(item.coin){
+								$('#' + item.field).html(((item.amount || item.amount1) ? moneyFormat(displayValue,'',item.coin) : displayValue) || '-');
+				        	}else{
+								$('#' + item.field).html(((item.amount || item.amount1) ? moneyFormat(displayValue) : displayValue) || '-');
+				        	}
 						}
 						else if (item.field in data) {
-							$('#' + item.field).html(((item.amount || item.amount1) ? moneyFormat(data[item.field],'',item.coin?item.coin:'') : data[item.field]));
+							if(item.coin){
+								$('#' + item.field).html(((item.amount || item.amount1) ? moneyFormat(data[item.field],'',item.coin) : data[item.field]));
+				        	}else{
+								$('#' + item.field).html(((item.amount || item.amount1) ? moneyFormat(data[item.field]) : data[item.field]));
+				        	}
 						} else {
 							$('#' + item.field).html('-');
 						}
@@ -1933,7 +2056,11 @@ function buildDetail(options) {
                         if (item.formatter) {
                             $('#' + item.field).val(item.formatter(displayValue, data));
                         } else {
-							$('#' + item.field).val((item.amount || item.amount1) ? moneyFormat(displayValue,'',item.coin?item.coin:'') : displayValue);
+                        	if(item.coin){
+								$('#' + item.field).val((item.amount || item.amount1) ? moneyFormat(displayValue,'',item.coin) : displayValue);
+				        	}else{
+                            	$('#' + item.field).val((item.amount || item.amount1) ? moneyFormat(displayValue) : displayValue);
+				        	}
                         }
                     }
                 }
@@ -2930,8 +3057,11 @@ function buildDetail1(options) {
                     data.area && $('#area-model').html(data.area);
                 } else {
                     if (displayValue) {
-                    	
-						$('#' + item.field + "-model").html(((item.amount || item.amount1) ? moneyFormat(displayValue,'',item.coin?item.coin:'') : displayValue) || '-');
+                    	if(item.coin){
+							$('#' + item.field + "-model").html(((item.amount || item.amount1) ? moneyFormat(displayValue,'',item.coin) : displayValue) || '-');
+			        	}else{
+							$('#' + item.field + "-model").html(((item.amount || item.amount1) ? moneyFormat(displayValue) : displayValue) || '-');
+						}
                     } else {
                         $('#' + item.field + "-model").html('-');
                     }
@@ -3032,7 +3162,14 @@ function buildDetail1(options) {
                     $('#' + item.field + "-model").val((item.type == 'datetime' ?
                         dateTimeFormat : dateFormat)(displayValue));
                 } else {
-					$('#' + item.field + "-model").val(item.amount ? moneyFormat(displayValue,'',item.coin?item.coin:'') : displayValue);
+                	if(item.coin=="SC"){
+						$('#' + item.field + "-model").val(item.amount ? moneyFormat(displayValue,'','SC') : displayValue);
+		        	}else if(item.coin=="BTC"){
+						$('#' + item.field + "-model").val(item.amount ? moneyFormat(displayValue,'','BTC') : displayValue);
+		        	}else{
+						$('#' + item.field + "-model").val(item.amount ? moneyFormat(displayValue) : displayValue);
+					}
+                    
                 }
             }
 
@@ -3040,7 +3177,11 @@ function buildDetail1(options) {
                 if (item.value && item.value.call) {
                     $('#' + item.field + "-model").val(item.value(data));
                 } else {
-					$('#' + item.field + "-model").val(item.amount ? moneyFormat(item.value,'',item.coin?item.coin:'') : item.value);
+                	if(item.coin){
+						$('#' + item.field + "-model").val(item.amount ? moneyFormat(item.value,'',item.coin) : item.value);
+		        	}else{
+						$('#' + item.field + "-model").val(item.amount ? moneyFormat(item.value) : item.value);
+					}
                 }
             }
             if (item.type == 'select') {

@@ -84,8 +84,7 @@ function reqApi(options, updateType) {
             async: !options.sync, // 同步
             url: url,
             type: 'POST',
-            data: params,
-            timeout: '0'
+            data: params
         });
     }
 
@@ -131,7 +130,6 @@ function reqApi1(options) {
         async: !options.sync, // 同步
         url: url,
         type: 'POST',
-        data: params,
-        timeout: '0'
+        data: params
     });
 }

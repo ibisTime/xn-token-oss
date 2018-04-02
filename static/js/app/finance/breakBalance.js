@@ -1,115 +1,83 @@
 $(function() {
     var accountNumberCNY;
-    var addressOGC;
+    var accountNumberJF;
+    var accountNumberTG;
     
     showLoading();
+    $('#tableList').bootstrapTable({
+        columns: [{
+	        field: 'name',
+	        title: '名称',
+	    }, {
+	        title: "数量",
+	        field: "amount",
+	        formatter: function(v, data){
+	        	return moneyFormat(v,'','ETH')
+	        }
+	    }],
+        singleSelect: true, //禁止多选
+        clickToSelect: true, //自动选中
+        uniqueId: 'id'
+    });
+    
     
     reqApi({
         code: '802500',
         json: {
             "start": 1,
             "limit": 10,
-            "type": "P"
+            "type": "P",
+            "currency": 'ETH'
         },
         sync: true
     }).then(function(data) {
+    	hideLoading()
     	var lists = data.list;
         lists.forEach(function(d){
-        	//平台盈亏账户
-        	if(d.accountNumber=="SYS_ACOUNT_OGC"){
-        		$("#amount-CNY").text(moneyFormat(d.amountString),'',d.currency);
+        	//平台ETH冷钱包
+        	if(d.accountNumber=="SYS_ACOUNT_ETH_COLD"){
+        		$("#amount-TG").text(moneyFormat(d.amountString,'','ETH'));
+        		accountNumberTG = d.accountNumber;
+        	}
+        	//平台ETH盈亏账户
+        	if(d.accountNumber=="SYS_ACOUNT_ETH"){
+        		$("#amount-CNY").text(moneyFormat(d.amountString,'','ETH'));
         		accountNumberCNY = d.accountNumber;
         	}
         })
         
-    	hideLoading()
-        
     }, hideLoading);
     
     reqApi({
-        code: '802108',
-        json: {},
+        code: '802900',
         sync: true
     }).then(function(data) {
-		$("#amount-OGC").text(moneyFormat(data.balance));
-		$("#useBalance").text(moneyFormat(data.useBalance));
-		$("#useRate").text(data.useRate);
-		
     	hideLoading()
-		addressOGC = data.address
+        var tableData = [{
+	        	name: '平台所有币',
+	        	amount: data.totalCount
+	        },{
+	        	name: '客户未归集总额',
+	        	amount: data.toCollectCount
+	        },{
+	        	name: '当前散取地址余额',
+	        	amount: data.toWithdrawCount
+	        },{
+	        	name: '历史归集总额',
+	        	amount: data.totolCollectCount
+	        },{
+	        	name: '历史散取总额',
+	        	amount: data.totolWithdrawCount
+	        }]
+        
+        $('#tableList').bootstrapTable('prepend', tableData)
     }, hideLoading);
-    
     
     $("#CNYls-Btn").click(function() {
         location.href = "ledger.html?accountNumber=" + accountNumberCNY;
     });
-    
-    //OGC
     $("#accoutGrantBtn").click(function() {
-        location.href = "ledgerOGC.html?address=" + addressOGC;
+        location.href = "ledger.html?accountNumber=" + accountNumberTG + "&kind=TG";
     });
-	
-	$("#sendBtn").click(function(){
-		var dw = dialog({
-    		fixed: true,
-            content: '<form class="pop-form" id="popForm" novalidate="novalidate">' +
-                '<ul class="form-info" id="formContainer"><li style="text-align:center;font-size: 15px;">发送</li></ul>' +
-                '</form>'
-        });
 
-        dw.showModal();
-        buildDetail({
-            fields: [{
-		        field: 'toUserId',
-		        title: '发送用户',
-		        required: true,
-		        type: 'select',
-		        pageCode: '805120',
-		        params: {
-            		kind: 'C',
-            		updater:''
-		        },
-		        keyName: 'userId',
-		        valueName: '{{mobile.DATA}} - {{nickname.DATA}}',
-		        searchName: 'mobile',
-		    },{
-		        field: 'quantity',
-		        title: '发送数量',
-		        required: true,
-		        number: true,
-		        amount: 'true',
-		        coin:"OGC",
-		        formatter: moneyFormat
-		    },{
-		        field: 'remark',
-		        title: '备注',
-		    }],
-            container: $('#formContainer'),
-            buttons: [{
-                title: '确定',
-        		field: 'confirm',
-                handler: function() {
-                    if ($('#popForm').valid()) {
-                        var data = $('#popForm').serializeObject();
-                        showLoading()
-		                reqApi({
-		                    code: '802120',
-		                    json: data
-		                }).then(function(data) {
-                    		dw.close().remove();
-		                	hideLoading();
-            				toastr.info("发送成功");
-		                },hideLoading);
-                    }
-                }
-            }, {
-                title: '取消',
-        		field: 'cancel',
-                handler: function() {
-                    dw.close().remove();
-                }
-            }]
-        });
-        dw.__center();
-	})
 });

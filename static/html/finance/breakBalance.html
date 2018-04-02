@@ -8,7 +8,7 @@
     }
     
     .account-list-w {
-        width: 380px;
+        width: 350px;
         float: left;
         padding: 20px;
     }
@@ -28,7 +28,7 @@
     
     .account-fs p {
         display: inline-block;
-        margin-left: 15px;
+        margin-left: 20px;
     }
     
     .account-btn {
@@ -52,6 +52,17 @@
 <div class="account-w">
     <div class="account-list-w">
         <div class="account-list">
+            <div class="account-fs">冷钱包余额：
+                <p class="account-amount" id="amount-TG"></p>
+            </div>
+
+            <div class="account-btn">
+                <div class="btn" id="accoutGrantBtn">资金流水</div>
+            </div>
+        </div>
+    </div>
+    <div class="account-list-w">
+        <div class="account-list">
             <div class="account-fs">本地平台盈亏：
                 <p class="account-amount" id="amount-CNY"></p>
             </div>
@@ -61,25 +72,10 @@
             </div>
         </div>
     </div>
-    <div class="account-list-w">
-        <div class="account-list">
-            <div class="account-fs">OGC钱包余额：
-                <p class="account-amount" id="amount-OGC"></p>
-            </div>
-            
-            <div class="account-fs">使用量：
-                <p class="account-amount" id="useBalance"></p>
-            </div>
-            <div class="account-fs">使用占有率：
-                <p class="account-amount" id="useRate"></p>
-            </div>
+</div>
 
-            <div class="account-btn">
-                <div class="btn" id="sendBtn">发送</div>
-                <div class="btn" id="accoutGrantBtn">交易查询</div>
-            </div>
-        </div>
-    </div>
+<div class="tableList-w">
+	<table id="tableList"></table>
 </div>
 
 <link rel="import" href="../foot.html?__inline">

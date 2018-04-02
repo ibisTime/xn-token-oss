@@ -83,7 +83,7 @@ $(function() {
         pageCode: '802755',
         searchParams: {
             status: "6",
-            channelType: "OGC",
+            channelType: "ETH",
             companyCode: OSS.company
         },
         // beforeDetail: function(data) {

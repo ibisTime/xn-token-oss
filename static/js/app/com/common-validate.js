@@ -153,6 +153,12 @@ $.validator.addMethod("minAmount", function(value, element) {
     return this.optional(element) || /^\d+(\.\d{1})?$/.test(value);
 }, '金额必须>0，且小数点后最多1位');
 
+//小数后1位
+$.validator.addMethod("coinAmount", function(value, element) {
+    return this.optional(element) || /^\d+(\.\d{8})?$/.test(value);
+}, '金额必须>0，且小数点后最多8位');
+
+
 
 //ie6兼容after
 var $beforeAfter = function(dom) {

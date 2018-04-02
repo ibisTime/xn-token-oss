@@ -1,4 +1,10 @@
 $(function() {
+	getCoinReq().then(function(data){
+		
+		var currencyData = {};
+		for(var i = 0; i < data.length ; i ++){
+			currencyData[data[i].symbol] = data[i].cname;
+		}
 
     var columns = [{
         field: '',
@@ -15,8 +21,7 @@ $(function() {
         field: "currency",
         title: "币种",
         type: 'select',
-        key: 'coin',
-        formatter: Dict.getNameForList("coin"),
+        data: currencyData,
         search: true
     }, {
         title: '余额',
@@ -60,6 +65,8 @@ $(function() {
             type: "C"
         },
     });
+    
+    },hideLoading);
 
     $('#ledgerBtn').click(function() {
         var selRecords = $('#tableList').bootstrapTable('getSelections');
@@ -72,8 +79,10 @@ $(function() {
     		window.location.href = "../SC-finance/partner_ledger.html?accountCode=" + selRecords[0].accountNumber + "&yk=1";
     	}else if(selRecords[0].currency=="BTC"){
     		window.location.href = "../BTC-finance/partner_ledger.html?accountCode=" + selRecords[0].accountNumber + "&yk=1";
-    	}else{
+    	}else if(selRecords[0].currency=="ETH"){
     		window.location.href = "../finance/partner_ledger.html?accountCode=" + selRecords[0].accountNumber + "&yk=1";
+    	}else{
+    		window.location.href = "../TOKEN-finance/partner_ledger.html?accountCode=" + selRecords[0].accountNumber + "&yk=1";
     	}
         
     });

@@ -5,9 +5,8 @@
     "main": "fis-conf.js",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
-        "dev": "fis3 release -d D:/chengdai_dabao/bcoin_oss -w",
-        "build": "fis3 release -d D:/chengdai_dabao/bcoin_oss prod"
-
+	    "dev": "fis3 release -d F:/web/xn-coin-oss/dist -w",
+	    "build": "fis3 release -d F:/web/xn-coin-oss/dist prod"
     },
     "author": "",
     "license": "ISC",

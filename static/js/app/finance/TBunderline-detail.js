@@ -26,9 +26,7 @@ $(function() {
     }, {
         field: 'payFeeString',
         title: '实际支付矿工费',
-        formatter: function(v,data){
-        	return moneyFormat(v,'',"ETH")
-        }
+        formatter: moneyFormat
     }, {
         field: 'channelType',
         title: '渠道',

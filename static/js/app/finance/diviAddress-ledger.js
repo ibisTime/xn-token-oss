@@ -9,10 +9,10 @@ $(function() {
         title: "交易HASH",
         field: 'hash'
     }, {
-        field: 'tokenValue',
+        field: 'value',
         title: '交易金额',
         formatter: function(v,data){
-        	if(data.tokenFrom==address){
+        	if(data.from==address){
         		return '-'+moneyFormat(v);
         	}else{
         		return moneyFormat(v);
@@ -22,10 +22,10 @@ $(function() {
         field: 'fromTo',
         title: '对方地址',
         formatter: function(v,data){
-        	if(data.tokenFrom==address){
-        		return data.tokenTo;
+        	if(data.from==address){
+        		return data.to;
         	}else{
-        		return data.tokenFrom;
+        		return data.from;
         	}
         }
     }, {
@@ -34,9 +34,7 @@ $(function() {
     }, {
         title: "gas价格",
         field: 'gasPrice',
-        formatter: function(v, data){
-        	return moneyFormat(v,'',"ETH");
-        },
+        formatter:moneyFormat
     }, {
         title: "消耗gas",
         field: 'gasUsed'
@@ -47,8 +45,11 @@ $(function() {
         	var gasPrice = new BigDecimal(data.gasPrice);
         	var gasUsed = new BigDecimal(data.gasUsed);
         	kgPrice =  gasPrice.multiply(gasUsed).toString();
-        	return moneyFormat(kgPrice,'',"ETH");
+        	return moneyFormat(kgPrice);
         }
+    }, {
+        field: 'refNo',
+        title: '关联订单号',
     }, {
         field: 'creates',
         title: '网络记账时间',
@@ -59,7 +60,7 @@ $(function() {
         pageCode: '802107',
         searchParams: {
             kind:'0',
-            tokenAddress: address,
+            address: address,
         }
     });
     $(".tools .toolbar").html('<li style="display:block;" id="goBackBtn"><span><img src="/static/images/t01.png"></span>返回</li>')

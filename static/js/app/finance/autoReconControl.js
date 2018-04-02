@@ -66,7 +66,7 @@ $(function() {
         searchParams: {
             channelType: "",
             status: "3",
-            currency: "OGC",
+            currency: "ETH",
             companyCode: OSS.company
         },
         beforeSearch: function(data) {

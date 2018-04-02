@@ -21,9 +21,7 @@ $(function() {
     }, {
         field: 'amountString',
         title: '充值金额',
-        formatter: function(v,data){
-        	return moneyFormat(v,'',data.currency)
-        }
+        formatter: moneyFormat
     }, {
         field: "bizNote",
         title: "充值说明"
@@ -51,6 +49,7 @@ $(function() {
         singleSelect: false,
         searchParams: {
             channelType: "90",
+            currency: "ETH",
             companyCode: OSS.company
         },
         beforeDetail: function(data) {

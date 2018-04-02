@@ -16,6 +16,8 @@ $(function() {
         ],
         params: {
             userId: userId,
+            currency:'ETH',
+            type:"C"
         },
         keyName: 'accountNumber',
         valueName: '{{realName.DATA}} - {{currencyName.DATA}} - {{typeName.DATA}}',
@@ -26,8 +28,9 @@ $(function() {
         field: 'amount',
         required: true,
         number: true,
+        maxlength: 13,
         amount: 'true',
-        coin:"OGC",
+        coin:"ETH",
         formatter: moneyFormat
     }, {
         field: 'payCardInfo',

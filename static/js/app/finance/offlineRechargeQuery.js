@@ -20,15 +20,15 @@ $(function() {
     }, {
         field: 'amountString',
         title: '充值金额',
-        formatter: function(v,data){
-        	return moneyFormat(v,'',data.currency)
-        }
+        formatter: moneyFormat
     }, {
         field: 'channelType',
         title: '支付渠道',
         type: 'select',
-        key: 'channel_type',
-        formatter: Dict.getNameForList('channel_type'),
+        data:{
+        	"ETH" : '以太坊',
+        	"90" : "人工线下"
+        },
         search: true,
     }, {
         field: "bizNote",
@@ -57,6 +57,7 @@ $(function() {
         pageCode: '802705',
         // singleSelect: false,
         searchParams: {
+            currency: "ETH",
             companyCode: OSS.company
         },
         beforeDetail: function(data) {

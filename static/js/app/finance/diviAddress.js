@@ -59,75 +59,50 @@ $(function() {
         window.location.href = "./diviAddress_ledger.html?address=" + selRecords[0].address;
     });
     
-    $("#sendBtn").click(function(){
-        var selRecords = $('#tableList').bootstrapTable('getSelections');
-        if (selRecords.length <= 0) {
-            toastr.info("请选择记录");
-            return;
-        }
-        
-		var dw = dialog({
-    		fixed: true,
+    //手动归集
+    $('#shoudongGuijiBtn').click(function() {
+        var dw = dialog({
             content: '<form class="pop-form" id="popForm" novalidate="novalidate">' +
-                '<ul class="form-info" id="formContainer"><li style="text-align:center;font-size: 15px;">发送</li></ul>' +
+                '<ul class="form-info" id="formContainer"><li style="text-align:center;font-size: 15px;">设置阈值</li></ul>' +
                 '</form>'
         });
 
         dw.showModal();
+
         buildDetail({
             container: $('#formContainer'),
             fields: [{
-		        field: 'toUserId',
-		        title: '接收用户',
-		        required: true,
-		        type: 'select',
-		        pageCode: '805120',
-		        params: {
-            		kind: 'C',
-            		updater:''
-		        },
-		        keyName: 'userId',
-		        valueName: '{{mobile.DATA}} - {{nickname.DATA}}',
-		        searchName: 'mobile',
-		    },{
-		        field: 'quantity',
-		        title: '发送数量',
-		        required: true,
-		        number: true,
-		        amount: 'true',
-		        coin:"OGC",
-		        formatter: moneyFormat
-		    },{
-		        field: 'remark',
-		        title: '备注',
+		        field: 'balanceStart',
+		        title: '阈值',
+				required: true,
+				number: true,
+				min: '0'
 		    }],
             buttons: [{
                 title: '确定',
-        		field: 'confirm',
                 handler: function() {
-                    if ($('#popForm').valid()) {
+                	if($('#popForm').valid()){
                         var data = $('#popForm').serializeObject();
-                        data.fromUserId = selRecords[0].userId
-                        showLoading()
-		                reqApi({
-		                    code: '802121',
-		                    json: data
-		                }).then(function(data) {
-                    		dw.close().remove();
-                    		sucList();
-		                	hideLoading()
-		                },hideLoading);
+                        confirm('所有余额大于'+data.balanceStart+'的地址都将进行归集，确定进行操作吗？').then(function () {
+                            reqApi({
+                                code: '802110',
+                                json: data
+                            }).done(function(data) {
+                                sucList();
+                                dw.close().remove();
+                            });
+                        },function () {})
                     }
                 }
             }, {
                 title: '取消',
-        		field: 'cancel',
                 handler: function() {
                     dw.close().remove();
                 }
             }]
         });
+
         dw.__center();
-	})
+    });
     
 });

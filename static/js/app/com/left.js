@@ -61,6 +61,25 @@ $(function() {
 							$(".menuson li.active").removeClass("active");
 							$(this).addClass("active");
 							
+							// 获取币种
+				            reqApi({
+				                code: '802267',
+				                json: {
+				                    updater:''
+				                },
+				                sync: true
+				            }).then(function(data) {
+				        		var coinList = {};
+								for(var i in data){
+									coinList[data[i].symbol]={
+										'coin':data[i].symbol,
+										'unit':'1e'+data[i].unit,
+										'name':data[i].cname,
+										'type':data[i].type
+									}
+								}
+								window.sessionStorage.setItem("coinList",JSON.stringify(coinList))
+				            });
 						});
 						if (!firstClick) {
 							$("#child_menu_0", $ul)[0] && $("#child_menu_0", $ul)[0].click();

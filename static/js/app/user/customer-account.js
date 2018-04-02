@@ -1,7 +1,13 @@
 $(function() {
     var userId = getQueryString('userId') || '';
     var kind = getQueryString('kind') || '';
-
+	
+	getCoinReq().then(function(data){
+		
+		var currencyData = {};
+		for(var i = 0; i < data.length ; i ++){
+			currencyData[data[i].symbol] = data[i].cname;
+		}
 
     var columns = [{
         field: '',
@@ -14,8 +20,8 @@ $(function() {
         field: 'currency',
         title: '币种',
         type: 'select',
-        key: 'coin',
-        formatter: Dict.getNameForList('coin')
+        data: currencyData,
+        search: true
     }, {
         field: 'accountNumber',
         title: '账号'
@@ -63,6 +69,8 @@ $(function() {
             userId: userId
         }
     });
+    
+    },hideLoading);
 
 
     $('.tools .toolbar').html('<li style="display:block;" id="ledgerBtn"><span><img src="/static/images/t01.png"></span>查看明细</li>'+
@@ -75,7 +83,15 @@ $(function() {
             toastr.info("请选择记录");
             return;
         }
-		window.location.href = "../finance/partner_ledger.html?&a=1&accountNumber=" + selRecords[0].accountNumber + "&kind=0";
+        if(selRecords[0].currency=="SC"){
+    		window.location.href = "../SC-finance/partner_ledger.html?&a=1&accountNumber=" + selRecords[0].accountNumber + "&kind=0";
+    	}else if(selRecords[0].currency=="BTC"){
+    		window.location.href = "../BTC-finance/partner_ledger.html?&a=1&accountNumber=" + selRecords[0].accountNumber + "&kind=0";
+    	}else if(selRecords[0].currency=="ETH"){
+    		window.location.href = "../finance/partner_ledger.html?&a=1&accountNumber=" + selRecords[0].accountNumber + "&kind=0";
+    	}else{
+    		window.location.href = "../TOKEN-finance/partner_ledger.html?&a=1&accountNumber=" + selRecords[0].accountNumber + "&kind=0";
+    	}
     });
     
     $('#ledgerFrozenBtn').click(function() {
@@ -88,8 +104,10 @@ $(function() {
     		window.location.href = "../SC-finance/partner_ledger.html?&a=1&accountNumber=" + selRecords[0].accountNumber + "&kind=1";
     	}else if(selRecords[0].currency=="BTC"){
     		window.location.href = "../BTC-finance/partner_ledger.html?&a=1&accountNumber=" + selRecords[0].accountNumber + "&kind=1";
-    	}else{
+    	}else if(selRecords[0].currency=="ETH"){
     		window.location.href = "../finance/partner_ledger.html?&a=1&accountNumber=" + selRecords[0].accountNumber + "&kind=1";
+    	}else{
+    		window.location.href = "../TOKEN-finance/partner_ledger.html?&a=1&accountNumber=" + selRecords[0].accountNumber + "&kind=1";
     	}
     });
     

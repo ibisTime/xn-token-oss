@@ -37,7 +37,7 @@ $(function() {
         field: 'payFeeString',
         title: '实际支付矿工费',
         formatter: function(v, data) {
-            return moneyFormat(data.withdraw.payFeeString,'',"ETH");
+            return moneyFormat(data.withdraw.payFeeString);
         },
         readonly: true
     }, {
@@ -207,10 +207,10 @@ $(function() {
             field: 'blockNumber',
             title: 'blockNumber',
         }, {
-            field: 'tokenFrom',
+            field: 'from',
             title: 'from'
         }, {
-            field: 'tokenTo',
+            field: 'to',
             title: 'to'
         }, {
             field: 'gas',
@@ -218,21 +218,25 @@ $(function() {
         }, {
             field: 'gasPrice',
             title: 'gasPrice',
-	        formatter: function(v,data){
-	        	return moneyFormat(v,'',"ETH");
-	        }
+            formatter: moneyFormat,
         }, {
             field: 'gasUsed',
             title: 'gasUsed'
         }, {
 	        title: "矿工费",
-	        field: 'gasEth',
+	        field: 'kgPrice',
 	        formatter: function(v,data){
-	        	return moneyFormat(v,'',"ETH");
-	        }
+	        	var gasPrice = new BigDecimal(data.gasPrice);
+	        	var gasUsed = new BigDecimal(data.gasUsed);
+	        	kgPrice =  gasPrice.multiply(gasUsed).toString();
+	        	return moneyFormat(kgPrice);
+	        	}
         },{
             field: 'nonce',
             title: 'nonce'
+        }, {
+            field: 'refNo',
+            title: 'refNo'
         }, {
             title: "交易Hash",
             field: "hash"
@@ -241,7 +245,7 @@ $(function() {
             title: 'transactionIndex'
         }, {
             title: "value",
-            field: "tokenValue",
+            field: "value",
             formatter: moneyFormat,
         }]
     }, {
