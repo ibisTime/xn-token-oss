@@ -1860,9 +1860,11 @@ function buildDetail(options) {
                         if (!item.detailCode && item.pageCode) {
                             params = {
                                 start: 1,
-                                limit: 1000000000
+                                limit: 100000
                             };
                         }
+                        
+			            $.extend(params, item.params || {});
                         var realValue = displayValue || '';
                         if (item.value && item.value.call) {
                             realValue = item.value(data);

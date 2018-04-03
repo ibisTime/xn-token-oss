@@ -83,50 +83,87 @@ $(function() {
         window.location.href = "./diviAddress_ledger.html?address=" + selRecords[0].address;
     });
     
-    //手动归集
-    $('#shoudongGuijiBtn').click(function() {
-        var dw = dialog({
+    //发送
+    $("#sendBtn").click(function(){
+        var selRecords = $('#tableList').bootstrapTable('getSelections');
+        if (selRecords.length <= 0) {
+            toastr.info("请选择记录");
+            return;
+        }
+        
+        if (selRecords[0].status == 2) {
+            toastr.warning("无效地址，不能发送");
+            return;
+        }
+		var dw = dialog({
+    		fixed: true,
             content: '<form class="pop-form" id="popForm" novalidate="novalidate">' +
-                '<ul class="form-info" id="formContainer"><li style="text-align:center;font-size: 15px;">设置阈值</li></ul>' +
+                '<ul class="form-info" id="formContainer"><li style="text-align:center;font-size: 15px;">发送</li></ul>' +
                 '</form>'
         });
 
         dw.showModal();
-
         buildDetail({
-            container: $('#formContainer'),
             fields: [{
-		        field: 'balanceStart',
-		        title: '阈值',
-				required: true,
-				number: true,
-				min: '0'
+		        field: 'addressCode',
+		        title: '地址',
+		        type: 'select',
+		        pageCode: '802305',
+                params: {
+                    type: "H",
+                    status: '0',
+                    currencyList: [selRecords[0].symbol]
+                },
+                keyName: 'code',
+                valueName: '{{address.DATA}}-{{balanceString.DATA}}{{symbol.DATA}}',
+                searchName: 'name',
+                valueFormatter: {
+                    balanceString: function(v){
+            			return moneyFormat(v,'',selRecords[0].symbol)
+                    }
+                },
+		        required: true,
+		    },{
+		        field: 'value',
+		        title: '发送数量',
+		        required: true,
+		        number: true,
+		        coinAmount: true
+		    },{
+		        field: 'remark',
+		        title: '备注',
 		    }],
+            container: $('#formContainer'),
             buttons: [{
                 title: '确定',
+        		field: 'confirm',
                 handler: function() {
-                	if($('#popForm').valid()){
+                    if ($('#popForm').valid()) {
                         var data = $('#popForm').serializeObject();
-                        confirm('所有余额大于'+data.balanceStart+'的地址都将进行归集，确定进行操作吗？').then(function () {
-                            reqApi({
-                                code: '802110',
-                                json: data
-                            }).done(function(data) {
-                                sucList();
-                                dw.close().remove();
-                            });
-                        },function () {})
+                        data.code = data.addressCode
+                        data.toUserId = selRecords[0].user.userId;
+                        delete data.symbol1;
+                        delete data.addressCode;
+                        
+                        showLoading()
+		                reqApi({
+		                    code: '802304',
+		                    json: data
+		                }).then(function(data) {
+                    		dw.close().remove();
+		                	hideLoading();
+            				toastr.info("发送成功");
+		                },hideLoading);
                     }
                 }
             }, {
                 title: '取消',
+        		field: 'cancel',
                 handler: function() {
                     dw.close().remove();
                 }
             }]
         });
-
         dw.__center();
-    });
-    
+	})
 });

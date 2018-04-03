@@ -83,7 +83,7 @@ $(function() {
         pageCode: '802755',
         searchParams: {
             status: "6",
-            channelType: "ETH",
+        	currency: 'ETH',
             companyCode: OSS.company
         },
         // beforeDetail: function(data) {

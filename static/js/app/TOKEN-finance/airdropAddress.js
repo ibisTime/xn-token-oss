@@ -63,7 +63,7 @@ $(function() {
         columns: columns,
         pageCode: '802305',
         searchParams: {
-            type: 'h',
+            type: 'H',
             currencyList: currencyList,
             companyCode: OSS.company
         }
