@@ -1584,6 +1584,11 @@ function buildDetail(options) {
         // 生成编辑器
         if (!item.original) {
             var editor = new wangEditor(item.field);
+            editor.onchange = function(){
+	            //获取editor的html值
+	            $('#' + item.field)[0].css({"line-height":'2'})
+	        }
+            console.log($('#' + item.field)[0])
             $('#' + item.field)[0].editor = editor;
             editor.config.menus = [
                 "source",
@@ -1630,8 +1635,6 @@ function buildDetail(options) {
             editor.config.customUploadInit = uploadInit; // 配置自定义上传初始化事件，uploadInit方法在上面定义了
             //editor.config.uploadImgUrl = '/upload';
             editor.create();
-        }
-
     }
 
     for (var i = 0, len = dateTimeList.length; i < len; i++) {
