@@ -1635,6 +1635,8 @@ function buildDetail(options) {
             editor.config.customUploadInit = uploadInit; // 配置自定义上传初始化事件，uploadInit方法在上面定义了
             //editor.config.uploadImgUrl = '/upload';
             editor.create();
+        
+    	}
     }
 
     for (var i = 0, len = dateTimeList.length; i < len; i++) {
