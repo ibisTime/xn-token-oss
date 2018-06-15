@@ -6,7 +6,7 @@ OSS.system = 'CD-TOKEN00018';
 // companyCode
 OSS.company = 'CD-TOKEN00018';
 // system name
-OSS.systemName = 'OGC钱包管理平台';
+OSS.systemName = 'THA钱包管理平台';
 // company name
 OSS.companyName = '橙袋科技';
 // menuCode
