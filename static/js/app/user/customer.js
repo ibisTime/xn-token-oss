@@ -12,6 +12,13 @@ $(function() {
         field: 'nickname',
         title: '昵称',
     }, {
+        field: 'interCode',
+        title: '国家',
+        type: 'select',
+        listCode:'801120',
+        keyName: 'interCode',
+        valueName: 'chineseName'
+    }, {
         field: 'level',
         title: '用户等级',
         type: 'select',

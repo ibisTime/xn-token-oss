@@ -9,6 +9,14 @@ $(function() {
         readonly: !!symbol,
         required: true,
     }, {
+        title: "类型",
+        field: "type",
+        type: 'select',
+        data: {
+        	'1': '基于ETH的token币',
+        	'2': '基于WAN的token币'
+        }
+    }, {
         title: "英文名称",
         field: "ename",
         required: true,
@@ -98,13 +106,6 @@ $(function() {
         field: "orderNo",
         number: true,
         required: true
-    }, {
-        title: "类型",
-        field: "type",
-        type: "select",
-        key: "coin_type",
-        formatter: Dict.getNameForList("coin_type"),
-        hidden: !isDetail
     }, {
         title: "状态",
         field: "status",
