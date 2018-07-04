@@ -142,7 +142,6 @@ $(function() {
         	delete data.updater;
         	delete data.updateDatetime;
         	delete data.status;
-        	delete data.type;
         	if(symbol){
         		data.symbol = symbol
         	}
