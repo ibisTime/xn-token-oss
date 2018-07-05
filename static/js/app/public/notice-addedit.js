@@ -35,8 +35,9 @@ $(function() {
     }, {
         title: '内容',
         field: 'smsContent',
+        type: 'textarea',
+        normalArea: true,
         required: true,
-        maxlength: 255,
         readonly: view
     }, {
         title: "拟发送时间",
