@@ -85,7 +85,7 @@ $(function() {
                         var data = $('#popForm').serializeObject();
                         confirm('所有余额大于'+data.balanceStart+'的地址都将进行归集，确定进行操作吗？').then(function () {
                             reqApi({
-                                code: '802110',
+                                code: '802360',
                                 json: data
                             }).done(function(data) {
                                 sucList();
