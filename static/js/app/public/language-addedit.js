@@ -11,7 +11,6 @@ $(function() {
     	field: "cvalue",
     	title: "内容",
         type: 'textarea',
-        normalArea: true,
         required: true
     }];
 
