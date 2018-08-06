@@ -1385,6 +1385,9 @@ function buildDetail(options) {
         for (var i = 0, len = options.buttons.length; i < len; i++) {
             var item = options.buttons[i];
             var id = 'btn-' + i;
+            if(options.container){
+            	id = 'popForm-btn-' + i;
+            }
             btnHandlers.push({ id: id, handler: item.handler });
             btnHtml += '<input id="' + id + '" type="button" class="btn margin-left-20" value="' + item.title + '"/>';
         }
