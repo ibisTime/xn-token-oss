@@ -1205,6 +1205,7 @@ function buildDetail(options) {
         rules = {},
         textareaList = [];
     var dateTimeList = [],
+    	dateTimeList1 = [],
         imgList = [];
 
     //页面构造
@@ -1366,8 +1367,22 @@ function buildDetail(options) {
                 html += '<div class="city-group-spec" data-only-prov="' + item.onlyProvince + '"><select id="' + item.field + '"  name="' + item.field + '" class="control-def prov"><option value="">请选择</option></select></div></li>';
                 //控制必填
                 rules[item.field] = { required: true };
-            } else if (item.type == 'datetime' || item.type == 'date') {
+            }  else if (item.twoDate) {
                 dateTimeList.push(item);
+                html += '<input id="' + item.field1 + '" name="' + item.field1 + '" class="lay-input lay-input1"/>'
+                		+'&nbsp;&nbsp;至&nbsp;&nbsp;<input id="' + item.field2 + '" name="' + item.field2 + '" class="lay-input lay-input1"/></li>';
+
+                if(item.type=="date"){
+                	rules[item.field1] = { required: true, dataformat1: true };
+        			rules[item.field2]  = { required: true, dataformat1: true  };
+                }else{
+                	rules[item.field1] = { required: true};
+        			rules[item.field2]  = { required: true};
+                }
+
+                // 单个日期搜索框
+            } else if (item.type == 'datetime' || item.type == 'date') {
+                dateTimeList1.push(item);
                 html += '<input id="' + item.field + '" name="' + item.field + '" class="lay-input"/></li>';
             } else if (item.type == "o2m") {
                 html += '<div id="' + item.field + '" style="display: inline-block;"></div>';
@@ -1642,15 +1657,43 @@ function buildDetail(options) {
     	}
     }
 
+    // 两个日期框
     for (var i = 0, len = dateTimeList.length; i < len; i++) {
-        var item = dateTimeList[i];
+        (function(i) {
+            var item = dateTimeList[i];
+            $('#' + item.field1).click(function() {
+                var end = $('#' + item.field2).val();
+                var obj = {
+                	min: item.minDate ? item.minDate : '',//设定最小日期
+                    elem: '#' + item.field1,
+	                istime: item.type == 'datetime',
+	                format: item.type == 'datetime' ? 'YYYY-MM-DD hh:mm:ss' : 'YYYY-MM-DD'
+                };
+                end && (obj.max = end);
+                laydate(obj);
+            });
+            $('#' + item.field2).click(function() {
+                var start = $('#' + item.field1).val();
+                var obj = {
+                	min: item.minDate ? item.minDate : '',//设定最小日期
+                    elem: '#' + item.field2,
+	                istime: item.type == 'datetime',
+	                format: item.type == 'datetime' ? 'YYYY-MM-DD hh:mm:ss' : 'YYYY-MM-DD'
+                };
+                start && (obj.min = start);
+                laydate(obj);
+            });
+        })(i);
+    }
+    // 一个日期框
+    for (var i = 0, len = dateTimeList1.length; i < len; i++) {
+        var item = dateTimeList1[i];
         if (item.dateOption) {
             laydate(item.dateOption);
         } else {
             laydate({
                 elem: '#' + item.field,
-                min: item.minDate ?
-                    item.minDate : '',
+                min: item.minDate ? item.minDate : '',
                 istime: item.type == 'datetime',
                 format: item.type == 'datetime' ?
                     'YYYY-MM-DD hh:mm:ss' : 'YYYY-MM-DD'
@@ -1932,6 +1975,14 @@ function buildDetail(options) {
                         $('#province').html(data.province);
                         data.city && $('#city').html(data.city);
                         data.area && $('#area').html(data.area);
+                    }  else if(item.type == 'datetime' || item.type == 'date'){
+                    	//两个日期框
+                    	if(item.twoDate){
+                    		$('#' + item.field1).html(displayValue);
+                    		$('#' + item.field2).html(displayValue);
+                    	}else{
+                    		$('#' + item.field).html(displayValue);
+                    	}
                     } else {
                         if (item.field && item.field.indexOf('-') > -1) {
                         	if(item.coin){
@@ -2061,7 +2112,15 @@ function buildDetail(options) {
                             data: displayValue || []
                         });
                     } else if (item.type == 'datetime' || item.type == 'date') {
-                        $('#' + item.field).val((item.type == 'datetime' ? dateTimeFormat : dateFormat)(displayValue));
+                    	//两个日期框
+                    	if(item.twoDate){
+                    		$('#' + item.field1).val((item.type == 'datetime' ? dateTimeFormat : dateFormatData)(data[item.field1]));
+                    		$('#' + item.field2).val((item.type == 'datetime' ? dateTimeFormat : dateFormatData)(data[item.field2]));
+                    	}else{
+                    		$('#' + item.field).val((item.type == 'datetime' ? dateTimeFormat : dateFormatData)(displayValue));
+                    	}
+
+                        // 星级选中
                     } else {
                         if (item.formatter) {
                             $('#' + item.field).val(item.formatter(displayValue, data));

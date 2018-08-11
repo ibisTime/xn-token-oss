@@ -3,57 +3,122 @@ $(function() {
     var view = !!getQueryString('v');
     var isDetail = !!getQueryString('isDetail');
     
+    var d = new Date();
+    d.setDate(d.getDate());
+    var minDate = d.format('yyyy-MM-dd');
+    
     var fields = [{
-         title: "应用名",
+        title: "产品名称",
         field: "name",
         required: true
     }, {
-        title: "语言",
-        field: "language",
+        title: "币种",
+        field: "symbol",
         type: "select",
-        data: {
-        	'ZH_CN':'中文',
-        	'EN':'英文',
-        	'KO':'韩文'
+        pageCode: '802265',
+        params: {
+        	status:"0"
         },
-//      key: "coin_type",
-//      formatter: Dict.getNameForList("coin_type"),
-        hidden: !isDetail
+        keyName: 'symbol',
+        valueName: '{{symbol.DATA}}-{{cname.DATA}}',
+        searchName: 'symbol',
+        required: true,
+        readonly: !!code
     }, {
-        title: "应用简介",
-        field: "slogan",
-        type:"textarea",
-        normalArea: true,
-        required: true
+        title: "产品期限（天）",
+        field: "limitDays",
+        required: true,
+        number: true,
+        isPositive: true,
+        'Z+': true
     }, {
-        title: "description",
-        field: "slogan",
-        required: true
+        title: "预期年化收益率",
+        field: "expectYield",
+        required: true,
+        number: true,
+        range: [0, 1]
     }, {
-        title: "状态",
-        field: "status",
-        type: "select",
-        data: {
-        	'0':'不显示',
-        	'1':'显示'
+        title: "总募集金额",
+        field: "amount",
+        amount: true,
+        required: true,
+        formatter: function(v, data) {
+            return moneyFormat(v.toString(),'',data.symbol);
         },
-        hidden: !isDetail
     }, {
-        title: "序号",
-        field: "orderNo",
-        hidden: !isDetail
+        title: "可售金额",
+        field: "avilAmount",
+        amount: true,
+        required: true,
+        formatter: function(v, data) {
+            return moneyFormat(v.toString(),'',data.symbol);
+        },
     }, {
-        title: "更新人",
-        field: "updater",
-        hidden: !isDetail
+        title: "募集成功金额",
+        field: "successAmount",
+        amount: true,
+        required: true,
+        formatter: function(v, data) {
+            return moneyFormat(v.toString(),'',data.symbol);
+        },
     }, {
-        title: "更新时间",
-        field: "updateDatetime",
+        title: "起购金额",
+        field: "minAmount",
+        amount: true,
+        required: true,
+        formatter: function(v, data) {
+            return moneyFormat(v.toString(),'',data.symbol);
+        },
+    }, {
+        title: "递增金额",
+        field: "increAmount",
+        amount: true,
+        required: true,
+        formatter: function(v, data) {
+            return moneyFormat(v.toString(),'',data.symbol);
+        },
+    }, {
+        title: "限购金额",
+        field: "limitAmount",
+        amount: true,
+        required: true,
+        formatter: function(v, data) {
+            return moneyFormat(v.toString(),'',data.symbol);
+        },
+    }, {
+        title: '募集时间',
         formatter: dateTimeFormat,
-        hidden: !isDetail
+        field1: 'startDatetime',
+        field2: 'endDatetime',
+        minDate: minDate,
+        type : 'datetime',
+        twoDate: true,
+        required: true,
     }, {
-        title: "备注",
-        field: "remark"
+        title: '起息时间',
+        field: 'incomeDatetime',
+        formatter: dateTimeFormat,
+        type : 'datetime',
+        required: true,
+    }, {
+        title: '到期时间',
+        field: 'arriveDatetime',
+        formatter: dateTimeFormat,
+        type : 'datetime',
+        required: true,
+    }, {
+        title: '还款日',
+        field: 'repayDatetime',
+        formatter: dateTimeFormat,
+        type : 'datetime',
+        required: true,
+    }, {
+        title: "回款方式",
+        field: "paymentType",
+        type: "select",
+        key: "coin_status",
+        formatter: Dict.getNameForList("coin_status"),
+        required: true,
     }];
     
     var options = {
@@ -63,13 +128,53 @@ $(function() {
         editCode: "625402",
         detailCode: "625411",
         beforeSubmit: function(data){
-        	delete data.language;
-        	delete data.orderNo;
-        	delete data.updater;
-        	delete data.updateDatetime;
-        	delete data.status;
         	return data;
         }
     };
+    
+    options.buttons = [{
+	    title: '保存',
+	    handler: function() {
+	    	if ($('#jsForm').valid()) {
+	            var data = $('#jsForm').serializeObject();
+	            if(code){
+	            	data.code = code;
+	            }
+	            data.isPublish = '0';
+	            data.creator = getUserName();
+	            reqApi({
+	                code: '805101',
+	                json: data
+	            }).done(function(data) {
+	                sucDetail();
+	            });
+	        }
+	    }
+	}, {
+	    title: '提交',
+	    handler: function() {
+	        if ($('#jsForm').valid()) {
+	            var data = $('#jsForm').serializeObject();
+	            if(code){
+	            	data.code = code;
+	            }
+	            data.isPublish = '1';
+	            data.creator = getUserName();
+	            reqApi({
+	                code: '805101',
+	                json: data
+	            }).done(function(data) {
+	                sucDetail();
+	            });
+	        }
+	    }
+	}, {
+	    title: '返回',
+	    handler: function() {
+	        goBack();
+	    }
+	    
+    }]
+    
     buildDetail(options);
 });

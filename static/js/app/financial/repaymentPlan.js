@@ -10,50 +10,31 @@ $(function() {
         search: true
     }, {
         title: "币种",
-        field: "symbol",
+        field: "language",
         type: "select",
-        pageCode: '802265',
-        params: {
-        	status:"0"
+        data: {
+        	'ZH_CN':'中文',
+        	'EN':'英文',
+        	'KO':'韩文'
         },
-        keyName: 'symbol',
-        valueName: '{{symbol.DATA}}-{{cname.DATA}}',
-        searchName: 'symbol',
+//      key: "coin_type",
+//      formatter: Dict.getNameForList("coin_type"),
         search: true
     }, {
-        title: "产品期限（天）",
-        field: "limitDays"
+        title: "应用简介",
+        field: "slogan"
     }, {
-        title: "预期年化收益率",
-        field: "expectYield",
-    }, {
-        title: "总募集金额",
-        field: "amount",
-    }, {
-        title: "可售金额",
-        field: "avilAmount",
-    }, {
-        title: "募集成功金额",
-        field: "successAmount",
-    }, {
-        title: "起购金额",
-        field: "minAmount",
-    }, {
-        title: "递增金额",
-        field: "increAmount",
-    }, {
-        title: "限购金额",
-        field: "limitAmount",
+        title: "显示状态",
+        field: "status",
+        type: "select",
+        data: {
+        	'0':'不显示',
+        	'1':'显示'
+        },
+        search: true
     }, {
         title: "序号",
         field: "orderNo"
-    }, {
-        title: "状态",
-        field: "status",
-        type: "select",
-        key: "coin_status",
-        formatter: Dict.getNameForList("coin_status"),
-        required: true,
     }, {
         title: "更新时间",
         field: "updateDatetime",
@@ -64,7 +45,7 @@ $(function() {
     }];
     buildList({
         columns: columns,
-        pageCode: '802265'
+        pageCode: '625510'
     });
     
     //显示设置
