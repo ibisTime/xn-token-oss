@@ -5,11 +5,11 @@ $(function() {
         title: '',
         checkbox: true
     }, {
-        title: "应用名",
+        title: "产品名称",
         field: "name",
         search: true
     }, {
-        title: "语言",
+        title: "币种",
         field: "language",
         type: "select",
         data: {
@@ -45,7 +45,7 @@ $(function() {
     }];
     buildList({
         columns: columns,
-        pageCode: '625410',
+        pageCode: '625510'
     });
     
     //显示设置
