@@ -1604,9 +1604,9 @@ function buildDetail(options) {
             var editor = new wangEditor(item.field);
             editor.onchange = function(){
 	            //获取editor的html值
-	            $('#' + item.field)[0].css({"line-height":'2'})
+	            $('#' + item.field).css({"line-height":'2'})
 	        }
-            console.log($('#' + item.field)[0])
+//          console.log($('#' + item.field)[0])
             $('#' + item.field)[0].editor = editor;
             editor.config.menus = [
                 "source",
@@ -1758,6 +1758,11 @@ function buildDetail(options) {
             var item = fields[i];
             if ('value' in item && !item.value.call) {
                 $('#' + item.field)[item.readonly ? 'html' : 'val'](item.value);
+                if(item.type == 'select' && item.data && item.readonly){
+                    $('#' + item.field).html(item.data[item.value]);
+                } else {
+                	$('#' + item.field)[item.readonly ? 'html' : 'val'](item.value);
+                }
             }
         }
     }
@@ -1985,14 +1990,19 @@ function buildDetail(options) {
                     	}
                     } else {
                         if (item.field && item.field.indexOf('-') > -1) {
-                        	if(item.coin){
+                        	if(item.amount && item.formatter){
+                        		console.log(item);
+								$('#' + item.field).html(item.formatter(displayValue, data) || '-');
+				        	} else if(item.coin){
 								$('#' + item.field).html(((item.amount || item.amount1) ? moneyFormat(displayValue,'',item.coin) : displayValue) || '-');
-				        	}else{
+				        	} else{
 								$('#' + item.field).html(((item.amount || item.amount1) ? moneyFormat(displayValue) : displayValue) || '-');
 				        	}
 						}
 						else if (item.field in data) {
-							if(item.coin){
+							if(item.amount && item.formatter){
+								$('#' + item.field).html(item.formatter(displayValue, data) || '-');
+				        	} else if(item.coin){
 								$('#' + item.field).html(((item.amount || item.amount1) ? moneyFormat(data[item.field],'',item.coin) : data[item.field]));
 				        	}else{
 								$('#' + item.field).html(((item.amount || item.amount1) ? moneyFormat(data[item.field]) : data[item.field]));

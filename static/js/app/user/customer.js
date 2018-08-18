@@ -12,11 +12,11 @@ $(function() {
         field: 'nickname',
         title: '昵称',
     }, {
-        field: 'interCode',
+        field: 'countryCode',
         title: '国家',
         type: 'select',
         listCode:'801120',
-        keyName: 'interCode',
+        keyName: 'code',
         valueName: 'chineseName'
     }, {
         field: 'level',

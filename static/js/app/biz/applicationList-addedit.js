@@ -20,14 +20,19 @@ $(function() {
 //      formatter: Dict.getNameForList("coin_type"),
         hidden: !isDetail
     }, {
-        title: "应用简介",
-        field: "slogan",
-        type:"textarea",
-        normalArea: true,
+        title: "图片",
+        field: "icon",
+        type:'img',
+        single: true,
         required: true
     }, {
-        title: "description",
+        title: "应用简介",
         field: "slogan",
+        required: true
+    }, {
+        title: "具体描述",
+        field: "description",
+        type:"textarea",
         required: true
     }, {
         title: "状态",

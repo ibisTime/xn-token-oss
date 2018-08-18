@@ -1,7 +1,7 @@
 $(function() {
     var code = getQueryString('code');
     var view = !!getQueryString('v');
-    var isDetail = !!getQueryString('isDetail');
+    var isEdit = !!getQueryString('isEdit');
     
     var d = new Date();
     d.setDate(d.getDate());
@@ -25,6 +25,13 @@ $(function() {
         required: true,
         readonly: !!code
     }, {
+        title: "币种",
+        field: "symbol1",
+        formatter: function(v,data){
+        	return data.symbol;
+        },
+        hidden: true
+    }, {
         title: "产品期限（天）",
         field: "limitDays",
         required: true,
@@ -40,7 +47,7 @@ $(function() {
     }, {
         title: "总募集金额",
         field: "amount",
-        amount: true,
+        coinAmount: true,
         required: true,
         formatter: function(v, data) {
             return moneyFormat(v.toString(),'',data.symbol);
@@ -48,7 +55,7 @@ $(function() {
     }, {
         title: "可售金额",
         field: "avilAmount",
-        amount: true,
+        coinAmount: true,
         required: true,
         formatter: function(v, data) {
             return moneyFormat(v.toString(),'',data.symbol);
@@ -56,7 +63,7 @@ $(function() {
     }, {
         title: "募集成功金额",
         field: "successAmount",
-        amount: true,
+        coinAmount: true,
         required: true,
         formatter: function(v, data) {
             return moneyFormat(v.toString(),'',data.symbol);
@@ -64,7 +71,7 @@ $(function() {
     }, {
         title: "起购金额",
         field: "minAmount",
-        amount: true,
+        coinAmount: true,
         required: true,
         formatter: function(v, data) {
             return moneyFormat(v.toString(),'',data.symbol);
@@ -72,7 +79,7 @@ $(function() {
     }, {
         title: "递增金额",
         field: "increAmount",
-        amount: true,
+        coinAmount: true,
         required: true,
         formatter: function(v, data) {
             return moneyFormat(v.toString(),'',data.symbol);
@@ -80,7 +87,7 @@ $(function() {
     }, {
         title: "限购金额",
         field: "limitAmount",
-        amount: true,
+        coinAmount: true,
         required: true,
         formatter: function(v, data) {
             return moneyFormat(v.toString(),'',data.symbol);
@@ -110,27 +117,41 @@ $(function() {
         title: '还款日',
         field: 'repayDatetime',
         formatter: dateTimeFormat,
-        type : 'datetime',
+        type : 'date',
         required: true,
     }, {
         title: "回款方式",
         field: "paymentType",
-        type: "select",
-        key: "coin_status",
-        formatter: Dict.getNameForList("coin_status"),
+        value: '0',
+        required: true,
+        hidden: true
+    }, {
+        title: "详情",
+        field: "description",
+        type: 'textarea',
         required: true,
     }];
+    
     
     var options = {
         fields: fields,
         code: code,
         view: view,
-        editCode: "625402",
-        detailCode: "625411",
-        beforeSubmit: function(data){
-        	return data;
-        }
+        addCode: "625500",
+        editCode: "625501",
+        detailCode: "625511"
     };
+    
+    var bizCode = options.addCode;
+    	
+    if(isEdit){
+    	bizCode = options.editCode;
+    	
+    	options.fields = options.fields.concat([{
+	        title: "备注",
+	        field: "remark"
+    	}])
+    }
     
     options.buttons = [{
 	    title: '保存',
@@ -139,11 +160,14 @@ $(function() {
 	            var data = $('#jsForm').serializeObject();
 	            if(code){
 	            	data.code = code;
+	            	data.symbol = data.symbol1;
+	            	delete data.symbol1;
 	            }
 	            data.isPublish = '0';
 	            data.creator = getUserName();
+	            data = setFormatAmount(data);
 	            reqApi({
-	                code: '805101',
+	                code: bizCode,
 	                json: data
 	            }).done(function(data) {
 	                sucDetail();
@@ -157,11 +181,14 @@ $(function() {
 	            var data = $('#jsForm').serializeObject();
 	            if(code){
 	            	data.code = code;
+	            	data.symbol = data.symbol1;
+	            	delete data.symbol1;
 	            }
 	            data.isPublish = '1';
 	            data.creator = getUserName();
+	            data = setFormatAmount(data);
 	            reqApi({
-	                code: '805101',
+	                code: bizCode,
 	                json: data
 	            }).done(function(data) {
 	                sucDetail();
@@ -177,4 +204,15 @@ $(function() {
     }]
     
     buildDetail(options);
+    
+    // 格式化金额
+    function setFormatAmount(data){
+		data.amount = moneyParse(data.amount.toString(),'',data.symbol);
+    	data.avilAmount = moneyParse(data.avilAmount.toString(),'',data.symbol);
+    	data.successAmount = moneyParse(data.successAmount.toString(),'',data.symbol);
+    	data.minAmount = moneyParse(data.minAmount.toString(),'',data.symbol);
+    	data.increAmount = moneyParse(data.increAmount.toString(),'',data.symbol);
+    	data.limitAmount = moneyParse(data.limitAmount.toString(),'',data.symbol);
+    	return data;
+    }
 });

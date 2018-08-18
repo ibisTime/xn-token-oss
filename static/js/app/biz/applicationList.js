@@ -66,6 +66,17 @@ $(function() {
         buildDetail({
             container: $('#formContainer'),
             fields: [{
+		        title: "当前状态为",
+		        field: "status2",
+		        type: "select",
+		        data: {
+		        	'0':'不显示',
+		        	'1':'显示'
+		        },
+		        value: selRecords[0].status,
+        		required: true,
+        		readonly: true
+		    }, {
 		        title: "设置显示状态为",
 		        field: "status1",
 		        type: "select",
@@ -82,16 +93,10 @@ $(function() {
 				required: true,
 		        value: selRecords[0].orderNo,
 		        hidden: selRecords[0].status == '1'
-	    	}, {
-	    		title:'位置',
-		        field: "location1",
-		        hidden: true,
-		        value: selRecords[0].location,
-		        hidden: selRecords[0].status == '1'
 		    }, {
 		        title: "备注",
 		        field: "remark1",
-		        value: selRecords[0].remark
+		        value: selRecords[0].remark || ''
             }],
             buttons: [{
                 title: '取消',
@@ -105,15 +110,15 @@ $(function() {
                 		var params = {};
                         var data = $('#popForm').serializeObject();
                         var bizCode = '';
-                        if(data.status1=='0'){
-                        	bizCode = '625404';
-                        } else if(data.status1=='1') {
+                        if(selRecords[0].status=='0'){
                         	bizCode = '625403';
                         	params.orderNo = data.orderNo1;
-                        	params.location = data.location1;
+                        	params.location = '0';
+                        } else if(selRecords[0].status=='1') {
+                        	bizCode = '625404';
                         }
                         params.code = selRecords[0].code;
-                        params.remark1 = data.remark1;
+                        params.remark = data.remark1;
                         params.updater = getUserName();
                         
                         reqApi({
