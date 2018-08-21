@@ -133,10 +133,10 @@ $(function() {
         var balanceStart;
         showLoading();
         reqApi({
-            code: '802901',
+            code: '802358',
             json: {}
         }).then(function(data) {
-            var amount1 = data.bcoinGasPrice;
+            var amount1 = data.gasPrice;
             var amount2 = 21000;
             // amount1*amount2 = 矿工费
             var amount3 = selRecords[0].amountString;      // 提现金额

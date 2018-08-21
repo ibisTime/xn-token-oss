@@ -67,9 +67,9 @@ $(function() {
         field: "status",
         type: "select",
         data: {
-        	'0': '草稿',
-        	'1': '待审核',
-        	'3': '审核不通过'
+        	'4': '即将开始',
+        	'5': '募集中',
+        	'6': '停止交易'
         },
         required: true,
         search: true
@@ -85,25 +85,9 @@ $(function() {
         columns: columns,
         pageCode: '625510',
         searchParams:{
-        	statusList:['0', '1', '3']
+        	statusList:['4', '5', '6']
         }
     });
-    
-    //修改
-    $('#editBtn').off("click").click(function(){
-    	var selRecords = $('#tableList').bootstrapTable('getSelections');
-        if (selRecords.length <= 0) {
-            toastr.info("请选择记录");
-            return;
-        }
-        
-        if (selRecords[0].status != '0' && selRecords[0].status!= '3') {
-            toastr.info("不是可修改状态！");
-            return;
-        }
-        
-    	window.location.href = "./products_addedit.html?isEdit=1&code=" + selRecords[0].code;
-    })
     
     //详情
     $('#detailBtn').off("click").click(function(){
@@ -116,19 +100,19 @@ $(function() {
     	window.location.href = "./products_detail.html?v=1&isDetail=1&code=" + selRecords[0].code;
     })
     
-    //审核
-    $('#checkBtn').off("click").click(function() {
+    //认购明细
+    $('#investFlowAllBtn').click(function() {
         var selRecords = $('#tableList').bootstrapTable('getSelections');
         if (selRecords.length <= 0) {
             toastr.info("请选择记录");
             return;
         }
-        if (selRecords[0].status != "1") {
-            toastr.info("不是待确认状态！");
+        var statusList = {"5":"5","6":"6","7":"7","8":"8","9":"9"};
+        if (!statusList[selRecords[0].status]) {
+            toastr.info("该产品还未开始募集！");
             return;
         }
         
-    	window.location.href = "./products_detail.html?v=1&isCheck=1&code=" + selRecords[0].code;
+    	window.location.href = "./investFlowAll.html?code=" + selRecords[0].code;
     });
-    
 });

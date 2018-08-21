@@ -66,13 +66,9 @@ $(function() {
         title: "状态",
         field: "status",
         type: "select",
-        data: {
-        	'0': '草稿',
-        	'1': '待审核',
-        	'3': '审核不通过'
-        },
+        key: "product_status",
+        formatter: Dict.getNameForList("product_status"),
         required: true,
-        search: true
     }, {
         title: "更新时间",
         field: "updateDatetime",
@@ -85,25 +81,9 @@ $(function() {
         columns: columns,
         pageCode: '625510',
         searchParams:{
-        	statusList:['0', '1', '3']
+        	statusList:['2']
         }
     });
-    
-    //修改
-    $('#editBtn').off("click").click(function(){
-    	var selRecords = $('#tableList').bootstrapTable('getSelections');
-        if (selRecords.length <= 0) {
-            toastr.info("请选择记录");
-            return;
-        }
-        
-        if (selRecords[0].status != '0' && selRecords[0].status!= '3') {
-            toastr.info("不是可修改状态！");
-            return;
-        }
-        
-    	window.location.href = "./products_addedit.html?isEdit=1&code=" + selRecords[0].code;
-    })
     
     //详情
     $('#detailBtn').off("click").click(function(){
@@ -116,19 +96,28 @@ $(function() {
     	window.location.href = "./products_detail.html?v=1&isDetail=1&code=" + selRecords[0].code;
     })
     
-    //审核
-    $('#checkBtn').off("click").click(function() {
+    //上架
+    $('#upBtn').click(function() {
         var selRecords = $('#tableList').bootstrapTable('getSelections');
         if (selRecords.length <= 0) {
             toastr.info("请选择记录");
             return;
         }
-        if (selRecords[0].status != "1") {
-            toastr.info("不是待确认状态！");
+        
+        if (selRecords[0].status != "2") {
+            toastr.warning('不是可以上架的状态');
             return;
         }
         
-    	window.location.href = "./products_detail.html?v=1&isCheck=1&code=" + selRecords[0].code;
+        confirm("产品上架后不可下架,确定上架该产品？").then(function() {
+            reqApi({
+                code: '625503',
+                json: { "code": selRecords[0].code, updater: getUserName(), remark: selRecords[0].remark || '平台上架' }
+            }).then(function() {
+            	sucList();
+            });
+        }, function() {});
+
     });
     
 });

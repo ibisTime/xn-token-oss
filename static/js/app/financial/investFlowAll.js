@@ -1,6 +1,5 @@
 $(function() {
-	var productCode = getQueryString('productCode');
-	var investCode = getQueryString('code');
+	var productCode = getQueryString('code');
     var columns = [{
         field: '',
         title: '',
@@ -40,39 +39,61 @@ $(function() {
         	return data.productInfo.symbol;
         }
     }, {
-        title: "认购金额",
-        field: "amount",
+        title: "投资总金额",
+        field: "investAmount",
         formatter: function(v, data) {
             return moneyFormat(v.toString(),'',data.productInfo.symbol);
         },
     }, {
-        title: "认购预期收益",
+        title: "投资次数",
+        field: "investNum",
+    }, {
+        title: "预期收益",
+        field: "expectIncome",
+        formatter: function(v, data) {
+            return moneyFormat(v.toString(),'',data.productInfo.symbol);
+        },
+    }, {
+        title: "实际到账收益",
         field: "income",
         formatter: function(v, data) {
             return moneyFormat(v.toString(),'',data.productInfo.symbol);
         },
     }, {
-        title: "认购本金",
-        field: "principal",
-        formatter: function(v, data) {
-            return moneyFormat(v.toString(),'',data.productInfo.symbol);
-        },
+        title: "认购状态",
+        field: "status",
+        type: "select",
+        key: "invest_status",
+        formatter: Dict.getNameForList("invest_status"),
+        required: true,
+        search: true
     }, {
-        title: "创建时间",
-        field: "createDatetime",
+        title: "最后认购时间",
+        field: "lastInvestDatetime",
         formatter: dateTimeFormat,
     }];
     buildList({
         columns: columns,
-        pageCode: '625530',
+        pageCode: '625525',
         searchParams: {
-            investCode: investCode,
-            type: '0'
+            productCode: productCode
         },
     });
     
-    $('.tools .toolbar').html('<li style="display:block;" id="backBtn"><span><img src="/static/images/t01.png"></span>返回</li>');
+    $('.tools .toolbar').html('<li style="display:block;" id="userInvestFlowBtn"><span><img src="/static/images/t01.png"></span>认购明细</li><li style="display:block;" id="backBtn"><span><img src="/static/images/t01.png"></span>返回</li>');
     $('#backBtn').on('click', function() {
-    	window.location.href = "./investFlowAll.html?code=" + productCode;
+    	window.location.href = "./productsRaise.html";
     });
+    
+    //认购明细
+    $('#userInvestFlowBtn').click(function() {
+        var selRecords = $('#tableList').bootstrapTable('getSelections');
+        if (selRecords.length <= 0) {
+            toastr.info("请选择记录");
+            return;
+        }
+        
+    	window.location.href = "./investFlow.html?code=" + selRecords[0].code + '&productCode='+productCode;
+    });
+    
 });

@@ -4,8 +4,16 @@ $(function() {
     var isEdit = !!getQueryString('isEdit');
     
     var d = new Date();
-    d.setDate(d.getDate());
-    var minDate = d.format('yyyy-MM-dd');
+    var minDate = dateTimeFormat(d);
+    
+    $.fn.update = function(attrJsonObj){
+        for(var key in attrJsonObj) {
+            if ( $(this).prop(key)!=attrJsonObj[key] ) {
+                $(this).prop(key, attrJsonObj[key]);
+                $(this).change();
+            }
+        }
+    };
     
     var fields = [{
         title: "产品名称",
@@ -39,22 +47,18 @@ $(function() {
         isPositive: true,
         'Z+': true
     }, {
-        title: "预期年化收益率",
+        title: "预期年化收益率(%)",
         field: "expectYield",
         required: true,
         number: true,
-        range: [0, 1]
+        range: [0, 100],
+        rate: true,
+        formatter: function(v, data) {
+            return v*100;
+        },
     }, {
         title: "总募集金额",
         field: "amount",
-        coinAmount: true,
-        required: true,
-        formatter: function(v, data) {
-            return moneyFormat(v.toString(),'',data.symbol);
-        },
-    }, {
-        title: "可售金额",
-        field: "avilAmount",
         coinAmount: true,
         required: true,
         formatter: function(v, data) {
@@ -101,6 +105,54 @@ $(function() {
         type : 'datetime',
         twoDate: true,
         required: true,
+        dateOption2: {
+            elem: '#endDatetime',
+            min: minDate,
+            istime: true,
+            format: 'YYYY-MM-DD hh:mm:ss',
+            choose: function(v,data){
+            	$("#endDatetime").val(v);
+            	if(!$("#incomeDatetime").val() || compareDate(v, $("#incomeDatetime").val())){
+            		$("#incomeDatetime").val(addDate(v, 1))
+            	}
+            	if(!$("#arriveDatetime").val() || compareDate(v, $("#arriveDatetime").val())){
+            		$("#arriveDatetime").val(addDate($("#incomeDatetime").val(), parseInt($("#limitDays").val())))
+            	}
+            	if(!$("#repayDatetime").val() || compareDate(v, $("#repayDatetime").val())){
+            		$("#repayDatetime").val(addDate($("#incomeDatetime").val(), parseInt($("#limitDays").val())+1))
+            	}
+            	
+            	$("#incomeDatetime").off("click").click(function(){
+	            	laydate({
+		                elem: '#incomeDatetime',
+		                min: v,
+			            istime: true,
+			            format: 'YYYY-MM-DD hh:mm:ss',
+		            });
+		            laydate.reset();
+            	})
+            	
+            	$("#arriveDatetime").off("click").click(function(){
+	            	laydate({
+		                elem: '#arriveDatetime',
+		                min: v,
+			            istime: true,
+			            format: 'YYYY-MM-DD hh:mm:ss',
+		            });
+		            laydate.reset();
+            	})
+            	
+            	$("#repayDatetime").off("click").click(function(){
+	            	laydate({
+		                elem: '#repayDatetime',
+		                min: v,
+			            istime: true,
+			            format: 'YYYY-MM-DD',
+		            });
+		            laydate.reset();
+            	})
+            }
+        }
     }, {
         title: '起息时间',
         field: 'incomeDatetime',
@@ -139,7 +191,11 @@ $(function() {
         view: view,
         addCode: "625500",
         editCode: "625501",
-        detailCode: "625511"
+        detailCode: "625511",
+        beforeSubmit: function(data){
+        	data.expectYield = data.expectYield/100
+        	return data;
+        }
     };
     
     var bizCode = options.addCode;
@@ -208,11 +264,23 @@ $(function() {
     // 格式化金额
     function setFormatAmount(data){
 		data.amount = moneyParse(data.amount.toString(),'',data.symbol);
-    	data.avilAmount = moneyParse(data.avilAmount.toString(),'',data.symbol);
     	data.successAmount = moneyParse(data.successAmount.toString(),'',data.symbol);
     	data.minAmount = moneyParse(data.minAmount.toString(),'',data.symbol);
     	data.increAmount = moneyParse(data.increAmount.toString(),'',data.symbol);
     	data.limitAmount = moneyParse(data.limitAmount.toString(),'',data.symbol);
     	return data;
     }
+    
+    // 比较时间大小
+    function compareDate(d1,d2){
+	  return ((new Date(d1.replace(/-/g,"\/"))) > (new Date(d2.replace(/-/g,"\/"))));
+	}
+    
+    // 日期加法
+    function addDate(date, days, format){ 
+       var d = new Date(date); 
+       d.setDate(d.getDate()+days); 
+       var m = d.getMonth()+1; 
+       return dateFormat(d.getFullYear()+'-'+m+'-'+d.getDate()); 
+	} 
 });

@@ -31,24 +31,6 @@ $(function() {
         single: true,
         required: true,
     }, {
-        title: "钱包水印图标",
-        field: "pic1",
-        type: "img",
-        single: true,
-        required: true,
-    }, {
-        title: "流水加钱图标",
-        field: "pic2",
-        type: "img",
-        single: true,
-        required: true,
-    }, {
-        title: "流水减钱图标",
-        field: "pic3",
-        type: "img",
-        single: true,
-        required: true,
-    }, {
         title: "单位",
         field: "unit",
         readonly: !!symbol,
@@ -142,6 +124,9 @@ $(function() {
         	delete data.updater;
         	delete data.updateDatetime;
         	delete data.status;
+        	data.pic1 = data.icon;
+        	data.pic2 = data.icon;
+        	data.pic3 = data.icon;
         	if(symbol){
         		data.symbol = symbol
         	}

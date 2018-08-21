@@ -47,6 +47,16 @@ function dateTimeFormat(date) {
     date = new Date(date);
     return date.format(format);
 }
+
+function dateFormatData(date) {
+    if (date == '' || typeof(date) == 'undefined') {
+        return '-';
+    }
+    format = "yyyy-MM-dd";
+    date = new Date(date);
+    return date.format(format);
+}
+
 //重写toFixed方法  
 Number.prototype.toFixed = function(length) {
     var carry = 0; //存放进位标志
@@ -1206,6 +1216,7 @@ function buildDetail(options) {
         textareaList = [];
     var dateTimeList = [],
     	dateTimeList1 = [],
+    	dateTimeList2 = [],
         imgList = [];
 
     //页面构造
@@ -1273,6 +1284,15 @@ function buildDetail(options) {
         }
         if (item['url']) {
             rules[item.field]['url'] = item['url'];
+        }
+        if (item['coinAmount']) {
+            rules[item.field]['coinAmount'] = item['coinAmount'];
+        }
+        if (item['rate']) {
+            rules[item.field]['rate'] = item['rate'];
+        }
+        if (item['range']) {
+            rules[item.field]['range'] = item['range'];
         }
 
         var imgLabel = '';
@@ -1369,8 +1389,8 @@ function buildDetail(options) {
                 rules[item.field] = { required: true };
             }  else if (item.twoDate) {
                 dateTimeList.push(item);
-                html += '<input id="' + item.field1 + '" name="' + item.field1 + '" class="lay-input lay-input1"/>'
-                		+'&nbsp;&nbsp;至&nbsp;&nbsp;<input id="' + item.field2 + '" name="' + item.field2 + '" class="lay-input lay-input1"/></li>';
+                html += '<input type="text" id="' + item.field1 + '" name="' + item.field1 + '" class="lay-input lay-input1"/>'
+                		+'&nbsp;&nbsp;至&nbsp;&nbsp;<input type="text" id="' + item.field2 + '" name="' + item.field2 + '" class="lay-input lay-input1"/></li>';
 
                 if(item.type=="date"){
                 	rules[item.field1] = { required: true, dataformat1: true };
@@ -1379,11 +1399,9 @@ function buildDetail(options) {
                 	rules[item.field1] = { required: true};
         			rules[item.field2]  = { required: true};
                 }
-
-                // 单个日期搜索框
             } else if (item.type == 'datetime' || item.type == 'date') {
                 dateTimeList1.push(item);
-                html += '<input id="' + item.field + '" name="' + item.field + '" class="lay-input"/></li>';
+                html += '<input type="text" id="' + item.field + '" name="' + item.field + '" class="lay-input"/></li>';
             } else if (item.type == "o2m") {
                 html += '<div id="' + item.field + '" style="display: inline-block;"></div>';
             } else {
@@ -1663,23 +1681,33 @@ function buildDetail(options) {
             var item = dateTimeList[i];
             $('#' + item.field1).click(function() {
                 var end = $('#' + item.field2).val();
-                var obj = {
-                	min: item.minDate ? item.minDate : '',//设定最小日期
-                    elem: '#' + item.field1,
-	                istime: item.type == 'datetime',
-	                format: item.type == 'datetime' ? 'YYYY-MM-DD hh:mm:ss' : 'YYYY-MM-DD'
-                };
+                var obj = {}
+            	if (item.dateOption1) {
+		            obj = item.dateOption1;
+		        } else {
+		        	obj = {
+	                	min: item.minDate ? item.minDate : '',//设定最小日期
+	                    elem: '#' + item.field1,
+		                istime: item.type == 'datetime',
+		                format: item.type == 'datetime' ? 'YYYY-MM-DD hh:mm:ss' : 'YYYY-MM-DD'
+	                };
+	            }
                 end && (obj.max = end);
                 laydate(obj);
             });
             $('#' + item.field2).click(function() {
                 var start = $('#' + item.field1).val();
-                var obj = {
-                	min: item.minDate ? item.minDate : '',//设定最小日期
-                    elem: '#' + item.field2,
-	                istime: item.type == 'datetime',
-	                format: item.type == 'datetime' ? 'YYYY-MM-DD hh:mm:ss' : 'YYYY-MM-DD'
-                };
+                var obj = {}
+            	if (item.dateOption2) {
+		            obj = item.dateOption2;
+		        } else {
+	                obj = {
+	                	min: item.minDate ? item.minDate : '',//设定最小日期
+	                    elem: '#' + item.field2,
+		                istime: item.type == 'datetime',
+		                format: item.type == 'datetime' ? 'YYYY-MM-DD hh:mm:ss' : 'YYYY-MM-DD'
+	                };
+	            }
                 start && (obj.min = start);
                 laydate(obj);
             });
@@ -1687,20 +1715,24 @@ function buildDetail(options) {
     }
     // 一个日期框
     for (var i = 0, len = dateTimeList1.length; i < len; i++) {
-        var item = dateTimeList1[i];
-        if (item.dateOption) {
-            laydate(item.dateOption);
-        } else {
-            laydate({
-                elem: '#' + item.field,
-                min: item.minDate ? item.minDate : '',
-                istime: item.type == 'datetime',
-                format: item.type == 'datetime' ?
-                    'YYYY-MM-DD hh:mm:ss' : 'YYYY-MM-DD'
-            });
-        }
+        (function(i) {
+	        var item = dateTimeList1[i];
+	        if (item.dateOption) {
+	            laydate(item.dateOption);
+	        } else {
+	        	$('#' + item.field).click(function() {
+	        		laydate({
+	                	elem: '#' + item.field,
+		                min: item.minDate ? item.minDate : '',
+		                istime: item.type == 'datetime',
+		                format: item.type == 'datetime' ?
+		                    'YYYY-MM-DD hh:mm:ss' : 'YYYY-MM-DD'
+		            });
+	            });
+	        }
+        })(i);
     }
-
+    
     var _cityGroup = $("#city-group");
     _cityGroup.citySelect && _cityGroup.citySelect({
         required: false
