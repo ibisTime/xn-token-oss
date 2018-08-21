@@ -24,8 +24,11 @@ $(function() {
         title: "产品期限（天）",
         field: "limitDays"
     }, {
-        title: "预期年化收益率",
+        title: "预期年化收益率(%)",
         field: "expectYield",
+        formatter: function(v, data) {
+            return v*100;
+        },
     }, {
         title: "总募集金额",
         field: "amount",
@@ -85,92 +88,6 @@ $(function() {
         }
     });
     
-    //显示设置
-    $('#setShowHideBtn').click(function() {
-        var selRecords = $('#tableList').bootstrapTable('getSelections');
-        if (selRecords.length <= 0) {
-            toastr.info("请选择记录");
-            return;
-        }
-        var dw = dialog({
-            content: '<form class="pop-form" id="popForm" novalidate="novalidate">' +
-                '<ul class="form-info" id="formContainer"><li style="text-align:center;font-size: 15px;">显示设置</li></ul>' +
-                '</form>'
-        });
-
-        dw.showModal();
-
-        buildDetail({
-            container: $('#formContainer'),
-            fields: [{
-		        title: "设置显示状态为",
-		        field: "status1",
-		        type: "select",
-		        data: {
-		        	'0':'不显示',
-		        	'1':'显示'
-		        },
-		        value: selRecords[0].status == '0' ? '1' : '0',
-        		required: true,
-        		readonly: true
-		    }, {
-		        title: "备注",
-		        field: "remark1",
-		        value: selRecords[0].remark
-            }],
-            buttons: [{
-                title: '取消',
-                handler: function() {
-                    dw.close().remove();
-                }
-            }, {
-                title: '确定',
-                handler: function() {
-                	if($('#popForm').valid()){
-                		var params = {};
-                        var data = $('#popForm').serializeObject();
-                        var bizCode = '';
-                        if(data.status1=='0'){
-                        	bizCode = '625404';
-                        } else if(data.status1=='1') {
-                        	bizCode = '625403';
-                        }
-                        params.code = selRecords[0].code;
-                        params.remark1 = data.remark1;
-                        params.updater = getUserName();
-                        
-                        reqApi({
-                            code: bizCode,
-                            json: params
-                        }).done(function(data) {
-                            dw.close().remove();
-                        	sucList();
-                        });
-                    }
-
-                }
-            }]
-        });
-
-        dw.__center();
-    });
-    
-    //修改
-    $('#editBtn').off("click").click(function(){
-    	var selRecords = $('#tableList').bootstrapTable('getSelections');
-        if (selRecords.length <= 0) {
-            toastr.info("请选择记录");
-            return;
-        }
-        
-        if (selRecords[0].status != '0' && selRecords[0].status!= '3') {
-            toastr.info("不是可修改状态！");
-            return;
-        }
-        
-    	window.location.href = "./products_addedit.html?isEdit=1&code=" + selRecords[0].code;
-    })
-    
     //详情
     $('#detailBtn').off("click").click(function(){
     	var selRecords = $('#tableList').bootstrapTable('getSelections');
@@ -182,64 +99,8 @@ $(function() {
     	window.location.href = "./products_detail.html?v=1&isDetail=1&code=" + selRecords[0].code;
     })
     
-    //审核
-    $('#checkBtn').off("click").click(function() {
-        var selRecords = $('#tableList').bootstrapTable('getSelections');
-        if (selRecords.length <= 0) {
-            toastr.info("请选择记录");
-            return;
-        }
-        if (selRecords[0].status != "1") {
-            toastr.info("不是待确认状态！");
-            return;
-        }
-        
-    	window.location.href = "./products_detail.html?v=1&isCheck=1&code=" + selRecords[0].code;
-    });
-    
-    
-    //上架
-    $('#upBtn').click(function() {
-        var selRecords = $('#tableList').bootstrapTable('getSelections');
-        if (selRecords.length <= 0) {
-            toastr.info("请选择记录");
-            return;
-        }
-        
-        if (selRecords[0].status != "2") {
-            toastr.warning('不是可以上架的状态');
-            return;
-        }
-        
-        confirm("产品上架后不可下架,确定上架该产品？").then(function() {
-            reqApi({
-                code: '625503',
-                json: { "code": selRecords[0].code, updater: getUserName(), remark: selRecords[0].remark || '平台上架' }
-            }).then(function() {
-            	sucList();
-            });
-        }, function() {});
-
-    });
-    
-    
-    //还款计划
-    $('#repaymentPlanBtn').click(function() {
-        var selRecords = $('#tableList').bootstrapTable('getSelections');
-        if (selRecords.length <= 0) {
-            toastr.info("请选择记录");
-            return;
-        }
-        if (selRecords[0].status != "7" && selRecords[0].status != "5" && selRecords[0].status != "8") {
-            toastr.info("该产品还没有还款计划！");
-            return;
-        }
-        
-    	window.location.href = "./repaymentPlan.html?code=" + selRecords[0].code+'&symbol='+selRecords[0].symbol;
-    });
-    
     //认购明细
-    $('#investFlowBtn').click(function() {
+    $('#investFlowAllBtn').click(function() {
         var selRecords = $('#tableList').bootstrapTable('getSelections');
         if (selRecords.length <= 0) {
             toastr.info("请选择记录");
@@ -247,10 +108,10 @@ $(function() {
         }
         var statusList = {"5":"5","6":"6","7":"7","8":"8","9":"9"};
         if (!statusList[selRecords[0].status]) {
-            toastr.info("该产品未募集！");
+            toastr.info("该产品还未开始募集！");
             return;
         }
         
-    	window.location.href = "./investFlow.html?code=" + selRecords[0].code;
+    	window.location.href = "./investFlowAll.html?code=" + selRecords[0].code+'&menu=raisefail';
     });
 });

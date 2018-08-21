@@ -158,12 +158,10 @@ $.validator.addMethod("coinAmount", function(value, element) {
     return this.optional(element) || /^\d+(\.\d{1,8})?$/.test(value);
 }, '金额必须>0，且小数点后最多8位');
 
-//小数后4位
+//小数后2位
 $.validator.addMethod("rate", function(value, element) {
-    return this.optional(element) || /^\d+(\.\d{1,4})?$/.test(value);
-}, '必须>0，且小数点后最多4位');
-
-
+    return this.optional(element) || /^\d+(\.\d{1,2})?$/.test(value);
+}, '必须>0，且小数点后最多2位');
 
 //ie6兼容after
 var $beforeAfter = function(dom) {

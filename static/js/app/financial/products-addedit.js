@@ -191,11 +191,7 @@ $(function() {
         view: view,
         addCode: "625500",
         editCode: "625501",
-        detailCode: "625511",
-        beforeSubmit: function(data){
-        	data.expectYield = data.expectYield/100
-        	return data;
-        }
+        detailCode: "625511"
     };
     
     var bizCode = options.addCode;
@@ -221,6 +217,7 @@ $(function() {
 	            }
 	            data.isPublish = '0';
 	            data.creator = getUserName();
+        		data.expectYield = data.expectYield / 100;
 	            data = setFormatAmount(data);
 	            reqApi({
 	                code: bizCode,
@@ -242,6 +239,7 @@ $(function() {
 	            }
 	            data.isPublish = '1';
 	            data.creator = getUserName();
+        		data.expectYield = data.expectYield / 100;
 	            data = setFormatAmount(data);
 	            reqApi({
 	                code: bizCode,

@@ -1,5 +1,13 @@
 $(function() {
 	var productCode = getQueryString('code');
+	var menu = getQueryString('menu');
+	var menuList = {
+		'raise': './productsRaise.html',
+		'raisefail': './productsRaisefail.html',
+		'raiseSuccess': './productsRaiseSuccess.html',
+		'repay': './productsRepay.html'
+	}
+	
     var columns = [{
         field: '',
         title: '',
@@ -82,7 +90,7 @@ $(function() {
     
     $('.tools .toolbar').html('<li style="display:block;" id="userInvestFlowBtn"><span><img src="/static/images/t01.png"></span>认购明细</li><li style="display:block;" id="backBtn"><span><img src="/static/images/t01.png"></span>返回</li>');
     $('#backBtn').on('click', function() {
-    	window.location.href = "./productsRaise.html";
+    	window.location.href = menuList[menu];
     });
     
     //认购明细

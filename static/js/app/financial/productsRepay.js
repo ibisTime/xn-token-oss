@@ -24,8 +24,11 @@ $(function() {
         title: "产品期限（天）",
         field: "limitDays"
     }, {
-        title: "预期年化收益率",
+        title: "预期年化收益率(%)",
         field: "expectYield",
+        formatter: function(v, data) {
+            return v*100;
+        },
     }, {
         title: "总募集金额",
         field: "amount",
@@ -109,7 +112,7 @@ $(function() {
             return;
         }
         
-    	window.location.href = "./investFlowAll.html?code=" + selRecords[0].code;
+    	window.location.href = "./investFlowAll.html?code=" + selRecords[0].code+'&menu=repay';
     });
     
     //还款计划

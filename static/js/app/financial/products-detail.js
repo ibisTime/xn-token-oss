@@ -29,11 +29,12 @@ $(function() {
         isPositive: true,
         'Z+': true
     }, {
-        title: "预期年化收益率",
+        title: "预期年化收益率(%)",
         field: "expectYield",
         required: true,
-        number: true,
-        range: [0, 1]
+        formatter: function(v, data) {
+            return v*100;
+        },
     }, {
         title: "总募集金额",
         field: "amount",
