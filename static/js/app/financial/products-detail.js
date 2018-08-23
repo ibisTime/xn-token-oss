@@ -111,7 +111,7 @@ $(function() {
         title: '还款日',
         field: 'repayDatetime',
         formatter: dateTimeFormat,
-        type : 'datetime',
+        type : 'date',
         required: true,
     }, {
         title: "回款方式",

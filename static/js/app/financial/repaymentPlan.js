@@ -7,24 +7,20 @@ $(function() {
         title: '',
         checkbox: true
     }, {
-        title: "期数",
-        field: "periods",
-        search: true
-    }, {
         title: "应还本金",
         field: "principalTotal",
         formatter: function(v, data) {
             return v ? moneyFormat(v.toString(),'',symbol) : '-';
         },
     }, {
-        title: "应还本息",
-        field: "amountTotal",
+        title: "应还利息",
+        field: "interestTotal",
         formatter: function(v, data) {
             return v ? moneyFormat(v.toString(),'',symbol) : '-';
         },
     }, {
-        title: "应还利息",
-        field: "interestTotal",
+        title: "应还本息",
+        field: "amountTotal",
         formatter: function(v, data) {
             return v ? moneyFormat(v.toString(),'',symbol) : '-';
         },
@@ -42,14 +38,14 @@ $(function() {
             return v ? moneyFormat(v.toString(),'',symbol) : '-';
         },
     }, {
-        title: "已还本息",
-        field: "amountYet",
+        title: "已还利息",
+        field: "interestYet",
         formatter: function(v, data) {
             return v ? moneyFormat(v.toString(),'',symbol) : '-';
         },
     }, {
-        title: "已还利息",
-        field: "interestYet",
+        title: "已还本息",
+        field: "amountYet",
         formatter: function(v, data) {
             return v ? moneyFormat(v.toString(),'',symbol) : '-';
         },

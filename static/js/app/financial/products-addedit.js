@@ -18,6 +18,8 @@ $(function() {
     var fields = [{
         title: "产品名称",
         field: "name",
+        maxlength: 6,
+        minlength: 1,
         required: true
     }, {
         title: "币种",

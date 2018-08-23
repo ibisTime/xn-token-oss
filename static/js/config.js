@@ -6,9 +6,9 @@ OSS.system = 'CD-TOKEN00018';
 // companyCode
 OSS.company = 'CD-TOKEN00018';
 // system name
-OSS.systemName = 'THA钱包管理平台';
+OSS.systemName = 'Theia钱包管理平台';
 // company name
-OSS.companyName = '橙袋科技';
+OSS.companyName = '杭州橙链科技有限公司';
 // menuCode
 OSS.menuRoot = 'TOKENSM201700000000000000';
 // picUrl

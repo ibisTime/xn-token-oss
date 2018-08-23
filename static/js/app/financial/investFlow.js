@@ -1,6 +1,7 @@
 $(function() {
 	var productCode = getQueryString('productCode');
 	var investCode = getQueryString('code');
+	var menu = getQueryString('menu');
     var columns = [{
         field: '',
         title: '',
@@ -73,6 +74,6 @@ $(function() {
     
     $('.tools .toolbar').html('<li style="display:block;" id="backBtn"><span><img src="/static/images/t01.png"></span>返回</li>');
     $('#backBtn').on('click', function() {
-    	window.location.href = "./investFlowAll.html?code=" + productCode;
+    	window.location.href = "./investFlowAll.html?code=" + productCode+'&menu='+menu;
     });
 });
