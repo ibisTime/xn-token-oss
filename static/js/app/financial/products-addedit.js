@@ -18,8 +18,6 @@ $(function() {
     var fields = [{
         title: "产品名称",
         field: "name",
-        maxlength: 6,
-        minlength: 1,
         required: true
     }, {
         title: "币种",
@@ -121,7 +119,7 @@ $(function() {
             		$("#arriveDatetime").val(addDate($("#incomeDatetime").val(), parseInt($("#limitDays").val())))
             	}
             	if(!$("#repayDatetime").val() || compareDate(v, $("#repayDatetime").val())){
-            		$("#repayDatetime").val(addDate($("#incomeDatetime").val(), parseInt($("#limitDays").val())+1))
+            		$("#repayDatetime").val(dateFormatData(addDate($("#incomeDatetime").val(), parseInt($("#limitDays").val())+1)))
             	}
             	
             	$("#incomeDatetime").off("click").click(function(){
@@ -170,7 +168,7 @@ $(function() {
     }, {
         title: '还款日',
         field: 'repayDatetime',
-        formatter: dateTimeFormat,
+        formatter: dateFormatData,
         type : 'date',
         required: true,
     }, {

@@ -7,6 +7,8 @@ $(function() {
         title: "符号",
         field: "symbol",
         readonly: !!symbol,
+        maxlength: 6,
+        minlength: 1,
         required: true,
     }, {
         title: "类型",

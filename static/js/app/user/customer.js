@@ -18,13 +18,13 @@ $(function() {
         listCode:'801120',
         keyName: 'code',
         valueName: 'chineseName'
-    }, {
-        field: 'level',
-        title: '用户等级',
-        type: 'select',
-        key: 'user_level',
-        formatter: Dict.getNameForList('user_level'),
-        search: true
+//  }, {
+//      field: 'level',
+//      title: '用户等级',
+//      type: 'select',
+//      key: 'user_level',
+//      formatter: Dict.getNameForList('user_level'),
+//      search: true
     }, {
         field: 'userReferee',
         title: '推荐人',
@@ -36,12 +36,12 @@ $(function() {
             }
         },
         required: true
-    }, {
-        field: 'userRefereeLevel',
-        title: '推荐人等级',
-        type: 'select',
-        key: 'user_level',
-        formatter: Dict.getNameForList('user_level'),
+//  }, {
+//      field: 'userRefereeLevel',
+//      title: '推荐人等级',
+//      type: 'select',
+//      key: 'user_level',
+//      formatter: Dict.getNameForList('user_level'),
     }, {
         field: 'status',
         title: '状态',
@@ -76,6 +76,13 @@ $(function() {
         field: 'lastLogin',
         title: '最后登录时间',
         formatter: dateTimeFormat,
+        field1: 'lastLoginStart',
+        title1: '最后登录时间',
+        type1: 'date',
+        field2: 'lastLoginEnd',
+        type2: 'date',
+        twoDate: true,
+        search: true,
     }, {
         field: 'remark',
         title: '备注',

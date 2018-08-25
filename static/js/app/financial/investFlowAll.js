@@ -101,7 +101,7 @@ $(function() {
             return;
         }
         
-    	window.location.href = "./investFlow.html?code=" + selRecords[0].code + '&productCode='+productCode;
+    	window.location.href = "./investFlow.html?code=" + selRecords[0].code + '&productCode='+productCode+"&menu="+menu;
     });
     
 });
