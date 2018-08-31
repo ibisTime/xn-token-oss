@@ -5,8 +5,8 @@ $(function() {
         title: '',
         checkbox: true
     }, {
-        title: "产品名称",
-        field: "name",
+        title: "名称（中文简体）",
+        field: "nameZhCn",
         search: true
     }, {
         title: "币种",

@@ -5,8 +5,16 @@ $(function() {
     var isCheck = !!getQueryString('isCheck');
     
     var fields = [{
-        title: "产品名称",
-        field: "name",
+        title: "名称（中文简体）",
+        field: "nameZhCn",
+        required: true
+    }, {
+        title: "名称（英文）",
+        field: "nameEn",
+        required: true
+    }, {
+        title: "名称（韩文）",
+        field: "nameKo",
         required: true
     }, {
         title: "币种",
@@ -120,8 +128,18 @@ $(function() {
         required: true,
         hidden: true
     }, {
-        title: "详情",
-        field: "description",
+        title: "详情（中文简体）",
+        field: "descriptionZhCn",
+        type: 'textarea',
+        required: true,
+    }, {
+        title: "详情（英文）",
+        field: "descriptionEn",
+        type: 'textarea',
+        required: true,
+    }, {
+        title: "详情（韩文）",
+        field: "descriptionKo",
         type: 'textarea',
         required: true,
     }, {
