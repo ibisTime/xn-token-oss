@@ -58,6 +58,9 @@ $(function() {
         key: 'user_status',
         formatter: Dict.getNameForList('user_status'),
     }, {
+        field: 'jfAmount',
+        title: '积分余额'
+    }, {
         field: 'createDatetime',
         title: '注册时间',
         formatter: dateTimeFormat,

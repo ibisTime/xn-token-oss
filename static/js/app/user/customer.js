@@ -61,6 +61,9 @@ $(function() {
         formatter: function (v, data) {
             return data.realName?data.realName:'-'
         }
+    }, {
+        field: 'jfAmount',
+        title: '积分余额'
     },  {
         field: 'createDatetime',
         title: '注册时间',

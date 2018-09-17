@@ -5,18 +5,29 @@ $(function() {
         title: '',
         checkbox: true
     }, {
+        field: 'currency',
+        title: '币种',
+        type: 'select',
+        pageCode: '802265',
+        params: {
+        	type: "1",
+        	status: "0"
+        },
+        keyName: 'symbol',
+        valueName: '{{symbol.DATA}}',
+        search: true
+    }, {
+        title: "归集来方地址",
+        field: "formAddress"
+    }, {
         field: 'amountString',
-        title: '交易数量',
-        formatter: moneyFormat
+        title: '归集数量',
+        formatter: function (v, data) {
+            return moneyFormat(v,'',data.currency)
+        }
     }, {
-        field: 'fromAddress',
-        title: '来方归集',
-    }, {
-        title: "去方归集地址",
+        title: "归集去方地址",
         field: "toAddress"
-    }, {
-        title: "交易HASH",
-        field: 'txHash'
     }, {
         field: 'status',
         title: '状态',
@@ -33,12 +44,15 @@ $(function() {
         field: 'createDatetime',
         title: '归集时间',
         formatter: dateTimeFormat
+    }, {
+        field: 'remark',
+        title: '备注',
     }];
     buildList({
         columns: columns,
         pageCode: '802115',
         searchParams: {
-        	currency:'WAN',
+        	coinType:'1',
             companyCode: OSS.company
         }
     });
