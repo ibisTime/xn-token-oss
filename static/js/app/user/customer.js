@@ -35,7 +35,16 @@ $(function() {
                 return "-"
             }
         },
-        required: true
+        type: "select",
+        pageCode: "805120",
+        params: {
+            updater: "",
+            kind: "C"
+        },
+        keyName: "userId",
+        valueName: "{{mobile.DATA}}--{{nickname.DATA}}",
+        searchName: "mobile",
+        search: true
 //  }, {
 //      field: 'userRefereeLevel',
 //      title: '推荐人等级',
