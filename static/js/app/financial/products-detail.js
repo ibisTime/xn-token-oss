@@ -68,29 +68,15 @@ $(function() {
             return moneyFormat(v.toString(),'',data.symbol);
         },
     }, {
-        title: "起购金额",
-        field: "minAmount",
-        amount: true,
-        required: true,
-        formatter: function(v, data) {
-            return moneyFormat(v.toString(),'',data.symbol);
-        },
+        title: "总份数",
+        field: "totalFen",
+        'Z+': true,
+        required: true
     }, {
-        title: "递增金额",
-        field: "increAmount",
-        amount: true,
-        required: true,
-        formatter: function(v, data) {
-            return moneyFormat(v.toString(),'',data.symbol);
-        },
-    }, {
-        title: "限购金额",
-        field: "limitAmount",
-        amount: true,
-        required: true,
-        formatter: function(v, data) {
-            return moneyFormat(v.toString(),'',data.symbol);
-        },
+        title: "限购份数",
+        field: "limitFen",
+        'Z+': true,
+        required: true
     }, {
         title: '募集开始时间',
         field: 'startDatetime',
@@ -127,26 +113,49 @@ $(function() {
         value: '0',
         required: true,
         hidden: true
-    }, {
-        title: "详情（中文简体）",
-        field: "descriptionZhCn",
+    }, {title: "购买属性（中文简体）",
+        field: "buyDescZhCn",
         type: 'textarea',
         required: true,
     }, {
-        title: "详情（英文）",
-        field: "descriptionEn",
+        title: "购买属性（英文）",
+        field: "buyDescEn",
         type: 'textarea',
         required: true,
     }, {
-        title: "详情（韩文）",
-        field: "descriptionKo",
+        title: "购买属性（韩文）",
+        field: "buyDescKo",
         type: 'textarea',
         required: true,
     }, {
-        title: '审批说明',
-        field: 'approveNote',
+        title: "赎回属性（中文简体）",
+        field: "redeemDescZhCn",
+        type: 'textarea',
         required: true,
-        readonly: !isCheck
+    }, {
+        title: "赎回属性（英文）",
+        field: "redeemDescEn",
+        type: 'textarea',
+        required: true,
+    }, {
+        title: "赎回属性（韩文）",
+        field: "redeemDescKo",
+        type: 'textarea',
+        required: true,
+    }, {
+        title: "说明书（中文简体）",
+        field: "directionsZhCn",
+        type: 'textarea',
+        required: true,
+    }, {
+        title: "说明书（英文）",
+        field: "directionsEn",
+        type: 'textarea',
+    }, {
+        title: "说明书（韩文）",
+        field: "directionsKo",
+        type: 'textarea',
+        required: true,
     }];
     
     var options = {

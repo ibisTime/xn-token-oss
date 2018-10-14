@@ -48,23 +48,11 @@ $(function() {
             return moneyFormat(v.toString(),'',data.symbol);
         },
     }, {
-        title: "起购金额",
-        field: "minAmount",
-        formatter: function(v, data) {
-            return moneyFormat(v.toString(),'',data.symbol);
-        },
+        title: "总份数",
+        field: "totalFen",
     }, {
-        title: "递增金额",
-        field: "increAmount",
-        formatter: function(v, data) {
-            return moneyFormat(v.toString(),'',data.symbol);
-        },
-    }, {
-        title: "限购金额",
-        field: "limitAmount",
-        formatter: function(v, data) {
-            return moneyFormat(v.toString(),'',data.symbol);
-        },
+        title: "限购份数",
+        field: "limitFen",
     }, {
         title: "状态",
         field: "status",
