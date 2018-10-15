@@ -48,6 +48,14 @@ $(function() {
         },
         hidden: true
     }, {
+        title: "类型",
+        field: "type",
+        type: "select",
+        key: "product_type",
+        formatter: Dict.getNameForList("product_type"),
+        required: true,
+        readonly: !!code
+    }, {
         title: "产品期限（天）",
         field: "limitDays",
         required: true,
