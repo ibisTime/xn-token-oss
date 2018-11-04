@@ -122,6 +122,6 @@ $(function() {
             return;
         }
         
-    	window.location.href = "./repaymentPlan.html?code=" + selRecords[0].code+'&symbol='+selRecords[0].symbol;
+    	window.location.href = "./repaymentPlan.html?code=" + selRecords[0].code+'&symbol='+selRecords[0].symbol + '&status=' + selRecords[0].status;
     });
 });

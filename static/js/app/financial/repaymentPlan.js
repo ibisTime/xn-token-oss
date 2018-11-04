@@ -1,6 +1,7 @@
 $(function() {
 	var productCode = getQueryString('code');
 	var symbol = getQueryString('symbol');
+    var status = getQueryString('status');
 
     var columns = [{
         field: '',
@@ -61,8 +62,14 @@ $(function() {
             productCode: productCode
         },
     });
-    
-    $('.tools .toolbar').html('<li style="display:block;" id="repaymentBtn"><span><img src="/static/images/t01.png"></span>还款</li><li style="display:block;" id="backBtn"><span><img src="/static/images/t01.png"></span>返回</li>');
+
+    var toolbarHtml = '';
+    if (status != '8') {
+        toolbarHtml += '<li style="display:block;" id="repaymentBtn"><span><img src="/static/images/t01.png"></span>还款</li>';
+    }
+    toolbarHtml += '<li style="display:block;" id="backBtn"><span><img src="/static/images/t01.png"></span>返回</li>'
+    $('.tools .toolbar').html(toolbarHtml);
+
     $('#backBtn').on('click', function() {
     	goBack();
     });

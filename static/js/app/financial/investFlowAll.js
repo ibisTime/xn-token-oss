@@ -38,7 +38,7 @@ $(function() {
         title: "产品名称",
         field: "name",
         formatter: function(v, data){
-        	return data.productInfo.name;
+        	return data.productInfo.nameZhCn;
         }
     }, {
         title: "产品币种",

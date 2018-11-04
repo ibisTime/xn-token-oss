@@ -74,6 +74,16 @@ $(function() {
         type2: 'date',
         twoDate: true,
         search: true,
+    },  {
+        field: 'createIp',
+        title: '注册IP'
+    },  {
+        field: 'createClient',
+        title: '注册端',
+        type: 'select',
+        key: 'client_type',
+        formatter: Dict.getNameForList('client_type'),
+        search: true
     }, {
         field: 'lastLogin',
         title: '最后登录时间',

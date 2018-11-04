@@ -64,6 +64,15 @@ $(function() {
         field: 'createDatetime',
         title: '注册时间',
         formatter: dateTimeFormat,
+    },  {
+        field: 'createIp',
+        title: '注册IP'
+    },  {
+        field: 'createClient',
+        title: '注册端',
+        type: 'select',
+        key: 'client_type',
+        formatter: Dict.getNameForList('client_type')
     }, {
         field: 'lastLogin',
         title: '最后登录时间',

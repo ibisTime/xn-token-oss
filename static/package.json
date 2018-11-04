@@ -1,17 +1,17 @@
 {
-    "name": "coin-oss",
-    "version": "1.0.0",
-    "description": "xn-coin-oss",
-    "main": "fis-conf.js",
-    "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1",
-	    "dev": "fis3 release -d ../dist -w",
-        "dist": "fis3 release -d ../dist",
-	    "build": "fis3 release -d ../dist"
-    },
-    "author": "",
-    "license": "ISC",
-    "devDependencies": {
-        "fis3-postpackager-loader": "^2.1.4"
-    }
+  "name": "coin-oss",
+  "version": "1.0.0",
+  "description": "xn-coin-oss",
+  "main": "fis-conf.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "fis3 release -d ../dist -w",
+    "dist": "fis3 release -d ../dist",
+    "build": "fis3 release -d ../dist"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "fis3-postpackager-loader": "^2.1.4"
+  }
 }
