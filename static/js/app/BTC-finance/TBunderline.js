@@ -19,7 +19,10 @@ $(function() {
         keyName: 'realName',
         valueName: '{{realName.DATA}}',
         searchName: 'realName',
-        search: true
+        search: true,
+        formatter: function (v, data) {
+            return data.user ? data.user.realName : '';
+        }
     }, {
         field: 'amountString',
         title: '提现金额',
@@ -100,7 +103,7 @@ $(function() {
         field2: 'approveDateEnd',
         twoDate: true,
         search: true
-    }, ];
+    }];
     buildList({
         columns: columns,
         pageCode: '802755',
@@ -131,20 +134,8 @@ $(function() {
             toastr.info("只有审批通过的记录才可以广播");
             return;
         }
-		
-		confirm("确定广播这条记录？").then(function() {
-	    	reqApi({
-				code: '802754',
-				json: {
-					approveUser: selRecords[0].approveUser,
-					code: selRecords[0].code
-				}
-			}).then(function() {
-				sucList();
-			});
-		
-		},function() {})
 
+        window.location.href = "./TBunderline_sp.html?code=" + selRecords[0].code;
     });
 	
     //审核

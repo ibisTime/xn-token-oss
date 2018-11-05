@@ -7,16 +7,18 @@ $(function() {
 	getCoinReq().then(function(data){
     	hideLoading()
 		var coinList = [];
-		var currencyList = []
-		for(var i = 0; i < data.length ; i ++){
-			if(data[i].type=='2'){
-				coinList.push({
-					'dkey':data[i].symbol,
-					'dvalue':data[i].cname
-				})
-				currencyList.push(data[i].symbol)
-			}
-		}
+		var currencyList = [];
+        var hasCurrency = false;
+        for(var i = 0; i < data.length ; i ++){
+            if(data[i].type=='2'){
+                hasCurrency = true;
+                currencyData[data[i].symbol] = data[i].cname;
+                currencyList.push(data[i].symbol)
+            }
+        }
+        if(!hasCurrency){
+            currencyList.push("无")
+        }
 		
 		var fields = [{
 	        field: 'accountNumber',
@@ -24,18 +26,13 @@ $(function() {
 	        required: true,
 	        type: 'select',
 	        pageCode: userId ? '802503' : '802500',
-//	        keyCode1: '660906',
-	        dict: [
-	            ['currency'],
-	        ],
-	        dictData:coinList,
 	        params: {
 	            userId: userId,
 	            type:"C",
 	            currencyList:currencyList
 	        },
 	        keyName: 'accountNumber',
-	        valueName: '{{realName.DATA}} - {{currencyName.DATA}}',
+	        valueName: '{{realName.DATA}} - {{currency.DATA}}',
 	        searchName: 'realName',
 	        onChange: function(v, data){
 	        	coin = data.currency || '';

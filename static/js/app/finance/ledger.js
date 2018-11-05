@@ -1,7 +1,32 @@
 $(function() {
     var currency = getQueryString('currency') || "";
     var accountNumber = getQueryString('accountNumber') || "";
-    var kind = !!getQueryString('kind') || "";
+    var type = getQueryString('type') || 0; // 币种类型
+    var bizTypelist = {
+        '_CLOD': 'jour_biz_type_plat_cold', // 平台冷钱包账户业务类型
+        '_WITHDRAW': 'jour_biz_type_plat_withdraw', // 平台散取账户业务类型
+        '_LHLC': 'jour_biz_type_plat_lhlc', // 平台量化理财账户业务类型
+        '_HB': 'jour_biz_type_plat_hb', // 平台量化理财账户业务类型
+        '_eth': 'jour_biz_type_plat_income_eth', // ETH盈亏账户业务类型
+        '_wan': 'jour_biz_type_plat_income_wan', // WAN盈亏账户业务类型
+        '_btc': 'jour_biz_type_plat_income_btc', // BTC盈亏账户业务类型
+        '_eth_token': 'jour_biz_type_plat_income_eth_token', // ETHToken盈亏账户业务类型
+        '_wan_token': 'jour_biz_type_plat_income_wan_token'  // WANToken盈亏账户业务类型
+    };
+    var bizType = '';
+    // 盈亏账户业务类型
+    if (bizTypelist['_' + accountNumber.split('_')[3].toUpperCase()] === '_INCOME') {
+        if(type == 1) {
+            bizType = bizTypelist['_' + 'eth_token'];
+        } else if(type == 2) {
+            bizType = bizTypelist['_' + 'wan_token'];
+        } else {
+            bizType = bizTypelist['_' + currency.toLowerCase()];
+        }
+    } else {
+        bizType = bizTypelist['_' + accountNumber.split('_')[3].toUpperCase()];
+    }
+
 
     var columns = [{
         field: '',
@@ -27,9 +52,8 @@ $(function() {
         field: 'bizType',
         title: '业务类型',
         type: 'select',
-        search: true,
-        key: kind ? "jour_biz_type_cold" : "jour_biz_type_plat",
-        formatter: kind ? Dict.getNameForList('jour_biz_type_cold') : Dict.getNameForList('jour_biz_type_plat'),
+        key: bizType,
+        formatter: Dict.getNameForList(bizType),
         search: true
     }, {
         field: 'transAmountString',

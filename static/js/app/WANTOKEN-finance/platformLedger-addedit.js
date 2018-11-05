@@ -11,9 +11,8 @@ $(function() {
         readonly: view
     }, {
         title: '户名',
-        field: 'realName',
+        field: 'accountName',
         required: true,
-        maxlength: 32,
         readonly: view
     }, {
         title: '账号',

@@ -59,7 +59,7 @@ $(function() {
     }];
     buildList({
         columns: columns,
-        pageCode: '802405',
+        pageCode: '802355',
         searchParams: {
             type: 'M',
             currencyList: currencyList,

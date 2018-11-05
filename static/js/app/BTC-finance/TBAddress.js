@@ -20,9 +20,9 @@ $(function() {
         formatter: dateTimeFormat
     }, {
         title: "余额",
-        field: "balanceString",
+        field: "btcBalanceString",
         formatter: function (v, data) {
-            return moneyFormatBTC(data.balanceString) + 'BTC'
+            return moneyFormatBTC(data.btcBalanceString) + 'BTC'
         }
     }];
     buildList({

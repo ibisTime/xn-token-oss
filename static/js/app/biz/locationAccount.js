@@ -11,9 +11,20 @@ $(function() {
         title: '',
         checkbox: true
     }, {
-        field: 'realName',
-        title: '户名',
-        search: true
+        field: 'userId',
+        title: '账号',
+        type: 'select',
+        pageCode: '802500',
+        params: {
+            type:'C'
+        },
+        keyName: 'realName',
+        valueName: '{{realName.DATA}}',
+        searchName: 'realName',
+        search: true,
+        formatter: function (v, data) {
+            return data.accountName;
+        }
     }, {
         title: "账号",
         field: "accountNumber"
@@ -75,16 +86,7 @@ $(function() {
             return;
         }
         
-    	if(selRecords[0].currency=="SC"){
-    		window.location.href = "../SC-finance/partner_ledger.html?accountCode=" + selRecords[0].accountNumber + "&yk=1";
-    	}else if(selRecords[0].currency=="BTC"){
-    		window.location.href = "../BTC-finance/partner_ledger.html?accountCode=" + selRecords[0].accountNumber + "&yk=1";
-    	}else if(selRecords[0].currency=="ETH"){
-    		window.location.href = "../finance/partner_ledger.html?accountCode=" + selRecords[0].accountNumber + "&yk=1";
-    	}else{
-    		window.location.href = "../TOKEN-finance/partner_ledger.html?accountCode=" + selRecords[0].accountNumber + "&yk=1";
-    	}
-        
+        window.location.href = "../user/partner_ledger.html?accountNumber=" + selRecords[0].accountNumber + "&kind=0";
     });
 
 });

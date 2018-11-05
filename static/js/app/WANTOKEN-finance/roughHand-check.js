@@ -57,10 +57,10 @@ $(function() {
                 return data.code
             }
         }, {
-            field: 'realName',
+            field: 'accountName',
             title: '户名',
             formatter: function(v, data) {
-                return data.realName
+                return data.accountName
             }
         }, {
             field: 'currency',
@@ -121,10 +121,10 @@ $(function() {
                 return data.code
             }
         }, {
-            field: 'realName',
+            field: 'accountName',
             title: '户名',
             formatter: function(v, data) {
-                return data.realName
+                return data.accountName
             }
         }, {
             field: 'currency',

@@ -5,9 +5,8 @@ $(function() {
         title: '',
         checkbox: true
     }, {
-        field: 'realName',
-        title: '户名',
-        search: true
+        field: 'accountName',
+        title: '户名'
     }, {
         field: 'currency',
         title: '币种',

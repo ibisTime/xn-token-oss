@@ -24,18 +24,13 @@ $(function() {
 	        required: true,
 	        type: 'select',
 	        pageCode: userId ? '802503' : '802500',
-//	        keyCode1: '660906',
-	        dict: [
-	            ['currency'],
-	        ],
-	        dictData:coinList,
 	        params: {
 	            userId: userId,
 	            type:"C",
 	            currencyList:currencyList
 	        },
 	        keyName: 'accountNumber',
-	        valueName: '{{realName.DATA}} - {{currencyName.DATA}}',
+	        valueName: '{{realName.DATA}} - {{currency.DATA}}',
 	        searchName: 'realName',
 	        onChange: function(v, data){
 	        	coin = data.currency || '';

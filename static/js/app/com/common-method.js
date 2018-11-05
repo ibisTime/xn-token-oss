@@ -909,7 +909,7 @@ function buildList(options) {
                     return d[v];
                 };
             })(dataDict);
-        } else if (item.pageCode) {
+        } else if (item.pageCode && $('#' + item.field)[0]) {
             var pageParams = {
                 start: 1,
                 limit: 10

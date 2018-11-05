@@ -26,7 +26,7 @@ $(function() {
         title: "使用次数",
         field: "useCount"
     }, {
-        field: 'useAmountString',
+        field: 'btcBalanceString',
         title: '归集总额',
         formatter: moneyFormatBTC
     }];

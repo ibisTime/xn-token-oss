@@ -25,7 +25,6 @@ $(function() {
 	    }, {
 	        field: 'accountName',
 	        title: '户名',
-	        search: true,
 	    }, {
 	        field: 'currency',
 	        title: '币种',

@@ -3,12 +3,13 @@
 <style>
     .account-w {
         width: 100%;
+        min-height: 500px;
         padding: 30px 10px;
         overflow: hidden;
     }
     
     .account-list-w {
-        width: 350px;
+        width: 380px;
         float: left;
         padding: 20px;
     }
@@ -40,6 +41,11 @@
     .tableList-w{
     	width: 660px;
     	margin-left: 30px;
+        margin-bottom: 50px;
+    }
+    .createDatetime{
+        margin-left: 30px;
+        margin-bottom: 15px;
     }
 </style>
 
@@ -49,31 +55,10 @@
     </ul>
 </div>
 
-<div class="account-w">
-    <div class="account-list-w">
-        <div class="account-list">
-            <div class="account-fs">冷钱包余额：
-                <p class="account-amount" id="amount-TG"></p>
-            </div>
-
-            <div class="account-btn">
-                <div class="btn" id="accoutGrantBtn">资金流水</div>
-            </div>
-        </div>
-    </div>
-    <div class="account-list-w">
-        <div class="account-list">
-            <div class="account-fs">本地平台盈亏：
-                <p class="account-amount" id="amount-CNY"></p>
-            </div>
-            <div class="account-btn">
-                <div class="btn" id="CNYls-Btn">资金流水</div>
-
-            </div>
-        </div>
-    </div>
+<div class="account-w" id="accountWrap">
 </div>
 
+<div class="createDatetime"></div>
 <div class="tableList-w">
 	<table id="tableList"></table>
 </div>

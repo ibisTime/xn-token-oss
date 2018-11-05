@@ -155,72 +155,73 @@ $(function() {
             return;
         }
 
-        var balanceStart;
-        var amount3 = selRecords[0].amountString;      // 提现金额
-        var amount4 = selRecords[0].feeString;         // 手续费
-        balanceStart = amount3 - amount4;
-
-        var dw = dialog({
-            content: '<form class="pop-form pop-form-uRef " id="popForm" novalidate="novalidate">' +
-            '<ul class="form-info" id="formContainer"><li style="text-align:center;font-size: 15px;">提币广播</li></ul>' +
-            '</form>'
-        });
-
-        dw.showModal();
-
-        buildDetail({
-            container: $('#formContainer'),
-            fields: [{
-                field: 'mAddressCode',
-                title: '地址',
-                required: true,
-                type: "select",
-                pageCode: "802305",
-                params: {
-                    type: 'M',
-                    statusList: ['0'],
-                    symbol: selRecords[0].payCardInfo,
-                    companyCode: OSS.company,
-                    balanceStart: balanceStart
-                },
-                keyName: "code",
-                valueName: "{{address.DATA}}--{{balanceString.DATA}}",
-                searchName: "address",
-                valueFormatter: {
-                    balanceString: function(v){
-                    	return moneyFormat(v,'',selRecords[0].payCardInfo)
-                    }
-                }
-            }],
-            buttons: [{
-                title: '确定',
-                handler: function() {
-                    if($('#popForm').valid()){
-                        showLoading();
-
-                        var data = $('#popForm').serializeObject();
-                        data.approveUser = getUserName();
-                        data.code = selRecords[0].code;
-                        reqApi({
-                            code: '802754',
-                            json: data
-                        }).then(function() {
-                            hideLoading();
-                            sucList();
-                            dw.close().remove();
-                        },hideLoading);
-                    }
-
-                }
-            }, {
-                title: '取消',
-                handler: function() {
-                    dw.close().remove();
-                }
-            }]
-        });
-
-        dw.__center();
+        window.location.href = "./TBunderline_sp.html?code=" + selRecords[0].code;
+        // var balanceStart;
+        // var amount3 = selRecords[0].amountString;      // 提现金额
+        // var amount4 = selRecords[0].feeString;         // 手续费
+        // balanceStart = amount3 - amount4;
+        //
+        // var dw = dialog({
+        //     content: '<form class="pop-form pop-form-uRef " id="popForm" novalidate="novalidate">' +
+        //     '<ul class="form-info" id="formContainer"><li style="text-align:center;font-size: 15px;">提币广播</li></ul>' +
+        //     '</form>'
+        // });
+        //
+        // dw.showModal();
+        //
+        // buildDetail({
+        //     container: $('#formContainer'),
+        //     fields: [{
+        //         field: 'mAddressCode',
+        //         title: '地址',
+        //         required: true,
+        //         type: "select",
+        //         pageCode: "802305",
+        //         params: {
+        //             type: 'M',
+        //             statusList: ['0'],
+        //             symbol: selRecords[0].payCardInfo,
+        //             companyCode: OSS.company,
+        //             balanceStart: balanceStart
+        //         },
+        //         keyName: "code",
+        //         valueName: "{{address.DATA}}--{{balanceString.DATA}}",
+        //         searchName: "address",
+        //         valueFormatter: {
+        //             balanceString: function(v){
+        //             	return moneyFormat(v,'',selRecords[0].payCardInfo)
+        //             }
+        //         }
+        //     }],
+        //     buttons: [{
+        //         title: '确定',
+        //         handler: function() {
+        //             if($('#popForm').valid()){
+        //                 showLoading();
+        //
+        //                 var data = $('#popForm').serializeObject();
+        //                 data.approveUser = getUserName();
+        //                 data.code = selRecords[0].code;
+        //                 reqApi({
+        //                     code: '802754',
+        //                     json: data
+        //                 }).then(function() {
+        //                     hideLoading();
+        //                     sucList();
+        //                     dw.close().remove();
+        //                 },hideLoading);
+        //             }
+        //
+        //         }
+        //     }, {
+        //         title: '取消',
+        //         handler: function() {
+        //             dw.close().remove();
+        //         }
+        //     }]
+        // });
+        //
+        // dw.__center();
 
     });
 	

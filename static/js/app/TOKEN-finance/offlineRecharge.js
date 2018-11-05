@@ -4,7 +4,7 @@ $(function() {
 		hideLoading()
 		
 		var currencyData = {};
-		var currencyList = []
+		var currencyList = [];
 		var hasCurrency = false;
 		for(var i = 0; i < data.length ; i ++){
 			if(data[i].type=='1'){
@@ -27,8 +27,7 @@ $(function() {
 	        search: true
 	    }, {
 	        field: 'accountName',
-	        title: '户名',
-	        search: true
+	        title: '户名'
 	    }, {
 	        field: 'currency',
 	        title: '币种',

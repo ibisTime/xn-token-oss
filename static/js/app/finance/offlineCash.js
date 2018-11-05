@@ -23,8 +23,7 @@ $(function() {
         title: '银行卡号',
     }, {
         field: 'accountName',
-        title: '户名',
-        search: true
+        title: '户名'
     }, {
         field: 'amount',
         title: '取现金额',
