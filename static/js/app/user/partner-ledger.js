@@ -6,7 +6,7 @@ $(function() {
         title: '',
         checkbox: true
     }, {
-        field: 'accountName',
+        field: 'realName',
         title: '户名'
     }, {
         field: 'currency',

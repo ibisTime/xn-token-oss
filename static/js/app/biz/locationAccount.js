@@ -23,7 +23,7 @@ $(function() {
         searchName: 'realName',
         search: true,
         formatter: function (v, data) {
-            return data.accountName;
+            return data.realName;
         }
     }, {
         title: "账号",
