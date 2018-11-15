@@ -20,7 +20,7 @@ $(function() {
                     title: '地址',
                     required: true,
                     type: "select",
-                    pageCode: "802205",
+                    pageCode: "802105",
                     params: {
                         type: 'M',
                         statusList: ['0'],
@@ -44,7 +44,7 @@ $(function() {
                             data.approveUser = getUserName();
                             data.code = code;
                             reqApi({
-                                code: '802759',
+                                code: '802754',
                                 json: data
                             }).then(function() {
                                 hideLoading();
@@ -93,7 +93,7 @@ $(function() {
                             data.approveUser = getUserName();
                             data.code = code;
                             reqApi({
-                                code: '802754',
+                                code: '802759',
                                 json: data
                             }).then(function() {
                                 hideLoading();
@@ -120,8 +120,7 @@ $(function() {
             goBack();
         }
     }];
-    
-	var thisCoin = 'BTC';
+
     var fields = [{
         field: 'accountName',
         title: '账号'

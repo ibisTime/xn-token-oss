@@ -1,7 +1,6 @@
 $(function() {
     var code = getQueryString('code');
     var view = getQueryString('v');
-    var kind = !!getQueryString('kind') || "";
 
     var fields = [{
         title: '流水编号',

@@ -3,7 +3,7 @@ $(function() {
     var accountNumber = getQueryString('accountNumber') || "";
     var type = getQueryString('type') || 0; // 币种类型
     var bizTypelist = {
-        '_CLOD': 'jour_biz_type_plat_cold', // 平台冷钱包账户业务类型
+        '_COLD': 'jour_biz_type_plat_cold', // 平台冷钱包账户业务类型
         '_WITHDRAW': 'jour_biz_type_plat_withdraw', // 平台散取账户业务类型
         '_LHLC': 'jour_biz_type_plat_lhlc', // 平台量化理财账户业务类型
         '_HB': 'jour_biz_type_plat_hb', // 平台量化理财账户业务类型
@@ -26,6 +26,7 @@ $(function() {
     } else {
         bizType = bizTypelist['_' + accountNumber.split('_')[3].toUpperCase()];
     }
+    console.log(bizType);
 
     var columns = [{
         field: '',
@@ -51,7 +52,6 @@ $(function() {
         field: 'bizType',
         title: '业务类型',
         type: 'select',
-        search: true,
         key: bizType,
         formatter: Dict.getNameForList(bizType),
         search: true
@@ -101,7 +101,7 @@ $(function() {
     $('#backBtn').on('click', function() {
         window.location.href = "./breakBalance.html";
     });
-    
+
     //详情
     $('#detailBtn').on('click',function() {
         var selRecords = $('#tableList').bootstrapTable('getSelections');
@@ -109,7 +109,7 @@ $(function() {
             toastr.info("请选择记录");
             return;
         }
-        window.location.href = "ledger_addedit.html?code=" + selRecords[0].code + "&kind="+kind+"&v=1";
+        window.location.href = "ledger_addedit.html?code=" + selRecords[0].code +"&v=1";
     });
-    
+
 });

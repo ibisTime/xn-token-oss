@@ -44,12 +44,7 @@ $(function () {
     }, hideLoading);
 
     function buildHtml(item) {
-        var btnHtml = '';
-        if(item.accountNumber.indexOf('_COLD') != -1) {
-            btnHtml = `<div class="btn accoutFlowColdBtn" data-accountNumber="${item.accountNumber}">资金流水</div>`;
-        } else {
-            btnHtml = `<div class="btn accoutFlowBtn" data-accountNumber="${item.accountNumber}">资金流水</div>`;
-        }
+        var btnHtml = `<div class="btn accoutFlowBtn" data-accountNumber="${item.accountNumber}">资金流水</div>`;
         return `<div class="account-list-w">
                     <div class="account-list">
                         <div class="account-fs">${item.realName}：

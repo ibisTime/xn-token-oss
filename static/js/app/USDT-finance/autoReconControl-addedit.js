@@ -32,7 +32,7 @@ $(function() {
             type: 'select',
             formatter: function(v, data) {
                 if (data.charge) {
-            		return Dict.getNameForList1('coin','',data.charge.currency);
+            		return data.charge.currency;
             	}
             },
             readonly: true,
@@ -68,7 +68,7 @@ $(function() {
             field: 'amountString',
             title: '交易金额',
             formatter: function(v, data) {
-                return moneyFormat(v, '', 'USDT')
+                return moneyFormat(data.charge.amountString, '', 'USDT')
             },
             readonly: true
         }, {
@@ -95,7 +95,7 @@ $(function() {
             },
             readonly: true
         }, {
-            field: 'ethCollection',
+            field: 'usdtCollection',
             title: '归集订单:',
             readonly: true,
             type: 'o2m',
@@ -156,9 +156,7 @@ $(function() {
                 }
             }, {
                 field: 'currency',
-                title: '币种',
-                key: 'coin',
-                formatter: Dict.getNameForList('coin'),
+                title: '币种'
             }, {
                 field: 'channelType',
                 title: '渠道',
@@ -202,7 +200,7 @@ $(function() {
                 formatter: dateTimeFormat
             }]
         }, {
-            field: 'usdtTransactionList',
+            field: 'usdtTransList',
             title: '区块链流水',
             readonly: true,
             type: 'o2m',

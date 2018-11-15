@@ -1,7 +1,7 @@
 $(function() {
-	
+
 	var currencyData = {};
-	
+
 	getCoinReq().then(function(data){
 		hideLoading()
 		var currencyList = []
@@ -59,18 +59,18 @@ $(function() {
     }];
     buildList({
         columns: columns,
-        pageCode: '802305',
+        pageCode: '802105',
         searchParams: {
             type: 'M',
             currencyList: currencyList,
             companyCode: OSS.company
         }
     });
-    
+
     },hideLoading);
-    
+
     $('#addBtn').off('click').click(function () {
-    	
+
         var dw = dialog({
             content: '<form class="pop-form" id="popForm" novalidate="novalidate">' +
                 '<ul class="form-info" id="formContainer"><li style="text-align:center;font-size: 15px;">生成提币地址</li></ul>' +
@@ -95,7 +95,7 @@ $(function() {
                         var data = $('#popForm').serializeObject();
                         data.symbol = data.symbol1
                         delete data.symbol1;
-                        
+
                         reqApi({
                             code: '802301',
                             json: data
@@ -117,8 +117,8 @@ $(function() {
         dw.__center();
 
     });
-    
-    
+
+
     $('#deleBtn').click(function() {
         var selRecords = $('#tableList').bootstrapTable('getSelections');
         if (selRecords.length <= 0) {

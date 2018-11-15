@@ -101,7 +101,7 @@ $(function() {
     $('#backBtn').on('click', function() {
         window.location.href = "../finance/breakBalance.html";
     });
-    
+
     //详情
     $('#detailBtn').on('click',function() {
         var selRecords = $('#tableList').bootstrapTable('getSelections');
@@ -109,7 +109,7 @@ $(function() {
             toastr.info("请选择记录");
             return;
         }
-        window.location.href = "ledger_addedit.html?code=" + selRecords[0].code + "&kind="+kind+"&v=1";
+        window.location.href = "ledger_addedit.html?code=" + selRecords[0].code +"&v=1";
     });
-    
+
 });

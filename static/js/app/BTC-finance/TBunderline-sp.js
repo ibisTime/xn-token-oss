@@ -2,7 +2,7 @@ $(function() {
     var code = getQueryString('code');
     var view = !!getQueryString('v');
     var thisCoin = 'BTC';
-	
+
 	var buttons = [{
         title: '广播',
         handler: function() {
@@ -45,7 +45,7 @@ $(function() {
                             data.approveUser = getUserName();
                             data.code = code;
                             reqApi({
-                                code: '802759',
+                                code: '802754',
                                 json: data
                             }).then(function() {
                                 hideLoading();
@@ -94,7 +94,7 @@ $(function() {
                             data.approveUser = getUserName();
                             data.code = code;
                             reqApi({
-                                code: '802754',
+                                code: '802759',
                                 json: data
                             }).then(function() {
                                 hideLoading();

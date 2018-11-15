@@ -12,10 +12,7 @@ $(function() {
         title: '户名'
     }, {
         field: 'currency',
-        title: '币种',
-        type: 'select',
-        key: 'coin',
-        formatter: Dict.getNameForList("coin"),
+        title: '币种'
     }, {
         field: 'amountString',
         title: '充值金额',
@@ -26,11 +23,9 @@ $(function() {
         field: 'channelType',
         title: '支付渠道',
         type: 'select',
-        data:{
-        	"USDT" : '泰达币',
-        	"90" : "人工线下"
-        },
-        search: true,
+        key: 'channel_type',
+        formatter: Dict.getNameForList('channel_type'),
+        search: true
     }, {
         field: "bizNote",
         title: "充值说明"
