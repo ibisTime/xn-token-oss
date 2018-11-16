@@ -91,7 +91,7 @@ $(function () {
         if (data.coinType === '0') {
             tableData = tableData.concat([{
                 name: '归集矿工费支出',
-                amount: data.totalWithdrawMineFeeCountString
+                amount: data.totalCollectMineFeeCountString
             }, {
                 name: '生态币归集补给矿工费支出',
                 amount: data.totalExtCollectSupplyFeeCountString

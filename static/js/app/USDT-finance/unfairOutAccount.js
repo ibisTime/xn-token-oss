@@ -14,8 +14,6 @@ $(function() {
         field: 'currency',
         title: '币种',
         type: 'select',
-        key: 'coin',
-        formatter: Dict.getNameForList("coin"),
     }, {
         field: 'direction',
         title: '方向',

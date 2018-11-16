@@ -1,6 +1,7 @@
 $(function() {
     var code = getQueryString('code');
     var view = !!getQueryString('v');
+    var currency = getQueryString('currency') || '';
 
 	var buttons = [{
         title: '广播',
@@ -24,14 +25,15 @@ $(function() {
                     params: {
                         type: 'M',
                         statusList: ['0'],
-                        companyCode: OSS.company
+                        companyCode: OSS.company,
+                        currency: currency
                     },
                     keyName: "code",
                     valueName: "{{address.DATA}}--{{balanceString.DATA}}",
                     searchName: "address",
                     valueFormatter: {
                         balanceString: function(v){
-                            return moneyFormat(v,'',$("#payCardInfo").text())
+                            return moneyFormat(v,'', currency)
                         }
                     }
                 }],
@@ -97,7 +99,7 @@ $(function() {
                                 json: data
                             }).then(function() {
                                 hideLoading();
-                                sucList();
+                                sucDetail();
                                 dw.close().remove();
                             },hideLoading);
                         }

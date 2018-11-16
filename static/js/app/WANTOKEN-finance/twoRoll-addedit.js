@@ -159,7 +159,6 @@ $(function() {
             }, {
                 field: 'currency',
                 title: '币种',
-                key: 'coin',
                 formatter: getCoinName,
             }, {
                 field: 'channelType',

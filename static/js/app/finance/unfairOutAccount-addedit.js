@@ -84,8 +84,8 @@ $(function() {
                 field: 'bizType',
                 title: '业务类型',
                 type: 'select',
-                key: 'jour_biz_type',
-                formatter: Dict.getNameForList('jour_biz_type'),
+                key: 'jour_biz_type_plat_eth',
+                formatter: Dict.getNameForList('jour_biz_type_plat_eth'),
                 search: true
             }, {
                 field: 'transAmountString',

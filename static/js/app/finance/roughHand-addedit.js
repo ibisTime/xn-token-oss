@@ -45,10 +45,8 @@ $(function() {
         title: '渠道',
         formatter: function(v, data) {
             if (data.withdraw) {
-            	
             	return Dict.getNameForList1('channel_type','',data.withdraw.channelType);
             }
-
         },
         readonly: true
     }, {
@@ -147,16 +145,14 @@ $(function() {
                 return data.code
             }
         }, {
-            field: 'realName',
+            field: 'accountName',
             title: '户名',
             formatter: function(v, data) {
-                return data.realName
+                return data.accountName
             }
         }, {
             field: 'currency',
             title: '币种',
-            key: 'coin',
-            formatter: Dict.getNameForList('coin'),
         }, {
             field: 'channelType',
             title: '渠道',
@@ -168,8 +164,8 @@ $(function() {
             field: 'bizType',
             title: '业务类型',
             type: 'select',
-            key: 'jour_biz_type',
-            formatter: Dict.getNameForList('jour_biz_type'),
+            key: 'jour_biz_type_plat_eth',
+            formatter: Dict.getNameForList('jour_biz_type_plat_eth'),
             search: true
         }, {
             field: 'transAmountString',
@@ -213,24 +209,20 @@ $(function() {
             field: 'to',
             title: 'to'
         }, {
-            field: 'gas',
+            field: 'gasLimit',
             title: 'gasLimit',
         }, {
             field: 'gasPrice',
-            title: 'gasPrice',
-            formatter: moneyFormat,
+            title: 'gasPrice'
         }, {
             field: 'gasUsed',
             title: 'gasUsed'
         }, {
 	        title: "矿工费",
-	        field: 'kgPrice',
+	        field: 'gasFee',
 	        formatter: function(v,data){
-	        	var gasPrice = new BigDecimal(data.gasPrice);
-	        	var gasUsed = new BigDecimal(data.gasUsed);
-	        	kgPrice =  gasPrice.multiply(gasUsed).toString();
-	        	return moneyFormat(kgPrice);
-	        	}
+	        	return moneyFormat(v, '', 'ETH');
+	        }
         },{
             field: 'nonce',
             title: 'nonce'

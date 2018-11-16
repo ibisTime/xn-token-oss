@@ -228,10 +228,7 @@ $(function() {
             title: 'gasLimit',
         }, {
             field: 'gasPriceString',
-            title: 'gasPrice',
-	        formatter: function(v,data){
-	        	return moneyFormat(v,'','WAN')+'WAN';
-        	}
+            title: 'gasPrice'
         }, {
             field: 'gasUsed',
             title: 'gasUsed'

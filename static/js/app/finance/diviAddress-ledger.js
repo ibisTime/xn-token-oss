@@ -1,6 +1,6 @@
 $(function() {
     var address = getQueryString('address');
-    
+
     var columns = [{
         field: '',
         title: '',
@@ -30,28 +30,24 @@ $(function() {
         }
     }, {
         title: "gasLimit",
-        field: 'gas'
+        field: 'gasLimit'
     }, {
         title: "gas价格",
-        field: 'gasPrice',
-        formatter:moneyFormat
+        field: 'gasPrice'
     }, {
         title: "消耗gas",
         field: 'gasUsed'
     }, {
         title: "矿工费",
-        field: 'kgPrice',
+        field: 'gasFee',
         formatter: function(v,data){
-        	var gasPrice = new BigDecimal(data.gasPrice);
-        	var gasUsed = new BigDecimal(data.gasUsed);
-        	kgPrice =  gasPrice.multiply(gasUsed).toString();
-        	return moneyFormat(kgPrice);
+            return moneyFormat(v, '', 'ETH');
         }
     }, {
         field: 'refNo',
         title: '关联订单号',
     }, {
-        field: 'creates',
+        field: 'blockCreateDatetime',
         title: '网络记账时间',
         formatter: dateTimeFormat
     }];

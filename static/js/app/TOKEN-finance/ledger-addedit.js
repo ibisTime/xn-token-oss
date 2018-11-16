@@ -23,9 +23,6 @@ $(function() {
     }, {
         field: 'currency',
         title: '币种',
-        formatter: function(v, data) {
-        	return getCoinName(data.currency);
-        },
     }, {
         field: 'channelType',
         title: '渠道类型',
@@ -37,8 +34,8 @@ $(function() {
         field: 'bizType',
         title: '业务类型',
         type: 'select',
-        key: "jour_biz_type",
-        formatter: Dict.getNameForList('jour_biz_type'),
+        key: "jour_biz_type_plat_eth_token",
+        formatter: Dict.getNameForList('jour_biz_type_plat_eth_token'),
         readonly: view
     }, {
         field: 'bizNote',

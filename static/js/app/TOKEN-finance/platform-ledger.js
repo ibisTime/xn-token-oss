@@ -1,8 +1,8 @@
 $(function() {
     var accountCode = getQueryString('accountCode') || '';
-    
+
     showLoading()
-	
+
 	getCoinReq().then(function(data){
 		hideLoading()
 		var currencyData = {};
@@ -43,8 +43,8 @@ $(function() {
 	        field: 'bizType',
 	        title: '业务类型',
 	        type: 'select',
-	        key: 'jour_biz_type',
-	        formatter: Dict.getNameForList('jour_biz_type'),
+	        key: 'jour_biz_type_plat_eth_token',
+	        formatter: Dict.getNameForList('jour_biz_type_plat_eth_token'),
 	        search: true
 	    }, {
 	        field: 'transAmountString',
@@ -93,10 +93,10 @@ $(function() {
 	            companyCode: OSS.company
 	        }
 	    });
-	    
+
     },hideLoading);
-    
-    
+
+
     $("#detailBtn").off("click").on("click", function() {
         var selRecords = $('#tableList').bootstrapTable('getSelections');
         if (selRecords.length <= 0) {

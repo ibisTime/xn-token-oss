@@ -98,8 +98,6 @@ $(function() {
         field: 'currency',
         title: '币种',
         type: 'select',
-        key: 'coin',
-        formatter: Dict.getNameForList("coin"),
     }, {
         field: 'channelType',
         title: '支付渠道',
@@ -135,7 +133,7 @@ $(function() {
         	}else{
         		return data.applyUser
         	}
-            
+
         }
     }, {
         field: 'bizNote',

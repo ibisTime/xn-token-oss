@@ -12,10 +12,7 @@ $(function() {
         search: true
     }, {
         field: 'currency',
-        title: '币种',
-        type: 'select',
-        key: 'coin',
-        formatter: Dict.getNameForList("coin"),
+        title: '币种'
     }, {
         field: 'channelType',
         title: '渠道',

@@ -33,7 +33,7 @@ $(function() {
     }];
     buildList({
         columns: columns,
-        pageCode: '802385',
+        pageCode: '802485',
         searchParams: {
             type: 'S',
             companyCode: OSS.company
@@ -42,7 +42,7 @@ $(function() {
     $('#addBtn').off('click').click(function () {
         confirm('确认生成地址？').then(function () {
             reqApi({
-                code: '802380',
+                code: '802480',
                 json: {
                     updater: getUserId()
                 },
@@ -64,7 +64,7 @@ $(function() {
         }
         confirm("确认弃用？").then(function() {
             reqApi({
-                code: '802381',
+                code: '802481',
                 json: { "code": selRecords[0].code }
             }).then(function() {
             	sucList();

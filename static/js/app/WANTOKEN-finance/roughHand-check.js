@@ -17,10 +17,6 @@ $(function() {
     }, {
         field: 'currency',
         title: '币种',
-        type: 'select',
-        formatter: function(v, data) {
-        	return getCoinName(data.currency);
-        },
         readonly: true
     }, {
         field: 'direction',

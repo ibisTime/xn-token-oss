@@ -45,7 +45,7 @@ $(function() {
         title: '渠道',
         formatter: function(v, data) {
             if (data.withdraw) {
-            	
+
             	return Dict.getNameForList1('channel_type','',data.withdraw.channelType);
             }
 
@@ -148,15 +148,10 @@ $(function() {
             }
         }, {
             field: 'accountName',
-            title: '户名',
-            formatter: function(v, data) {
-                return data.accountName
-            }
+            title: '户名'
         }, {
             field: 'currency',
             title: '币种',
-            key: 'coin',
-            formatter: Dict.getNameForList('coin'),
         }, {
             field: 'channelType',
             title: '渠道',
@@ -168,8 +163,8 @@ $(function() {
             field: 'bizType',
             title: '业务类型',
             type: 'select',
-            key: 'jour_biz_type',
-            formatter: Dict.getNameForList('jour_biz_type'),
+            key: 'jour_biz_type_plat_btc',
+            formatter: Dict.getNameForList('jour_biz_type_plat_btc'),
             search: true
         }, {
             field: 'transAmountString',

@@ -73,7 +73,7 @@ $(function() {
             formatter: dateTimeFormat
         }, approveNoteField]
     }
-	
+
     var fields = [{
         title: '编号',
         field: 'code1',
@@ -97,9 +97,6 @@ $(function() {
     }, {
         field: 'currency',
         title: '币种',
-        formatter: function(v, data) {
-        	return getCoinName(data.currency);
-        },
     }, {
         field: 'channelType',
         title: '支付渠道',
@@ -135,7 +132,7 @@ $(function() {
         	}else{
         		return data.applyUser
         	}
-            
+
         }
     }, {
         field: 'bizNote',
@@ -156,5 +153,5 @@ $(function() {
     };
 
     buildDetail(options);
-	    
+
 });

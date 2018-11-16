@@ -45,7 +45,7 @@ $(function() {
         title: '渠道',
         formatter: function(v, data) {
             if (data.withdraw) {
-            	
+
             	return Dict.getNameForList1('channel_type','',data.withdraw.channelType);
             }
 
@@ -148,15 +148,10 @@ $(function() {
             }
         }, {
             field: 'accountName',
-            title: '户名',
-            formatter: function(v, data) {
-                return data.accountName
-            }
+            title: '户名'
         }, {
             field: 'currency',
             title: '币种',
-            key: 'coin',
-            formatter: Dict.getNameForList('coin'),
         }, {
             field: 'channelType',
             title: '渠道',

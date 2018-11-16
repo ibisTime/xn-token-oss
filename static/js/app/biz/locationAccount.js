@@ -1,11 +1,4 @@
 $(function() {
-	getCoinReq().then(function(data){
-		
-		var currencyData = {};
-		for(var i = 0; i < data.length ; i ++){
-			currencyData[data[i].symbol] = data[i].cname;
-		}
-
     var columns = [{
         field: '',
         title: '',
@@ -32,7 +25,13 @@ $(function() {
         field: "currency",
         title: "币种",
         type: 'select',
-        data: currencyData,
+        pageCode: '802265',
+        params: {
+            type: "",
+            status: ""
+        },
+        keyName: 'symbol',
+        valueName: '{{symbol.DATA}}',
         search: true
     }, {
         title: '余额',
@@ -54,7 +53,7 @@ $(function() {
         	var frozenAmount = new BigDecimal(data.frozenAmountString);
         	amount =  amount.subtract(frozenAmount).toString();
         	return moneyFormat(amount,'',data.currency);
-        	
+
         }
     }, {
         field: 'status',
@@ -76,8 +75,6 @@ $(function() {
             type: "C"
         },
     });
-    
-    },hideLoading);
 
     $('#ledgerBtn').click(function() {
         var selRecords = $('#tableList').bootstrapTable('getSelections');
@@ -85,7 +82,7 @@ $(function() {
             toastr.info("请选择记录");
             return;
         }
-        
+
         window.location.href = "../user/partner_ledger.html?accountNumber=" + selRecords[0].accountNumber + "&kind=0";
     });
 

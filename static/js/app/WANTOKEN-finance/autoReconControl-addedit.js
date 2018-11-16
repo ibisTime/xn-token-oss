@@ -3,7 +3,7 @@ $(function() {
     var view = !!getQueryString('v');
     var collectionData;
     var currencyVal = ''
-    
+
     reqApi({
         code: "802707",
         json: {
@@ -13,7 +13,7 @@ $(function() {
     }).then(function(data) {
         collectionData = data.collection?[data.collection]:[]
     });
-    
+
     var fields = [{
             title: '户名',
             field: 'accountName',
@@ -32,11 +32,10 @@ $(function() {
         }, {
             field: 'currency',
             title: '币种',
-            type: 'select',
             formatter: function(v, data) {
                 if (data.charge) {
                 	currencyVal = data.charge.currency;
-            		return getCoinName(data.charge.currency);
+            		return data.charge.currency;
             	}
             },
             readonly: true,
@@ -118,9 +117,6 @@ $(function() {
             }, {
                 field: 'currency',
                 title: '币种',
-                formatter: function(v,data){
-                	return getCoinName(data.currency);
-                },
             }, {
                 field: 'channelType',
                 title: '渠道',
@@ -183,9 +179,6 @@ $(function() {
             }, {
                 field: 'gasPriceString',
                 title: 'gasPrice',
-		        formatter: function(v,data){
-		        	return moneyFormat(v,'','WAN')+'WAN';
-	        	}
             }, {
                 field: 'gasUsed',
                 title: 'gasUsed'

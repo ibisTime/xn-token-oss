@@ -1,6 +1,6 @@
 $(function() {
     var address = getQueryString('address');
-    
+
     getCoinReq().then(function(data){
 		hideLoading()
 		var currencyData = {};
@@ -11,7 +11,7 @@ $(function() {
 				currencyList.push(data[i].symbol)
 			}
 		}
-    
+
     var columns = [{
         field: '',
         title: '',
@@ -49,10 +49,7 @@ $(function() {
         field: 'gasLimit'
     }, {
         title: "gas价格",
-        field: 'gasPriceString',
-        formatter: function(v, data){
-    		return moneyFormat(v,'','WAN')+'WAN';
-        }
+        field: 'gasPriceString'
     }, {
         title: "消耗gas",
         field: 'gasUsed'
@@ -75,9 +72,9 @@ $(function() {
             address: address,
         }
     });
-    
+
     },hideLoading);
-    
+
     $(".tools .toolbar").html('<li style="display:block;" id="goBackBtn"><span><img src="/static/images/t01.png"></span>返回</li>')
 
     $("#goBackBtn").on("click", function() {

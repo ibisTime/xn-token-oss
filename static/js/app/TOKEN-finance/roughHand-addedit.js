@@ -154,14 +154,10 @@ $(function() {
             }
         }, {
             field: 'accountName',
-            title: '户名',
-            formatter: function(v, data) {
-                return data.accountName
-            }
+            title: '户名'
         }, {
             field: 'currency',
-            title: '币种',
-        	formatter: getCoinName
+            title: '币种'
         }, {
             field: 'channelType',
             title: '渠道',
@@ -210,7 +206,7 @@ $(function() {
             title: '生成说明'
         }, ]
     }, {
-        field: 'tokenTransList',
+        field: 'ethTransList',
         title: '区块链流水',
         readonly: true,
         type: 'o2m',
@@ -219,43 +215,55 @@ $(function() {
             title: 'blockNumber',
         }, {
             field: 'tokenFrom',
-            title: 'from'
+            title: 'from',
+            formatter: function (v, data) {
+                if (data.ethTokenEvent) {
+                    return data.ethTokenEvent.tokenFrom;
+                }
+                return v;
+            }
         }, {
             field: 'tokenTo',
-            title: 'to'
+            title: 'to',
+            formatter: function (v, data) {
+                if (data.ethTokenEvent) {
+                    return data.ethTokenEvent.tokenTo;
+                }
+                return v;
+            }
         }, {
             field: 'gasLimit',
             title: 'gasLimit',
         }, {
-            field: 'gasPriceString',
-            title: 'gasPrice',
-	        formatter: function(v,data){
-	        	return moneyFormat(v,'','ETH')+'ETH';
-        	}
+            field: 'gasPrice',
+            title: 'gasPrice'
         }, {
             field: 'gasUsed',
             title: 'gasUsed'
         }, {
-	        title: "矿工费",
-	        field: 'gasFeeString',
-	        formatter: function(v,data){
-	        	return moneyFormat(v,'','ETH')+'ETH';
-        	}
-        },{
+            title: "矿工费",
+            field: 'gasFee',
+            formatter: function (v, data) {
+                return moneyFormat(v, '', 'ETH') + 'ETH';
+            }
+        }, {
             field: 'nonce',
-            title: 'nonce'
+            title: '交易次数'
         }, {
             title: "交易Hash",
             field: "hash"
         }, {
             field: 'transactionIndex',
-            title: 'transactionIndex'
+            title: '交易索引'
         }, {
             title: "value",
-            field: "tokenValueString",
-	        formatter: function(v, data) {
-	            return moneyFormat(v,'',data.symbol);
-	        },
+            field: "tokenValue",
+            formatter: function (v, data) {
+                if (data.ethTokenEvent) {
+                    return moneyFormat(data.ethTokenEvent.tokenValue, '', data.symbol);
+                }
+                return moneyFormat(v, '', data.symbol);
+            },
         }]
     }, {
         field: 'checkUser',

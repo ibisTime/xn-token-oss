@@ -159,9 +159,7 @@ $(function() {
                 }
             }, {
                 field: 'currency',
-                title: '币种',
-                key: 'coin',
-                formatter: Dict.getNameForList('coin'),
+                title: '币种'
             }, {
                 field: 'channelType',
                 title: '渠道',
@@ -173,8 +171,8 @@ $(function() {
                 field: 'bizType',
                 title: '业务类型',
                 type: 'select',
-                key: 'jour_biz_type',
-                formatter: Dict.getNameForList('jour_biz_type'),
+                key: 'jour_biz_type_plat_wan',
+                formatter: Dict.getNameForList('jour_biz_type_plat_wan'),
                 search: true
             }, {
                 field: 'transAmountString',

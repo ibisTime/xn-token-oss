@@ -29,10 +29,9 @@ $(function() {
         }, {
             field: 'currency',
             title: '币种',
-            type: 'select',
             formatter: function(v, data) {
                 if (data.charge) {
-            		return Dict.getNameForList1('coin','',data.charge.currency);
+            		return data.charge.currency;
             	}
             },
             readonly: true,
@@ -43,7 +42,6 @@ $(function() {
                 if (data.charge) {
                 	return Dict.getNameForList1('channel_type','',data.charge.channelType);
                 }
-
             },
             readonly: true
         }, {
@@ -53,7 +51,6 @@ $(function() {
                 if (data.charge) {
                 	return Dict.getNameForList1('jour_biz_type','',data.charge.bizType);
                 }
-
             },
             readonly: true,
         }, {
@@ -149,15 +146,10 @@ $(function() {
                 }
             }, {
                 field: 'accountName',
-                title: '户名',
-                formatter: function(v, data) {
-                    return data.accountName
-                }
+                title: '户名'
             }, {
                 field: 'currency',
-                title: '币种',
-                key: 'coin',
-                formatter: Dict.getNameForList('coin'),
+                title: '币种'
             }, {
                 field: 'channelType',
                 title: '渠道',
@@ -195,7 +187,7 @@ $(function() {
                 formatter: dateTimeFormat
             }]
         }, {
-            field: 'ethTransList',
+            field: 'wanTransList',
             title: '区块链流水',
             readonly: true,
             type: 'o2m',
@@ -209,24 +201,20 @@ $(function() {
                 field: 'to',
                 title: 'to'
             }, {
-                field: 'gas',
+                field: 'gasLimit',
                 title: 'gasLimit',
             }, {
                 field: 'gasPrice',
-                title: 'gasPrice',
-                formatter: moneyFormat,
+                title: 'gasPrice'
             }, {
                 field: 'gasUsed',
                 title: 'gasUsed'
             }, {
 		        title: "矿工费",
-		        field: 'kgPrice',
-		        formatter: function(v,data){
-		        	var gasPrice = new BigDecimal(data.gasPrice);
-		        	var gasUsed = new BigDecimal(data.gasUsed);
-		        	kgPrice =  gasPrice.multiply(gasUsed).toString();
-		        	return moneyFormat(kgPrice);
-		        	}
+                field: 'gasFee',
+                formatter: function(v,data){
+                    return moneyFormat(v, '', 'WAN');
+                }
 	        },{
                 field: 'nonce',
                 title: 'nonce'

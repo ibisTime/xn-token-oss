@@ -98,7 +98,7 @@ $(function() {
                                 json: data
                             }).then(function() {
                                 hideLoading();
-                                sucList();
+                                sucDetail();
                                 dw.close().remove();
                             },hideLoading);
                         }

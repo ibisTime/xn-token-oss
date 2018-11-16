@@ -1,7 +1,7 @@
 $(function() {
     var code = getQueryString('code');
     var view = !!getQueryString('v');
-	
+
 	var buttons = [{
         title: '通过',
         handler: function() {
@@ -42,7 +42,7 @@ $(function() {
             goBack();
         }
     }];
-    
+
 
     var fields = [{
         field: 'accountName',
@@ -55,6 +55,15 @@ $(function() {
         field: 'feeString',
         title: '手续费',
         formatter: moneyFormat
+    }, {
+        field: 'amount',
+        title: '实际到账金额',
+        formatter: function(v, data) {
+            var amount = new BigDecimal(data.amountString);
+            var feeString = new BigDecimal(data.feeString);
+            return moneyFormat(amount.subtract(feeString).toString(), '', data.currency);
+        },
+        readonly: true
     }, {
         field: 'channelType',
         title: '渠道',

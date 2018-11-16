@@ -1,5 +1,5 @@
 $(function() {
-	
+
 	getCoinReq().then(function(data){
 		hideLoading()
 		var currencyData = {};
@@ -42,10 +42,8 @@ $(function() {
 	        field: 'channelType',
 	        title: '支付渠道',
 	        type: 'select',
-	        data:{
-	        	"90" : "人工线下",
-	        	"1" : "线上"
-	        },
+            key: 'channel_type',
+            formatter: Dict.getNameForList('channel_type'),
 	        search: true,
 	    }, {
 	        field: "bizNote",
@@ -80,7 +78,7 @@ $(function() {
 	            location.href = "offlineRecharge_check.html?code=" + data.code + "&detail=1";
 	        }
 	    });
-	    
+
     },hideLoading);
 
     //审核

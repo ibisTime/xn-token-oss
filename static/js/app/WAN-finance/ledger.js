@@ -99,7 +99,7 @@ $(function() {
 
     $('.tools .toolbar').html('<li style="display:block;" id="detailBtn"><span><img src="/static/images/t01.png"></span>详情</li><li style="display:block;" id="backBtn"><span><img src="/static/images/t01.png"></span>返回</li>');
     $('#backBtn').on('click', function() {
-        window.location.href = "../finance/breakBalance.html";
+        window.location.href = "../WAN-finance/breakBalance.html";
     });
 
     //详情

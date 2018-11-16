@@ -57,7 +57,7 @@ function dateFormatData(date) {
     return date.format(format);
 }
 
-//重写toFixed方法  
+//重写toFixed方法
 Number.prototype.toFixed = function(length) {
     var carry = 0; //存放进位标志
     var num, multiple; //num为原浮点数放大multiple倍后的数，multiple为10的length次方
@@ -87,6 +87,10 @@ Number.prototype.toFixed = function(length) {
     return result;
 }
 
+function getBigDecimalNumber(money) {
+    return Number(money).toString();
+}
+
 /**
  * 金额格式转化
  * @param money
@@ -97,14 +101,16 @@ function moneyFormat(money, format, coin) {
     var unit = coin&&getCoinList()[coin]?getCoinUnit(coin):"1e18";
     if (isNaN(money)) {
         return '-';
+    } else {
+        money = Number(money);
     }
     if (format == '' || format == null || format == undefined || typeof format == 'object') {
         format = 8;
     }
     //钱除以1000并保留两位小数
-    money = new BigDecimal(money);
+    money = new BigDecimal(money.toString());
     money = money.divide(new BigDecimal(unit), format, MathContext.ROUND_DOWN).toString();
-    
+
     //去掉小数点后多余的0
 //  money = money.replace(/(-?\d+)\.0+$/, '$1').replace(/(.+[^0]+)0+$/, '$1');
     return money;
@@ -121,7 +127,7 @@ function moneyFormatSC(money, format) {
     //钱除以1000并保留两位小数
     money = new BigDecimal(money);
     money = money.divide(new BigDecimal(unit), format, MathContext.ROUND_DOWN).toString();
-    
+
     //去掉小数点后多余的0
 //  money = money.replace(/(-?\d+)\.0+$/, '$1').replace(/(.+[^0]+)0+$/, '$1');
     return money;
@@ -138,7 +144,7 @@ function moneyFormatBTC(money, format) {
     //钱除以1000并保留两位小数
     money = new BigDecimal(money);
     money = money.divide(new BigDecimal(unit), format, MathContext.ROUND_DOWN).toString();
-    
+
     //去掉小数点后多余的0
 //  money = money.replace(/(-?\d+)\.0+$/, '$1').replace(/(.+[^0]+)0+$/, '$1');
     return money;
@@ -352,6 +358,14 @@ function getUrlParam(key) {
     return key != undefined ?
         json[key] :
         json;
+}
+// 判断是否为数组
+function isArrayFn(value){
+    if (typeof Array.isArray === "function") {
+        return Array.isArray(value);
+    }else{
+        return Object.prototype.toString.call(value) === "[object Array]";
+    }
 }
 
 /**
@@ -897,7 +911,7 @@ function buildList(options) {
                 dataDict[data[j][item.keyName]] = data[j][item.valueName] || item.valueName.temp(data[j]);
                 if (item.amount) {
                 	if(item.coin){
-                		dataDict[data[j][item.keyName]] = moneyFormat(dataDict[data[j][item.keyName]],'',item.coin);	
+                		dataDict[data[j][item.keyName]] = moneyFormat(dataDict[data[j][item.keyName]],'',item.coin);
                 	}else{
                 		dataDict[data[j][item.keyName]] = moneyFormat(dataDict[data[j][item.keyName]]);
                 	}
@@ -1024,7 +1038,7 @@ function buildList(options) {
                 });
             }
             var data = codeParams;
-			
+
 			showLoading();
             reqApi({ code: options.deleteCode, json: data }).then(function(data) {
                 sucList();
@@ -1124,14 +1138,14 @@ function buildList(options) {
         sortOrder = options['sortOrder'];
     }
     var tableEl = $('#'+tableName);
-	
+
     if (options.tableId) {
         tableEl = $('#' + options.tableId);
     }
 	tableEl.on('load-success.bs.table', function () {
         hideLoading();
         updateTableInfo('tableList');
-    });    
+    });
     tableEl.on('page-change.bs.table', function () {
         showLoading();
     });
@@ -1467,7 +1481,7 @@ function buildDetail(options) {
     $('#subBtn').click(function() {
         if ($('#jsForm').valid()) {
             var data = $('#jsForm').serializeObject();
-            
+
             $('#jsForm').find('.btn-file [type=file]').parent().next().each(function(i, el) {
                 var values = [];
                 var imgs = $(el).find('.img-ctn');
@@ -1671,7 +1685,7 @@ function buildDetail(options) {
             editor.config.customUploadInit = uploadInit; // 配置自定义上传初始化事件，uploadInit方法在上面定义了
             //editor.config.uploadImgUrl = '/upload';
             editor.create();
-        
+
     	}
     }
 
@@ -1732,7 +1746,7 @@ function buildDetail(options) {
 	        }
         })(i);
     }
-    
+
     var _cityGroup = $("#city-group");
     _cityGroup.citySelect && _cityGroup.citySelect({
         required: false
@@ -1867,6 +1881,10 @@ function buildDetail(options) {
                         } else {
                             if (item.useData) {
                                 displayValue = $.isArray(item.useData) ? item.useData : (data || []);
+                            } else if(!isArrayFn(displayValue)) {
+                                let tmpl = [];
+                                tmpl.push(displayValue);
+                                displayValue = tmpl;
                             }
                             $('#' + item.field).html('<table id="' + item.field + 'List"></table>');
                             $('#' + item.field + 'List').bootstrapTable({
@@ -1951,7 +1969,7 @@ function buildDetail(options) {
                                 limit: 100000
                             };
                         }
-                        
+
 			            $.extend(params, item.params || {});
                         var realValue = displayValue || '';
                         if (item.value && item.value.call) {
@@ -3280,7 +3298,7 @@ function buildDetail1(options) {
 		        	}else{
 						$('#' + item.field + "-model").val(item.amount ? moneyFormat(displayValue) : displayValue);
 					}
-                    
+
                 }
             }
 
@@ -3431,7 +3449,7 @@ function buildCharts(options) {
         json.systemCode = sessionStorage.getItem('systemCode');
 
         $.extend(json, options.searchParams, searchFormParams);
-		
+
 		showLoading();
         reqApi({
             code: options.pageCode,

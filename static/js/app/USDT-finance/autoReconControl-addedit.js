@@ -29,7 +29,6 @@ $(function() {
         }, {
             field: 'currency',
             title: '币种',
-            type: 'select',
             formatter: function(v, data) {
                 if (data.charge) {
             		return data.charge.currency;
@@ -150,10 +149,7 @@ $(function() {
                 }
             }, {
                 field: 'accountName',
-                title: '户名',
-                formatter: function(v, data) {
-                    return data.accountName
-                }
+                title: '户名'
             }, {
                 field: 'currency',
                 title: '币种'
@@ -206,19 +202,19 @@ $(function() {
             type: 'o2m',
             columns: [{
                 title: "交易ID",
-		        field: 'txid'
+		        field: 'blockHash'
 		    }, {
 		        title: "矿工费",
-		        field: 'fees',
+		        field: 'fee',
 		        formatter: function(v, data){
 		        	return moneyFormatBTC(v.toString())
 		        }
 		    }, {
 		        title: "确认高度",
-		        field: "blockheight"
+		        field: "blockHeight"
 		    }, {
 		        title: "确认时间",
-		        field: "blocktime",
+		        field: "blockCreateDatetime",
                 formatter: dateTimeFormat
 		    }, {
 		        field: 'refNo',

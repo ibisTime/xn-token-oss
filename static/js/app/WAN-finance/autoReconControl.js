@@ -14,14 +14,13 @@ $(function() {
         search: true
     }, {
         field: 'currency',
-        title: '币种',
-        type: 'select',
-        key: 'coin',
-        formatter: Dict.getNameForList("coin"),
+        title: '币种'
     }, {
         field: 'amountString',
         title: '充值金额',
-        formatter: moneyFormat
+        formatter: function (v, data) {
+            return moneyFormat(v, '', data.currency)
+        }
     }, {
         field: 'channelType',
         title: '支付渠道',

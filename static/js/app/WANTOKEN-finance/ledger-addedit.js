@@ -22,9 +22,6 @@ $(function() {
     }, {
         field: 'currency',
         title: '币种',
-        formatter: function(v, data) {
-        	return getCoinName(data.currency);
-        },
     }, {
         field: 'channelType',
         title: '渠道类型',

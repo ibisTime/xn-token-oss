@@ -1,7 +1,7 @@
 $(function() {
     var code = getQueryString('code');
     var view = !!getQueryString('v');
-	
+
 	var buttons = [{
         title: '通过',
         handler: function() {
@@ -42,7 +42,7 @@ $(function() {
             goBack();
         }
     }];
-    
+
     var fields = [{
         field: 'accountName',
         title: '账号'
@@ -50,14 +50,23 @@ $(function() {
         field: 'amountString',
         title: '取现金额',
         formatter: function(v, data) {
-            return moneyFormat(v,'',data.payCardInfo);
+            return moneyFormat(v,'',data.currency);
         },
     }, {
         field: 'feeString',
         title: '手续费',
         formatter: function(v, data) {
-            return moneyFormat(v,'',data.payCardInfo);
+            return moneyFormat(v,'',data.currency);
         },
+    }, {
+        field: 'amount',
+        title: '实际到账金额',
+        formatter: function(v, data) {
+            var amount = new BigDecimal(data.amountString);
+            var feeString = new BigDecimal(data.feeString);
+            return moneyFormat(amount.subtract(feeString).toString(), '', data.currency);
+        },
+        readonly: true
     }, {
         field: 'amount',
         title: '实际到账金额',
@@ -122,5 +131,5 @@ $(function() {
     };
 
     buildDetail(options);
-	    
+
 });

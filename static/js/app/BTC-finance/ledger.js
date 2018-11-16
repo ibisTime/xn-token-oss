@@ -26,7 +26,6 @@ $(function() {
     } else {
         bizType = bizTypelist['_' + accountNumber.split('_')[3].toUpperCase()];
     }
-    console.log(bizType);
 
     var columns = [{
         field: '',

@@ -17,9 +17,6 @@ $(function() {
     }, {
         field: 'currency',
         title: '币种',
-        type: 'select',
-        key: 'currency',
-        formatter: Dict.getNameForList("currency"),
         readonly: true
     }, {
         field: 'direction',
@@ -79,8 +76,8 @@ $(function() {
             field: 'bizType',
             title: '业务类型',
             type: 'select',
-            key: 'jour_biz_type',
-            formatter: Dict.getNameForList('jour_biz_type'),
+            key: 'jour_biz_type_plat_usdt',
+            formatter: Dict.getNameForList('jour_biz_type_plat_usdt'),
             search: true
         }, {
             field: 'transAmountString',

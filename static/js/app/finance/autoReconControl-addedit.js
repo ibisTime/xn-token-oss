@@ -29,10 +29,9 @@ $(function() {
         }, {
             field: 'currency',
             title: '币种',
-            type: 'select',
             formatter: function(v, data) {
                 if (data.charge) {
-            		return Dict.getNameForList1('coin','',data.charge.currency);
+            		return data.charge.currency;
             	}
             },
             readonly: true,
@@ -148,16 +147,11 @@ $(function() {
                     return data.code
                 }
             }, {
-                field: 'realName',
-                title: '户名',
-                formatter: function(v, data) {
-                    return data.realName
-                }
+                field: 'accountName',
+                title: '户名'
             }, {
                 field: 'currency',
                 title: '币种',
-                key: 'coin',
-                formatter: Dict.getNameForList('coin'),
             }, {
                 field: 'channelType',
                 title: '渠道',
@@ -209,24 +203,20 @@ $(function() {
                 field: 'to',
                 title: 'to'
             }, {
-                field: 'gas',
+                field: 'gasLimit',
                 title: 'gasLimit',
             }, {
                 field: 'gasPrice',
-                title: 'gasPrice',
-                formatter: moneyFormat,
+                title: 'gasPrice'
             }, {
                 field: 'gasUsed',
                 title: 'gasUsed'
             }, {
 		        title: "矿工费",
-		        field: 'kgPrice',
-		        formatter: function(v,data){
-		        	var gasPrice = new BigDecimal(data.gasPrice);
-		        	var gasUsed = new BigDecimal(data.gasUsed);
-		        	kgPrice =  gasPrice.multiply(gasUsed).toString();
-		        	return moneyFormat(kgPrice);
-		        	}
+                field: 'gasFee',
+                formatter: function(v,data){
+                    return moneyFormat(v, '', 'ETH');
+                }
 	        },{
                 field: 'nonce',
                 title: 'nonce'
@@ -237,7 +227,7 @@ $(function() {
                 title: "交易Hash",
                 field: "hash"
             }, {
-                field: 'transactionIndex',
+                field: '交易索引',
                 title: 'transactionIndex'
             }, {
                 title: "value",

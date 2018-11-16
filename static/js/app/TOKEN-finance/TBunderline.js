@@ -1,6 +1,6 @@
 $(function() {
 	getCoinReq().then(function(data){
-		
+
 		var currencyList = []
 		var coinList = [];
 		var hasCurrency = false;
@@ -74,7 +74,7 @@ $(function() {
         field: 'mobile',
         title: '申请人',
         formatter: function(v, data) {
-        	
+
             if (data.user) {
             	if(data.user.kind="P"){
             		return data.user.loginName;
@@ -134,9 +134,9 @@ $(function() {
             window.location.href = "./TBunderline_detail.html?v=1&code=" + data.code;
         }
     });
-    
+
     },hideLoading);
-    
+
     //提币广播
     $('#spBtn').click(function() {
         var selRecords = $('#tableList').bootstrapTable('getSelections');
@@ -144,18 +144,18 @@ $(function() {
             toastr.info("请选择记录");
             return;
         }
-        
+
         if (selRecords.length > 1) {
             toastr.info("请选择一条记录");
             return;
         }
-		
+
 		if (selRecords[0].status !="3") {
             toastr.info("只有审批通过的记录才可以广播");
             return;
         }
 
-        window.location.href = "./TBunderline_sp.html?code=" + selRecords[0].code;
+        window.location.href = "./TBunderline_sp.html?code=" + selRecords[0].code + '&currency=' + selRecords[0].payCardInfo;
         // var balanceStart;
         // var amount3 = selRecords[0].amountString;      // 提现金额
         // var amount4 = selRecords[0].feeString;         // 手续费
@@ -222,9 +222,8 @@ $(function() {
         // });
         //
         // dw.__center();
-
     });
-	
+
     //审核
     $('#multiCheckBtn').click(function() {
         var selRecords = $('#tableList').bootstrapTable('getSelections');
@@ -239,20 +238,20 @@ $(function() {
 	        var dataCode = []
 	        for (var i = 0; i < selRecords.length; i++) {
 	            dataCode.push(selRecords[i].code)
-	
+
 	            if (selRecords[i].status != 1) {
 	                toastr.info(selRecords[i].code + "状态不能审核!");
 	                return;
 	            }
 	        }
-	
+
 	        var dw = dialog({
 	            content: '<form class="pop-form" id="popForm" novalidate="novalidate">' +
 	                '<ul class="form-info" id="formContainer"><li style="text-align:center;font-size: 15px;">审核</li></ul>' +
 	                '</form>'
 	        });
 	        dw.showModal();
-	
+
 	        buildDetail({
 	            fields: [{
 	                field: 'approveNote',
@@ -263,7 +262,7 @@ $(function() {
 	            buttons: [{
 	                title: '通过',
 	                handler: function() {
-	
+
 	                    if ($('#approveNote').val() == "") {
 	                        toastr.error("审核意见不能为空");
 	                    } else {
@@ -279,7 +278,7 @@ $(function() {
 	                            dw.close().remove();
 	                        });
 	                    }
-	
+
 	                }
 	            }, {
 	                title: '不通过',

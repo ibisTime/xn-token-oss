@@ -51,7 +51,7 @@ $(function() {
         title: "交易数量",
         field: "countString",
         formatter: function(v, data) {
-            return moneyFormat(v) + Dict.getNameForList1('coin','',data.tradeCoin);
+            return moneyFormat(v) + data.tradeCoin;
         }
     }, {
         title: "交易金额",
@@ -100,7 +100,7 @@ $(function() {
         	return data;
         }
     });
-	
-	
-	
+
+
+
 });

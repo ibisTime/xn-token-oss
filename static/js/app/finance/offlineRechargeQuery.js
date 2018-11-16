@@ -13,9 +13,6 @@ $(function() {
     }, {
         field: 'currency',
         title: '币种',
-        type: 'select',
-        key: 'coin',
-        formatter: Dict.getNameForList("coin"),
     }, {
         field: 'amountString',
         title: '充值金额',
@@ -23,11 +20,8 @@ $(function() {
     }, {
         field: 'channelType',
         title: '支付渠道',
-        type: 'select',
-        data:{
-        	"ETH" : '以太坊',
-        	"90" : "人工线下"
-        },
+        key: 'channel_type',
+        formatter: Dict.getNameForList('channel_type'),
         search: true,
     }, {
         field: "bizNote",
