@@ -2,7 +2,7 @@ $(function() {
     var code = getQueryString('code');
     var view = !!getQueryString('v');
     var userId = getQueryString('userId') || '';
-    
+
     var fields = [{
         field: 'accountName',
         title: '账号'
@@ -13,11 +13,8 @@ $(function() {
             return moneyFormat(v,'',data.payCardInfo);
         },
     }, {
-        field: 'coin',
-        title: '币种',
-        formatter: function(v, data) {
-        	return getCoinName(data.payCardInfo);
-        },
+        field: 'currency',
+        title: '币种'
     }, {
         field: 'feeString',
         title: '手续费',
@@ -110,5 +107,5 @@ $(function() {
     };
 
     buildDetail(options);
-	    
+
 });

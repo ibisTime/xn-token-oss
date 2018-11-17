@@ -205,7 +205,10 @@ $(function() {
                 title: 'gasLimit',
             }, {
                 field: 'gasPrice',
-                title: 'gasPrice'
+                title: 'gasPrice',
+                formatter: function(v, data){
+                    return moneyFormat(v, '', '', '1e9') + 'Gwin';
+                }
             }, {
                 field: 'gasUsed',
                 title: 'gasUsed'
@@ -224,9 +227,6 @@ $(function() {
             }, {
                 title: "交易Hash",
                 field: "hash"
-            }, {
-                field: 'transactionIndex',
-                title: 'transactionIndex'
             }, {
                 title: "value",
                 field: "value",

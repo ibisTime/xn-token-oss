@@ -49,7 +49,10 @@ $(function() {
         field: 'gasLimit'
     }, {
         title: "gas价格",
-        field: 'gasPriceString'
+        field: 'gasPriceString',
+        formatter: function(v, data){
+            return moneyFormat(v, '', '', '1e9') + 'Gwei';
+        }
     }, {
         title: "消耗gas",
         field: 'gasUsed'

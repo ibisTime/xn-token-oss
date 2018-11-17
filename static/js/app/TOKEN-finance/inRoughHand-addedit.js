@@ -46,7 +46,7 @@ $(function() {
             title: "交易数量",
             field: "countString",
             formatter: function(v, data) {
-                return moneyFormat(data.tradeOrder.countString,"",data.tradeOrder.tradeCoin) + getCoinName(data.tradeOrder.tradeCoin);
+                return moneyFormat(data.tradeOrder.countString,"",data.tradeOrder.tradeCoin) + data.tradeOrder.tradeCoin;
             },
             readonly: true
         }, {
@@ -68,7 +68,7 @@ $(function() {
             field: "tradeCoin",
             formatter: function(v, data) {
                 if (data.tradeOrder) {
-                	return getCoinName(data.tradeOrder.tradeCoin);
+                	return data.tradeOrder.tradeCoin;
                 }
             },
             readonly: true

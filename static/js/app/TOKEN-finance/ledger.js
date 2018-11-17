@@ -44,8 +44,7 @@ $(function() {
         formatter: Dict.getNameForList('channel_type'),
     }, {
         title: "币种",
-        field: "currency",
-        formatter: getCoinName
+        field: "currency"
     }, {
         field: 'bizType',
         title: '业务类型',

@@ -23,7 +23,7 @@ $(function() {
         title: '币种',
         formatter: function(v,data){
         	currencyVal = v;
-        	return getCoinName(data.withdraw.currency)
+        	return data.withdraw.currency
         }
     }, {
         field: 'feeString',
@@ -236,7 +236,10 @@ $(function() {
             title: 'gasLimit',
         }, {
             field: 'gasPrice',
-            title: 'gasPrice'
+            title: 'gasPrice',
+            formatter: function(v, data){
+                return moneyFormat(v, '', '', '1e9') + 'Gwei';
+            }
         }, {
             field: 'gasUsed',
             title: 'gasUsed'
@@ -252,9 +255,6 @@ $(function() {
         }, {
             title: "交易Hash",
             field: "hash"
-        }, {
-            field: 'transactionIndex',
-            title: '交易索引'
         }, {
             title: "value",
             field: "tokenValue",

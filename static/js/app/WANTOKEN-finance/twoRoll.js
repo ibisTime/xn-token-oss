@@ -1,5 +1,5 @@
 $(function() {
-	
+
 	getCoinReq().then(function(data){
 		var currencyData = {};
 		var currencyList = [];
@@ -14,7 +14,7 @@ $(function() {
 		if(!hasCurrency){
 			currencyList.push("无")
 		}
-		
+
     var columns = [{
         field: '',
         title: '',
@@ -72,7 +72,7 @@ $(function() {
         title: "交易数量",
         field: "countString",
         formatter: function(v, data){
-    		return moneyFormat(v,'',data.tradeCoin)+getCoinName(data.tradeCoin);
+    		return moneyFormat(v,'',data.tradeCoin)+data.tradeCoin;
         }
     }, {
         title: "交易金额",
@@ -127,9 +127,9 @@ $(function() {
         	return data;
         }
     });
-    
+
     },hideLoading);
-	
-	
-	
+
+
+
 });

@@ -97,8 +97,8 @@ function getBigDecimalNumber(money) {
  * @param format
  * @param coin 币种
  */
-function moneyFormat(money, format, coin) {
-    var unit = coin&&getCoinList()[coin]?getCoinUnit(coin):"1e18";
+function moneyFormat(money, format, coin, unit = '1e18') {
+    unit = coin&&getCoinList()[coin]?getCoinUnit(coin): unit;
     if (isNaN(money)) {
         return '-';
     } else {

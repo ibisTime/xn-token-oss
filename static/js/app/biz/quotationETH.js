@@ -7,9 +7,6 @@ $(function() {
     }, {
         title: "币种",
         field: "coin",
-        type: "select",
-        key: "coin",
-        formatter: Dict.getNameForList("coin"),
     }, {
         title: "最新成交价",
         field: "lastPrice",
@@ -53,6 +50,6 @@ $(function() {
         	coin:'ETH'
         },
     });
-    
-    
+
+
 });

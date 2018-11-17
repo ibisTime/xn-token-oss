@@ -45,9 +45,6 @@ $(function() {
     }, {
         title: "币种",
         field: "currency",
-        type: "select",
-        key: "coin",
-        formatter: Dict.getNameForList("coin")
     }, {
         field: 'bizType',
         title: '业务类型',
