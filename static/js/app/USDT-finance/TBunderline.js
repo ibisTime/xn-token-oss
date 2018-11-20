@@ -14,10 +14,11 @@ $(function() {
         type: 'select',
         pageCode: '802500',
         params: {
-            type:'C'
+            type:'C',
+            currency: 'USDT'
         },
         keyName: 'realName',
-        valueName: '{{realName.DATA}}',
+        valueName: '{{accountName.DATA}}',
         searchName: 'realName',
         search: true
     }, {

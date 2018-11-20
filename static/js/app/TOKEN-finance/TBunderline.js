@@ -35,12 +35,8 @@ $(function() {
             type:'C',
             currencyList:currencyList
         },
-        dict: [
-            ['currency'],
-        ],
-        dictData:coinList,
         keyName: 'realName',
-        valueName: '{{realName.DATA}} - {{currencyName.DATA}}',
+        valueName: '{{accountName.DATA}} - {{currency.DATA}}',
         searchName: 'realName',
         search: true
     }, {

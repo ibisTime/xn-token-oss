@@ -64,15 +64,6 @@ $(function() {
         formatter: function(v, data) {
             var amount = new BigDecimal(data.amountString);
             var feeString = new BigDecimal(data.feeString);
-            return moneyFormat(amount.subtract(feeString).toString(), '', data.currency);
-        },
-        readonly: true
-    }, {
-        field: 'amount',
-        title: '实际到账金额',
-        formatter: function(v, data) {
-            var amount = new BigDecimal(data.amountString);
-            var feeString = new BigDecimal(data.feeString);
             return moneyFormat(amount.subtract(feeString).toString(),"",data.payCardInfo);
         },
         readonly: true

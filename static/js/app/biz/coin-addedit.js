@@ -2,7 +2,7 @@ $(function() {
     var symbol = getQueryString('symbol');
     var view = !!getQueryString('v');
     var isDetail = !!getQueryString('isDetail');
-    
+
     var fields = [{
         title: "符号",
         field: "symbol",
@@ -15,8 +15,7 @@ $(function() {
         field: "type",
         type: 'select',
         data: {
-        	'1': '基于ETH的token币',
-        	'2': '基于WAN的token币'
+        	'1': '基于ETH的token币'
         }
     }, {
         title: "英文名称",
@@ -110,7 +109,7 @@ $(function() {
         title: "备注",
         field: "remark"
     }];
-    
+
     var options = {
         fields: fields,
         code: {

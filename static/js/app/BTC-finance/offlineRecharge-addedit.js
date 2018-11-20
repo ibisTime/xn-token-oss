@@ -11,7 +11,6 @@ $(function() {
         pageCode: userId ? '802503' : '802500',
         keyCode1: '660906',
         dict: [
-            ['currency', 'coin'],
             ['type', 'account_type']
         ],
         params: {
@@ -20,7 +19,7 @@ $(function() {
             type:"C"
         },
         keyName: 'accountNumber',
-        valueName: '{{realName.DATA}} - {{currencyName.DATA}} - {{typeName.DATA}}',
+        valueName: '{{accountName.DATA}} - {{currency.DATA}} - {{typeName.DATA}}',
         searchName: 'realName',
         help: '支持户名查询'
     }, {

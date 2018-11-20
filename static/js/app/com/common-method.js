@@ -1883,7 +1883,9 @@ function buildDetail(options) {
                                 displayValue = $.isArray(item.useData) ? item.useData : (data || []);
                             } else if(!isArrayFn(displayValue)) {
                                 let tmpl = [];
-                                tmpl.push(displayValue);
+                                if (displayValue) {
+                                    tmpl.push(displayValue);
+                                }
                                 displayValue = tmpl;
                             }
                             $('#' + item.field).html('<table id="' + item.field + 'List"></table>');

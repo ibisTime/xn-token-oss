@@ -21,7 +21,7 @@ $(function() {
                     title: '地址',
                     required: true,
                     type: "select",
-                    pageCode: "802205",
+                    pageCode: "802455",
                     params: {
                         type: 'M',
                         statusList: ['0'],

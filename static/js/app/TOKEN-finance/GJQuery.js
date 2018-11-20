@@ -18,7 +18,7 @@ $(function() {
         search: true
     }, {
         title: "归集来方地址",
-        field: "formAddress"
+        field: "fromAddress"
     }, {
         field: 'amountString',
         title: '归集数量',

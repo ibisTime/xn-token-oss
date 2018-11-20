@@ -3,7 +3,7 @@ $(function() {
     var userId = getQueryString('userId') || '';
 	var coin='';
 	showLoading()
-	
+
 	getCoinReq().then(function(data){
     	hideLoading()
 		var coinList = [];
@@ -19,7 +19,7 @@ $(function() {
         if(!hasCurrency){
             currencyList.push("无")
         }
-		
+
 		var fields = [{
 	        field: 'accountNumber',
 	        title: '充值账户',
@@ -32,7 +32,7 @@ $(function() {
 	            currencyList:currencyList
 	        },
 	        keyName: 'accountNumber',
-	        valueName: '{{realName.DATA}} - {{currency.DATA}}',
+	        valueName: '{{accountName.DATA}} - {{currency.DATA}}',
 	        searchName: 'realName',
 	        onChange: function(v, data){
 	        	coin = data.currency || '';
@@ -57,7 +57,7 @@ $(function() {
 	        title: '充值说明',
 	        maxlength: 255
 	    }];
-	
+
 	    var options = {
 	        fields: fields,
 	        addCode: '802700',
@@ -70,7 +70,7 @@ $(function() {
 	    };
 
     	buildDetail(options);
-		
+
     },hideLoading);
 
 })

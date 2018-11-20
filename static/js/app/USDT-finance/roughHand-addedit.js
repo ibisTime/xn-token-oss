@@ -200,30 +200,30 @@ $(function() {
             title: '生成说明'
         }, ]
     }, {
-        field: 'usdtTransactionList',
+        field: 'usdtTransList',
         title: '区块链流水',
         readonly: true,
         type: 'o2m',
         columns: [{
             title: "交易ID",
-		        field: 'txid'
-		    }, {
-		        title: "矿工费",
-		        field: 'fees',
-		        formatter: function(v, data){
-		        	return moneyFormatBTC(v.toString())
-		        }
-		    }, {
-		        title: "确认高度",
-		        field: "blockheight"
-		    }, {
-		        title: "确认时间",
-		        field: "blocktime",
-                formatter: dateTimeFormat
-		    }, {
-		        field: 'refNo',
-		        title: '关联订单号',
-            }]
+            field: 'blockHash'
+        }, {
+            title: "矿工费",
+            field: 'fee',
+            formatter: function(v, data){
+                return moneyFormatBTC(v.toString())
+            }
+        }, {
+            title: "确认高度",
+            field: "blockHeight"
+        }, {
+            title: "确认时间",
+            field: "blockCreateDatetime",
+            formatter: dateTimeFormat
+        }, {
+            field: 'refNo',
+            title: '关联订单号',
+        }]
     }, {
         field: 'checkUser',
         type: 'hidden',

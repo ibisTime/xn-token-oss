@@ -12,11 +12,11 @@ $(function() {
             type:'C'
         },
         keyName: 'realName',
-        valueName: '{{realName.DATA}}',
+        valueName: '{{accountName.DATA}} - {{currency.DATA}}',
         searchName: 'realName',
         search: true,
         formatter: function (v, data) {
-            return data.realName;
+            return data.accountName;
         }
     }, {
         title: "账号",

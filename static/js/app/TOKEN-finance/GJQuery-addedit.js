@@ -18,9 +18,9 @@ $(function() {
             return moneyFormat(v,'','ETH')
         }
     }, {
-//      field: 'fromAddress',
-//      title: '来方归集地址',
-//  }, {
+         field: 'fromAddress',
+         title: '来方归集地址',
+     }, {
         title: "归集去方地址",
         field: "toAddress"
     }, {

@@ -34,7 +34,7 @@ $(function() {
     }];
     buildList({
         columns: columns,
-        pageCode: '802205',
+        pageCode: '802455',
         searchParams: {
             type: 'W',
             companyCode: OSS.company
@@ -49,7 +49,7 @@ $(function() {
 //
 //      }
     });
-    
+
     $('#addBtn').off("click").click(function() {
     	var dw = dialog({
             content: '<form class="pop-form pop-form-uRef " id="popForm" novalidate="novalidate">' +
