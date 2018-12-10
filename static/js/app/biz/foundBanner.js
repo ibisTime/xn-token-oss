@@ -32,7 +32,7 @@ $(function() {
     formatter: Dict.getNameForList("dapp_status"),
   }, {
     title: '描述',
-    field: 'desc',
+    field: 'desc'
   }];
   buildList({
     router: 'banner',

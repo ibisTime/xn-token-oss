@@ -50,6 +50,16 @@ $(function() {
     readonly: view,
     items: dappLabel
   }, {
+    title: '点赞数量',
+    field: 'likeCount',
+    readonly: view,
+    hidden: !view
+  }, {
+    title: '浏览数量',
+    field: 'scanCount',
+    readonly: view,
+    hidden: !view
+  }, {
     title: '起始点赞数量',
     field: 'likeCountFake',
     required: true,
