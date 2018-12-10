@@ -1236,6 +1236,7 @@ function buildDetail(options) {
     //页面构造
     for (var i = 0, len = fields.length; i < len; i++) {
         var item = fields[i];
+        console.log(item.type || JSON.stringify(item));
         rules[item.field] = {};
         if (!('readonly' in item) && options.view) {
             item.readonly = true;
@@ -1383,6 +1384,7 @@ function buildDetail(options) {
             } else if (item.type == 'textarea' && item.normalArea) {
                 html += '<div style="width:400px;float:left;"><textarea style="resize:none;height:200px;width: 320px !important;border: 1px solid #e0e0e0;padding: 8px;" id="' + item.field + '" name="' + item.field + '"></textarea></div></li>';
             } else if (item.type == 'citySelect') {
+                console.log(1);
                 if (item.onlyProvince) {
                     html += '<div id="city-group" data-only-prov="' + item.onlyProvince + '"><select id="province" name="province" class="control-def prov"><option value="">请选择</option></select></div></li>';
                 } else {
@@ -1417,7 +1419,7 @@ function buildDetail(options) {
                 dateTimeList1.push(item);
                 html += '<input type="text" id="' + item.field + '" name="' + item.field + '" class="lay-input"/></li>';
             } else if (item.type == "o2m") {
-                html += '<div id="' + item.field + '" style="display: inline-block;"></div>';
+                html += '<div id="' + item.field + '" style="display: inline-block;"></div></li>';
                 //显示星级
             } else if(item.type=="start"){
                 html += '<p class="starWrap" id="'+item.field+'" data-score="1" >';
@@ -1429,12 +1431,12 @@ function buildDetail(options) {
                 var score = item.score ? item.score : '5';
                 for (var i = 1 ; i <= score ; i ++ ) {
                     var active = '';
-                    if (i === '1') {
+                    if (i == '1') {
                         active = 'active';
                     }
                     html += '<i class="star ' + active+ '" data-score="'+ i +'" ></i>';
                 }
-                html += '</p>';
+                html += '</p></li>';
 
                 //星星点击
                 $("#jsForm").on('click',"#"+item.field+" .star",function(){
@@ -1539,6 +1541,9 @@ function buildDetail(options) {
                 }
                 if (item.type == 'select' && item.passValue) {
                     data[item.field] = $('#' + item.field).find('option:selected').html();
+                }
+                if(item.type == 'start'){
+                    data[item.field] = $('#' + item.field).attr("data-score")
                 }
             }
             data['id'] = data['code'];
