@@ -811,6 +811,15 @@ function buildList(options) {
         	}else {
         		item.formatter = moneyFormat;
         	}
+        } else if(item.type == 'start') {
+            item.formatter = function(v) {
+                var startHtml = '<p class="starWrap" id="' + item.field+'" data-score="'+ v +'">';
+                for (var s=1; s <= v; s++) {
+                    startHtml+='<i class="star active"></i>'
+                }
+                startHtml += '</p>';
+                return startHtml;
+            };
         }
         if (item.search) {
             if (item.key || item.type == 'select') {
