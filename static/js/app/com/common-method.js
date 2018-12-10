@@ -836,12 +836,14 @@ function buildList(options) {
                 html += '<li  class="search-form-li" style="width: 25%;"><label>' + item.title + '</label><input id="' + item.field + '" name="' + item.field + '" class="lay-input lay-input1"/></li>';
             } else if (item.type == "citySelect") {
                 html += '<li class="clearfix" style="width:56%;"><label>' + item.title + '</label><div id="city-group"><select id="province" name="province" class="control-def prov"></select>' + '<select id="city" name="city" class="control-def city"></select>' + '<select id="area" name="area" class="control-def dist"></select></div></li>';
+            } else if (item.type == 'start') {
+                html += '<li class="search-form-li"><label>' + item.title + '</label><select id="' + item.field + '" name="' + item.field + '"></select></li>';
             } else {
                 html += '<li class="search-form-li"><label>' + item.title + '</label><input id="' + item.field + '" name="' + item.field + '" type="text"/></li>';
             }
         }
 
-        if ((item.key || item.type == 'select') && options.type != 'o2m') {
+        if ((item.key || item.type == 'select' || item.type == 'start') && options.type != 'o2m') {
             dropDownList.push(item);
         }
 
@@ -885,6 +887,13 @@ function buildList(options) {
 
     for (var i = 0, len = dropDownList.length; i < len; i++) {
         var item = dropDownList[i];
+        if (item.type == 'start') {
+            var score = item.score ? item.score : '5';
+            item.data = {};
+            for (var s = 1; s <= score; s ++) {
+                item.data[s] = s + '星';
+            }
+        }
         if (item.data) {
             var data = item.data;
             $('#' + item.field).renderDropdown2(data);
