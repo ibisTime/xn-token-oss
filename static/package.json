@@ -4,8 +4,7 @@
   "description": "xn-coin-oss",
   "main": "fis-conf.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "fis3 release -d ../dist -w",
+    "start": "fis3 release -d ../dist -w",
     "dist": "fis3 release -d ../dist",
     "build": "fis3 release -d ../dist"
   },

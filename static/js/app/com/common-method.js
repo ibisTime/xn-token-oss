@@ -1418,6 +1418,32 @@ function buildDetail(options) {
                 html += '<input type="text" id="' + item.field + '" name="' + item.field + '" class="lay-input"/></li>';
             } else if (item.type == "o2m") {
                 html += '<div id="' + item.field + '" style="display: inline-block;"></div>';
+                //显示星级
+            } else if(item.type=="start"){
+                html += '<p class="starWrap" id="'+item.field+'" data-score="1" >';
+                    // +'<i class="star active" data-score="1" ></i>'
+                    // +'<i class="star" data-score="2"></i>'
+                    // +'<i class="star" data-score="3"></i>'
+                    // +'<i class="star" data-score="4"></i>'
+                    // +'<i class="star" data-score="5"></i></p>';
+                var score = item.score ? item.score : '5';
+                for (var i = 1 ; i <= score ; i ++ ) {
+                    var active = '';
+                    if (i === '1') {
+                        active = 'active';
+                    }
+                    html += '<i class="star ' + active+ '" data-score="'+ i +'" ></i>';
+                }
+                html += '</p>';
+
+                //星星点击
+                $("#jsForm").on('click',"#"+item.field+" .star",function(){
+                    var _this = $(this);
+                    var _starWrap = _this.parent('.starWrap');
+                    var _thisIndex = _this.index()+1
+
+                    startActive(_starWrap,_thisIndex);
+                })
             } else {
                 html += '<input id="' + item.field + '" name="' + item.field + '" class="control-def" ' + (item.placeholder ?
                     ('placeholder="' + item.placeholder + '"') :
@@ -2089,6 +2115,14 @@ function buildDetail(options) {
                                 var dSrc = OSS.picBaseUrl + '/' + $(this).parents("[data-src]").attr('data-src');
                                 window.open(dSrc, '_blank');
                             });
+                            // 星级选中
+                        } else if(item.type=="start"){
+                            var startHtml = '';
+                            for (var i=1; i<= displayValue; i++) {
+                                startHtml+='<i class="star active"></i>'
+                            }
+
+                            $('#' + item.field).html('<p class="starWrap" id="' + item.field+'">'+startHtml+'</p>');
                         } else {
                             $('#' + item.field).html(item.formatter(displayValue, data));
                         }
@@ -2183,6 +2217,8 @@ function buildDetail(options) {
                     	}
 
                         // 星级选中
+                    } else if(item.type=="start"){
+                        startActive($('#' + item.field),displayValue)
                     } else {
                         if (item.formatter) {
                             $('#' + item.field).val(item.formatter(displayValue, data));
@@ -4013,4 +4049,18 @@ function showLoading() {
 }
 function hideLoading() {
     $("#loadingSpin").addClass("hidden");
+}
+//星级选中
+function startActive(starWrap,thisIndex){
+    var _starWrap = starWrap,
+        _thisIndex = thisIndex-1,
+        score = 1;
+    _starWrap.children('.star').removeClass("active")
+    _starWrap.children('.star').each(function(i, d){
+        if(i<=_thisIndex){
+            score = i+1;
+            $(this).addClass('active')
+        }
+    })
+    _starWrap.attr('data-score', score);
 }
