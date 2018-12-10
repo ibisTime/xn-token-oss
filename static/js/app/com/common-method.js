@@ -1236,7 +1236,6 @@ function buildDetail(options) {
     //页面构造
     for (var i = 0, len = fields.length; i < len; i++) {
         var item = fields[i];
-        console.log(item.type || JSON.stringify(item));
         rules[item.field] = {};
         if (!('readonly' in item) && options.view) {
             item.readonly = true;
@@ -1334,6 +1333,21 @@ function buildDetail(options) {
                     html += '<input type="checkbox" disabled id="' + item.field + '_checkbox' + k + '" name="' + item.field + '" value="' + rd.key + '"><label for="radio' + k + '" class="radio-text">' + (rd.value || '') + '<i class="zmdi ' + (rd.icon || '') + ' zmdi-hc-5x"></i></label>';
                 }
                 html += '</li>';
+                // 星级选中
+            } else if(item.type=="start" && !!item.value){
+                html += '<li class="clearfix" type="' + ((item.amount || item.amount1) ? 'amount' : '') +
+                    '" data-coin="' + (item.coin ? item.coin : '') +
+                    '" style="' + (item.width ? ('width: ' + item.width + ';display:inline-block;') : '') +
+                    (item.hidden ? 'display: none;' : '') + '"><label>' + (item.help ?
+                        '<i data-help="' + item.help + '" class="zmdi zmdi-help-outline field-help"></i>' : '') +
+                    (item.title ?
+                        ('<b>' + ((item.required && '*') || '') + '</b>' + item.title + imgLabel + ':') :
+                        '&nbsp;') + '</label>';
+                var startHtml = '';
+                for (var s=1; s <= item.value; s++) {
+                    startHtml+='<i class="star active"></i>'
+                }
+                html += '<p class="starWrap" id="' + item.field+'" data-score="'+ item.value +'">'+startHtml+'</p></li>';
             } else {
                 html += '<li class="clearfix" type="' + ((item.amount || item.amount1) ? 'amount' : '') +
                     '" data-coin="' + (item.coin ? item.coin : '') +
@@ -1384,7 +1398,6 @@ function buildDetail(options) {
             } else if (item.type == 'textarea' && item.normalArea) {
                 html += '<div style="width:400px;float:left;"><textarea style="resize:none;height:200px;width: 320px !important;border: 1px solid #e0e0e0;padding: 8px;" id="' + item.field + '" name="' + item.field + '"></textarea></div></li>';
             } else if (item.type == 'citySelect') {
-                console.log(1);
                 if (item.onlyProvince) {
                     html += '<div id="city-group" data-only-prov="' + item.onlyProvince + '"><select id="province" name="province" class="control-def prov"><option value="">请选择</option></select></div></li>';
                 } else {
@@ -1422,19 +1435,20 @@ function buildDetail(options) {
                 html += '<div id="' + item.field + '" style="display: inline-block;"></div></li>';
                 //显示星级
             } else if(item.type=="start"){
-                html += '<p class="starWrap" id="'+item.field+'" data-score="1" >';
-                    // +'<i class="star active" data-score="1" ></i>'
-                    // +'<i class="star" data-score="2"></i>'
-                    // +'<i class="star" data-score="3"></i>'
-                    // +'<i class="star" data-score="4"></i>'
-                    // +'<i class="star" data-score="5"></i></p>';
+                var defaultValue = '1';
+                if (item.value) {
+                    defaultValue = item.value;
+                }
+                html += '<p class="starWrap" id="'+item.field+'" data-score="'+ defaultValue +'" >';
                 var score = item.score ? item.score : '5';
-                for (var i = 1 ; i <= score ; i ++ ) {
+                for (var s = 1 ; s <= score ; s ++ ) {
                     var active = '';
-                    if (i == '1') {
+                    if(item.value && s <= item.value) {
+                        active = 'active';
+                    } else if (s == '1') {
                         active = 'active';
                     }
-                    html += '<i class="star ' + active+ '" data-score="'+ i +'" ></i>';
+                    html += '<i class="star ' + active+ '" data-score="'+ s +'" ></i>';
                 }
                 html += '</p></li>';
 
@@ -1442,7 +1456,7 @@ function buildDetail(options) {
                 $("#jsForm").on('click',"#"+item.field+" .star",function(){
                     var _this = $(this);
                     var _starWrap = _this.parent('.starWrap');
-                    var _thisIndex = _this.index()+1
+                    var _thisIndex = _this.index()+1;
 
                     startActive(_starWrap,_thisIndex);
                 })
@@ -1833,7 +1847,7 @@ function buildDetail(options) {
     if (!code) {
         for (var i = 0, len = fields.length; i < len; i++) {
             var item = fields[i];
-            if ('value' in item && !item.value.call) {
+            if ('value' in item && !item.value.call && item.type) {
                 $('#' + item.field)[item.readonly ? 'html' : 'val'](item.value);
                 if(item.type == 'select' && item.data && item.readonly){
                     $('#' + item.field).html(item.data[item.value]);
@@ -2063,18 +2077,27 @@ function buildDetail(options) {
                         $('#province').html(data.province);
                         data.city && $('#city').html(data.city);
                         data.area && $('#area').html(data.area);
-                    }  else if(item.type == 'datetime' || item.type == 'date'){
-                    	//两个日期框
-                    	if(item.twoDate){
-                    		$('#' + item.field1).html(displayValue);
-                    		$('#' + item.field2).html(displayValue);
-                    	}else{
-                    		$('#' + item.field).html(displayValue);
-                    	}
+                    }  else if(item.type == 'datetime' || item.type == 'date') {
+                        //两个日期框
+                        if (item.twoDate) {
+                            $('#' + item.field1).html(displayValue);
+                            $('#' + item.field2).html(displayValue);
+                        } else {
+                            $('#' + item.field).html(displayValue);
+                        }
+                        // 星级选中
+                    } else if(item.type=="start"){
+                        var startHtml = '';
+                        if (!displayValue && item.value) {
+                            displayValue = value;
+                        }
+                        for (var s=1; s <= displayValue; s++) {
+                            startHtml+='<i class="star active"></i>'
+                        }
+                        $('#' + item.field).html('<p class="starWrap" id="' + item.field+'">'+startHtml+'</p>');
                     } else {
                         if (item.field && item.field.indexOf('-') > -1) {
                         	if(item.amount && item.formatter){
-                        		console.log(item);
 								$('#' + item.field).html(item.formatter(displayValue, data) || '-');
 				        	} else if(item.coin){
 								$('#' + item.field).html(((item.amount || item.amount1) ? moneyFormat(displayValue,'',item.coin) : displayValue) || '-');
@@ -2120,14 +2143,6 @@ function buildDetail(options) {
                                 var dSrc = OSS.picBaseUrl + '/' + $(this).parents("[data-src]").attr('data-src');
                                 window.open(dSrc, '_blank');
                             });
-                            // 星级选中
-                        } else if(item.type=="start"){
-                            var startHtml = '';
-                            for (var i=1; i<= displayValue; i++) {
-                                startHtml+='<i class="star active"></i>'
-                            }
-
-                            $('#' + item.field).html('<p class="starWrap" id="' + item.field+'">'+startHtml+'</p>');
                         } else {
                             $('#' + item.field).html(item.formatter(displayValue, data));
                         }
@@ -2237,7 +2252,7 @@ function buildDetail(options) {
                     }
                 }
 
-                if ('value' in item) {
+                if ('value' in item && item.type != 'start') {
                     if (item.value && item.value.call) {
                         $('#' + item.field).val(item.value(data));
                     } else {
