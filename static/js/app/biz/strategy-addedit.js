@@ -44,7 +44,7 @@ $(function() {
     maxlength: 300
   }, {
     title: '标签',
-    field: 'labelList',
+    field: 'label',
     type: 'checkbox',
     required: true,
     readonly: view,
@@ -77,6 +77,9 @@ $(function() {
     editCode: "625462",
     detailCode: '625467',
     beforeSubmit(data) {
+      if(Array.isArray(data.label)) {
+        data.label = data.label.join();
+      }
       data.dappId = dappId;
       return data;
     }

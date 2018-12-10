@@ -19,6 +19,10 @@ $(function() {
     title: '所属厂商',
     field: 'company'
   }, {
+    title: '评分',
+    field: 'grade',
+    type: 'start'
+  }, {
     title: '顺序',
     field: 'orderNo'
   }, {

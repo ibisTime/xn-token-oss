@@ -22,7 +22,7 @@ $(function() {
   var fields = [{
     field: "companyCode",
     hidden: true,
-    value: sessionStorage.getItem('systemCode')
+    value: OSS.system
   }, {
     title: '分类',
     field: "category",
@@ -30,7 +30,7 @@ $(function() {
     type: 'select',
     readonly: view,
     key: 'dapp_category',
-    formatter: Dict.getNameForList("dapp_status")
+    formatter: Dict.getNameForList("dapp_category")
   }, {
     title: '应用名称',
     field: 'name',
@@ -51,7 +51,7 @@ $(function() {
     readonly: view,
   }, {
     title: '标签',
-    field: 'labelList',
+    field: 'label',
     type: 'checkbox',
     required: true,
     readonly: view,
@@ -83,7 +83,7 @@ $(function() {
     readonly: view
   }, {
     title: "详情截图",
-    field: "picScreenshotList",
+    field: "picScreenshot",
     type: "img",
     required: true,
     readonly: view
@@ -147,8 +147,9 @@ $(function() {
     editCode: "625452",
     detailCode: '625457',
     beforeSubmit(data) {
-      data.picScreenshotList = data.picScreenshotList.split('||');
-      console.log(data.picScreenshotList);
+      if(Array.isArray(data.label)) {
+        data.label = data.label.join();
+      }
       data.location = '0';
       return data;
     }
