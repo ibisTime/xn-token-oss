@@ -3,12 +3,23 @@ $(function() {
   var code = getQueryString('code') || '';
   var view = getQueryString('v');
 
+  var dappLabel = [];
+  reqApi({
+    code: '660906',
+    json: {
+      parentKey: 'dapp_label'
+    },
+    sync: true
+  }).then(function(data) {
+    data.forEach(item => {
+      dappLabel.push({
+        key: item.dkey,
+        value: item.dvalue
+      })
+    })
+  });
+
   var fields = [{
-    field: "status",
-    required: 'true',
-    value: 1,
-    hidden: true
-  }, {
     field: "companyCode",
     hidden: true,
     value: sessionStorage.getItem('systemCode')
@@ -17,11 +28,9 @@ $(function() {
     field: "category",
     required: 'true',
     type: 'select',
-    data: {
-      '0': '游戏类',
-      '1': '工具类 ',
-      '2': '资讯类'
-    }
+    readonly: view,
+    key: 'dapp_category',
+    formatter: Dict.getNameForList("dapp_status")
   }, {
     title: '应用名称',
     field: 'name',
@@ -31,37 +40,26 @@ $(function() {
   }, {
     title: '星级评分',
     field: 'grade',
+    type: 'start',
+    value: '0',
     required: true,
     readonly: view,
   }, {
     title: '厂商',
-    field: 'location',
+    field: 'company',
     required: true,
     readonly: view,
   }, {
     title: '标签',
-    field: 'label',
+    field: 'labelList',
     type: 'checkbox',
     required: true,
-    items: [
-      {
-        key: '0',
-        value: '标签1'
-      }, {
-        key: '1',
-        value: '标签2'
-      }, {
-        key: '2',
-        value: '标签3'
-      }
-    ]
+    readonly: view,
+    items: dappLabel
   }, {
     title: '位置',
     field: 'location',
-    type: "select",
-    key: "banner_location",
-    required: true,
-    readonly: view,
+    hidden: true
   }, {
     title: '顺序',
     field: 'orderNo',
@@ -70,9 +68,10 @@ $(function() {
     required: true,
     readonly: view
   }, {
-    title: "列表展示图",
+    title: "展示图",
     field: "picList",
     type: "img",
+    single: true,
     required: true,
     readonly: view
   }, {
@@ -84,7 +83,7 @@ $(function() {
     readonly: view
   }, {
     title: "详情截图",
-    field: "picScreenshot",
+    field: "picScreenshotList",
     type: "img",
     required: true,
     readonly: view
@@ -98,15 +97,19 @@ $(function() {
     field: "volume",
     readonly: view
   }, {
-    title: '执行动作',
-    field: "action",
-    required: true,
-    readonly: view
-  }, {
     title: 'url地址',
     field: "url",
     required: true,
     readonly: view
+  }, {
+    title: '执行动作',
+    field: "action",
+    type: 'select',
+    required: true,
+    readonly: view,
+    data: {
+      '1': 'third_part'
+    }
   }, {
     title: '是否置顶',
     field: "isTop",
@@ -137,11 +140,18 @@ $(function() {
 
   buildDetail({
     fields: fields,
+    view,
     id: detId,
     code: code,
     addCode: "625450",
     editCode: "625452",
-    detailCode: '625457'
+    detailCode: '625457',
+    beforeSubmit(data) {
+      data.picScreenshotList = data.picScreenshotList.split('||');
+      console.log(data.picScreenshotList);
+      data.location = '0';
+      return data;
+    }
   });
 
 });
