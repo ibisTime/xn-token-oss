@@ -811,6 +811,15 @@ function buildList(options) {
         	}else {
         		item.formatter = moneyFormat;
         	}
+        } else if(item.type == 'start') {
+            item.formatter = function(v) {
+                var startHtml = '<p class="starWrap" id="' + item.field+'" data-score="'+ v +'">';
+                for (var s=1; s <= v; s++) {
+                    startHtml+='<i class="star active"></i>'
+                }
+                startHtml += '</p>';
+                return startHtml;
+            };
         }
         if (item.search) {
             if (item.key || item.type == 'select') {
@@ -827,12 +836,14 @@ function buildList(options) {
                 html += '<li  class="search-form-li" style="width: 25%;"><label>' + item.title + '</label><input id="' + item.field + '" name="' + item.field + '" class="lay-input lay-input1"/></li>';
             } else if (item.type == "citySelect") {
                 html += '<li class="clearfix" style="width:56%;"><label>' + item.title + '</label><div id="city-group"><select id="province" name="province" class="control-def prov"></select>' + '<select id="city" name="city" class="control-def city"></select>' + '<select id="area" name="area" class="control-def dist"></select></div></li>';
+            } else if (item.type == 'start') {
+                html += '<li class="search-form-li"><label>' + item.title + '</label><select id="' + item.field + '" name="' + item.field + '"></select></li>';
             } else {
                 html += '<li class="search-form-li"><label>' + item.title + '</label><input id="' + item.field + '" name="' + item.field + '" type="text"/></li>';
             }
         }
 
-        if ((item.key || item.type == 'select') && options.type != 'o2m') {
+        if ((item.key || item.type == 'select' || item.type == 'start') && options.type != 'o2m') {
             dropDownList.push(item);
         }
 
@@ -876,6 +887,13 @@ function buildList(options) {
 
     for (var i = 0, len = dropDownList.length; i < len; i++) {
         var item = dropDownList[i];
+        if (item.type == 'start') {
+            var score = item.score ? item.score : '5';
+            item.data = {};
+            for (var s = 1; s <= score; s ++) {
+                item.data[s] = s + '星';
+            }
+        }
         if (item.data) {
             var data = item.data;
             $('#' + item.field).renderDropdown2(data);
@@ -1435,7 +1453,7 @@ function buildDetail(options) {
                 html += '<div id="' + item.field + '" style="display: inline-block;"></div></li>';
                 //显示星级
             } else if(item.type=="start"){
-                var defaultValue = '1';
+                var defaultValue = '0';
                 if (item.value) {
                     defaultValue = item.value;
                 }
@@ -1444,8 +1462,6 @@ function buildDetail(options) {
                 for (var s = 1 ; s <= score ; s ++ ) {
                     var active = '';
                     if(item.value && s <= item.value) {
-                        active = 'active';
-                    } else if (s == '1') {
                         active = 'active';
                     }
                     html += '<i class="star ' + active+ '" data-score="'+ s +'" ></i>';
