@@ -1453,7 +1453,7 @@ function buildDetail(options) {
                 html += '<div id="' + item.field + '" style="display: inline-block;"></div></li>';
                 //显示星级
             } else if(item.type=="start"){
-                var defaultValue = '1';
+                var defaultValue = '0';
                 if (item.value) {
                     defaultValue = item.value;
                 }
@@ -1462,8 +1462,6 @@ function buildDetail(options) {
                 for (var s = 1 ; s <= score ; s ++ ) {
                     var active = '';
                     if(item.value && s <= item.value) {
-                        active = 'active';
-                    } else if (s == '1') {
                         active = 'active';
                     }
                     html += '<i class="star ' + active+ '" data-score="'+ s +'" ></i>';
