@@ -9,7 +9,7 @@ $(function() {
     field: 'category',
     type: 'select',
     key: 'dapp_category',
-    formatter: Dict.getNameForList("dapp_status"),
+    formatter: Dict.getNameForList("dapp_category"),
     search: true
   }, {
     title: '应用名称',
@@ -26,13 +26,14 @@ $(function() {
     title: '顺序',
     field: 'orderNo'
   }, {
-    title: '状态',
+    title: '显示状态',
     field: 'status',
-    key: "dapp_status",
-    formatter: Dict.getNameForList("dapp_status"),
-  }, {
-    title: '描述',
-    field: 'desc'
+    type: 'select',
+    data: {
+      '0':'不显示',
+      '1':'显示'
+    },
+    search: true
   }];
   buildList({
     router: 'banner',

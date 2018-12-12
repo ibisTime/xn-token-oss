@@ -2,10 +2,10 @@ $(function() {
     var code = getQueryString('code');
     var view = !!getQueryString('v');
     var isEdit = !!getQueryString('isEdit');
-    
+
     var d = new Date();
     var minDate = dateTimeFormat(d);
-    
+
     $.fn.update = function(attrJsonObj){
         for(var key in attrJsonObj) {
             if ( $(this).prop(key)!=attrJsonObj[key] ) {
@@ -14,7 +14,7 @@ $(function() {
             }
         }
     };
-    
+
     var fields = [{
         title: "名称（中文简体）",
         field: "nameZhCn",
@@ -123,7 +123,7 @@ $(function() {
             	if(!$("#repayDatetime").val() || compareDate(v, $("#repayDatetime").val())){
             		$("#repayDatetime").val(dateFormatData(addDate($("#incomeDatetime").val(), parseInt($("#limitDays").val())+1)))
             	}
-            	
+
             	$("#incomeDatetime").off("click").click(function(){
 	            	laydate({
 		                elem: '#incomeDatetime',
@@ -133,7 +133,7 @@ $(function() {
 		            });
 		            laydate.reset();
             	})
-            	
+
             	$("#arriveDatetime").off("click").click(function(){
 	            	laydate({
 		                elem: '#arriveDatetime',
@@ -143,7 +143,7 @@ $(function() {
 		            });
 		            laydate.reset();
             	})
-            	
+
             	$("#repayDatetime").off("click").click(function(){
 	            	laydate({
 		                elem: '#repayDatetime',
@@ -225,8 +225,8 @@ $(function() {
         type: 'textarea',
         required: true,
     }];
-    
-    
+
+
     var options = {
         fields: fields,
         code: code,
@@ -235,18 +235,18 @@ $(function() {
         editCode: "625501",
         detailCode: "625511"
     };
-    
+
     var bizCode = options.addCode;
-    	
+
     if(isEdit){
     	bizCode = options.editCode;
-    	
+
     	options.fields = options.fields.concat([{
 	        title: "备注",
 	        field: "remark"
     	}])
     }
-    
+
     options.buttons = [{
 	    title: '保存',
 	    handler: function() {
@@ -258,6 +258,7 @@ $(function() {
 	            	delete data.symbol1;
 	            }
 	            data.isPublish = '0';
+	            data.paymentType = '0';
 	            data.creator = getUserName();
         		data.expectYield = data.expectYield / 100;
 	            data = setFormatAmount(data);
@@ -280,6 +281,7 @@ $(function() {
 	            	delete data.symbol1;
 	            }
 	            data.isPublish = '1';
+              data.paymentType = '0';
 	            data.creator = getUserName();
         		data.expectYield = data.expectYield / 100;
 	            data = setFormatAmount(data);
@@ -296,28 +298,28 @@ $(function() {
 	    handler: function() {
 	        goBack();
 	    }
-	    
+
     }]
-    
+
     buildDetail(options);
-    
+
     // 格式化金额
     function setFormatAmount(data){
 		data.amount = moneyParse(data.amount.toString(),'',data.symbol);
     	data.successAmount = moneyParse(data.successAmount.toString(),'',data.symbol);
     	return data;
     }
-    
+
     // 比较时间大小
     function compareDate(d1,d2){
 	  return ((new Date(d1.replace(/-/g,"\/"))) > (new Date(d2.replace(/-/g,"\/"))));
 	}
-    
+
     // 日期加法
-    function addDate(date, days, format){ 
-       var d = new Date(date); 
-       d.setDate(d.getDate()+days); 
-       var m = d.getMonth()+1; 
-       return dateFormat(d.getFullYear()+'-'+m+'-'+d.getDate()); 
-	} 
+    function addDate(date, days, format){
+       var d = new Date(date);
+       d.setDate(d.getDate()+days);
+       var m = d.getMonth()+1;
+       return dateFormat(d.getFullYear()+'-'+m+'-'+d.getDate());
+	}
 });

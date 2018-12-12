@@ -5,7 +5,7 @@ $(function() {
         checkbox: true
     }, {
         field: 'userId',
-        title: '账号',
+        title: '户名',
         type: 'select',
         pageCode: '802500',
         params: {

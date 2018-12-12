@@ -6,23 +6,34 @@ $(function() {
     title: '',
     checkbox: true
   }, {
-    title: '标题',
+    title: '攻略名称',
     field: 'title',
     search: true
   }, {
     title: '作者',
-    field: 'author'
+    field: 'author',
+    search: true
   }, {
     title: '点赞数量',
-    field: 'likeCount'
+    field: 'likeCount',
+    formatter: function (d, v) {
+      return v.likeCount + v.likeCountFake;
+    }
   }, {
     title: '浏览数量',
-    field: 'scanCount'
+    field: 'scanCount',
+    formatter: function (d, v) {
+      return v.scanCount + v.scanCountFake;
+    }
   }, {
-    title: '状态',
+    title: '显示状态',
     field: 'status',
-    // key: "dapp_status",
-    // formatter: Dict.getNameForList("dapp_status"),
+    type: 'select',
+    data: {
+      '0':'不显示',
+      '1':'显示'
+    },
+    search: true
   }];
   buildList({
     router: 'banner',
@@ -37,6 +48,7 @@ $(function() {
   $('.toolbar').empty();
   let html = `<div>
                 <div class="per">
+                    <li style="display:block;" id="backBtn"><span><img src="/static/images/t01.png"></span>返回</li>
                     <li style="display:block;" id="addBtn"><span><img src="/static/images/t01.png"></span>新增</li>
                     <li style="display:block;" id="editBtn"><span><img src="/static/images/t01.png"></span>修改</li>
                     <li style="display:block;" id="deleteBtn"><span><img src="/static/images/t01.png"></span>删除</li>
@@ -46,6 +58,11 @@ $(function() {
               </div>`;
   let divHtml = $(html).find('.per').html();
   $('.toolbar').append(divHtml);
+
+  // 返回
+  $('#backBtn').on('click', function() {
+    window.location.href = "../biz/foundBanner.html";
+  });
 
   // 新增
   $('#addBtn').off('click').click(function() {

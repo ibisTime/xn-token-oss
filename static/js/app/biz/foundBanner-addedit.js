@@ -4,6 +4,7 @@ $(function() {
   var view = getQueryString('v');
 
   var dappLabel = [];
+  var dappCategory = {};
   reqApi({
     code: '660906',
     json: {
@@ -19,6 +20,18 @@ $(function() {
     })
   });
 
+  reqApi({
+    code: '660906',
+    json: {
+      parentKey: 'dapp_category'
+    },
+    sync: true
+  }).then(function(data) {
+    data.forEach(item => {
+      dappCategory[item.dkey] = item.dvalue;
+    })
+  });
+
   var fields = [{
     field: "companyCode",
     hidden: true,
@@ -29,8 +42,8 @@ $(function() {
     required: 'true',
     type: 'select',
     readonly: view,
-    key: 'dapp_category',
-    formatter: Dict.getNameForList("dapp_category")
+    data: dappCategory,
+    key: 'dapp_category'
   }, {
     title: '应用名称',
     field: 'name',
@@ -110,17 +123,19 @@ $(function() {
     data: {
       '1': 'third_part'
     }
-  }, {
-    title: '是否置顶',
-    field: "isTop",
-    required: true,
-    readonly: view,
-    type: 'select',
-    data: {
-      '0': '否',
-      '1': '是'
-    }
-  }, {
+  },
+  // {
+  //   title: '是否置顶',
+  //   field: "isTop",
+  //   required: true,
+  //   readonly: view,
+  //   type: 'select',
+  //   data: {
+  //     '0': '否',
+  //     '1': '是'
+  //   }
+  // },
+  {
     title: '语言',
     field: "language",
     required: true,
@@ -135,7 +150,11 @@ $(function() {
     title: '应用描述',
     field: 'desc',
     readonly: view,
-    maxlength: 255
+    maxlength: 255,
+    // formatter: function(v, d) {
+    //   console.log($('#desc'));
+    //   return v;
+    // }
   }];
 
   buildDetail({
@@ -148,8 +167,9 @@ $(function() {
     detailCode: '625457',
     beforeSubmit(data) {
       if(Array.isArray(data.label)) {
-        data.label = data.label.join();
+        data.label = data.label.join('||');
       }
+      data.isTop = '0';
       data.location = '0';
       return data;
     }

@@ -8,7 +8,7 @@ $(function() {
   reqApi({
     code: '660906',
     json: {
-      parentKey: 'dapp_label'
+      parentKey: 'dapp_trategy_label'
     },
     sync: true
   }).then(function(data) {
@@ -25,7 +25,7 @@ $(function() {
     hidden: true,
     value: sessionStorage.getItem('systemCode')
   }, {
-    title: '应用名称',
+    title: '攻略名称',
     field: 'title',
     required: true,
     readonly: view,
@@ -88,7 +88,7 @@ $(function() {
     detailCode: '625467',
     beforeSubmit(data) {
       if(Array.isArray(data.label)) {
-        data.label = data.label.join();
+        data.label = data.label.join('||');
       }
       data.dappId = dappId;
       return data;
