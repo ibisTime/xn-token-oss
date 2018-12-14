@@ -40,8 +40,7 @@ $(function() {
     field: 'content',
     type: 'textarea',
     required: true,
-    readonly: view,
-    maxlength: 300
+    readonly: view
   }, {
     title: '标签',
     field: 'label',

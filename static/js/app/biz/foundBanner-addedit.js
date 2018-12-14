@@ -5,6 +5,7 @@ $(function() {
 
   var dappLabel = [];
   var dappCategory = {};
+  var actionData = {};
   reqApi({
     code: '660906',
     json: {
@@ -23,6 +24,18 @@ $(function() {
   reqApi({
     code: '660906',
     json: {
+      parentKey: 'dapp_action'
+    },
+    sync: true
+  }).then(function(data) {
+    data.forEach(item => {
+      actionData[item.dkey] = item.dvalue;
+    })
+  });
+
+  reqApi({
+    code: '660906',
+    json: {
       parentKey: 'dapp_category'
     },
     sync: true
@@ -33,6 +46,17 @@ $(function() {
   });
 
   var fields = [{
+    title: '语言',
+    field: "language",
+    required: true,
+    readonly: view,
+    type: 'select',
+    data: {
+      'ZH_CN': '简体中文 ',
+      'ZN': '英语',
+      'KO': '韩语'
+    }
+  }, {
     field: "companyCode",
     hidden: true,
     value: OSS.system
@@ -74,14 +98,14 @@ $(function() {
     field: 'location',
     hidden: true
   }, {
-    title: '顺序',
+    title: '列表显示顺序(数字越小越靠前)',
     field: 'orderNo',
     number: true,
     maxlength: 10,
     required: true,
     readonly: view
   }, {
-    title: "展示图",
+    title: "列表展示图",
     field: "picList",
     type: "img",
     single: true,
@@ -108,21 +132,24 @@ $(function() {
   }, {
     title: '成交量',
     field: "volume",
-    readonly: view
-  }, {
-    title: 'url地址',
-    field: "url",
+    readonly: view,
     required: true,
-    readonly: view
   }, {
-    title: '执行动作',
+    title: '点击开始后执行的动作',
     field: "action",
     type: 'select',
     required: true,
     readonly: view,
-    data: {
-      '1': 'third_part'
-    }
+    key: 'dapp_action',
+    data: actionData
+    // data: {
+    //   '1': 'third_part'
+    // }
+  }, {
+    title: '点击开始后跳转的地址',
+    field: "url",
+    required: true,
+    readonly: view
   },
   // {
   //   title: '是否置顶',
@@ -136,25 +163,12 @@ $(function() {
   //   }
   // },
   {
-    title: '语言',
-    field: "language",
-    required: true,
-    readonly: view,
-    type: 'select',
-    data: {
-      'ZH_CN': '简体中文 ',
-      'ZN': '英语',
-      'KO': '韩语'
-    }
-  }, {
     title: '应用描述',
     field: 'desc',
     readonly: view,
     maxlength: 255,
-    // formatter: function(v, d) {
-    //   console.log($('#desc'));
-    //   return v;
-    // }
+    type: 'textarea',
+    normalArea: true
   }];
 
   buildDetail({

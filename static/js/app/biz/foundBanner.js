@@ -5,6 +5,10 @@ $(function() {
     title: '',
     checkbox: true
   }, {
+    title: '应用ID',
+    field: 'id',
+    search: true
+  }, {
     title: '分类',
     field: 'category',
     type: 'select',

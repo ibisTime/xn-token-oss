@@ -1,6 +1,19 @@
 $(function() {
     var code = getQueryString('code');
     var view = getQueryString('v');
+    var bannerAction = {};
+
+    reqApi({
+      code: '660906',
+      json: {
+        parentKey: 'banner_action'
+      },
+      sync: true
+    }).then(function(data) {
+      data.forEach(item => {
+        bannerAction[item.dkey] = item.dvalue;
+      })
+    });
 
     var fields = [{
         field: "status",
@@ -65,9 +78,29 @@ $(function() {
         required: true,
         readonly: view
     }, {
-        title: 'url地址',
-        field: "url",
-        readonly: view
+      title: '点击后跳转类型',
+      field: "action",
+      type: 'select',
+      key: 'banner_action',
+      data: bannerAction,
+      readonly: view,
+      onChange(v) {
+        if(v === '0') {
+          $('#url').parents('li').hide();
+        }
+        if(v === '1') {
+          $('#url').parents('li').show();
+          $('#url').prev('label').text('url地址');
+        }
+        if(v === '2') {
+          $('#url').parents('li').show();
+          $('#url').prev('label').text('应用ID');
+        }
+      }
+    }, {
+      title: 'url地址',
+      field: "url",
+      readonly: view
     }, {
         title: '备注',
         field: 'remark',
@@ -81,7 +114,13 @@ $(function() {
         view: view,
         addCode: "805800",
         editCode: "805802",
-        detailCode: '805807'
+        detailCode: '805807',
+        beforeSubmit(data) {
+          if(data.action === '0') {
+            data.url = null;
+          }
+          return data;
+        }
     });
 
 });

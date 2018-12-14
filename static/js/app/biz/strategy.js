@@ -14,13 +14,13 @@ $(function() {
     field: 'author',
     search: true
   }, {
-    title: '点赞数量',
+    title: '点赞总数量',
     field: 'likeCount',
     formatter: function (d, v) {
       return v.likeCount + v.likeCountFake;
     }
   }, {
-    title: '浏览数量',
+    title: '浏览总数量',
     field: 'scanCount',
     formatter: function (d, v) {
       return v.scanCount + v.scanCountFake;
