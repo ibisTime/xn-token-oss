@@ -56,17 +56,19 @@ $(function() {
     }, {
         field: 'mobile',
         title: '申请人',
-        formatter: function(v, data) {
+          formatter: function(v, data) {
             if (data.user) {
-            	if(data.user.kind="P"){
-            		return data.user.loginName;
-            	}else{
-                	return data.user.mobile;
-            	}
+              if(data.user.kind==="P"){
+                return data.user.loginName;
+              }else if(data.user.mobile){
+                return data.user.mobile;
+              }else {
+                return data.user.email;
+              }
             } else {
-                return data.approveUser
+              return data.approveUser
             }
-        }
+          }
     }, {
         field: 'applyNote',
         title: '申请说明',

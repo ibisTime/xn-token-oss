@@ -49,11 +49,13 @@ $(function() {
         title: '申请人',
         formatter: function(v, data) {
             if (data.user) {
-            	if(data.user.kind="P"){
+            	if(data.user.kind==="P"){
             		return data.user.loginName;
-            	}else{
+            	}else if(data.user.mobile){
                 	return data.user.mobile;
-            	}
+            	}else {
+            	    return data.user.email;
+              }
             } else {
                 return data.approveUser
             }
