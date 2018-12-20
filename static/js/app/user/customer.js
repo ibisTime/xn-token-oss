@@ -23,7 +23,11 @@ $(function() {
         title: '推荐人',
         formatter: function(v, data) {
             if (data.refereeUser) {
-                return data.refereeUser.mobile;
+                if(data.refereeUser.mobile) {
+                  return data.refereeUser.mobile;
+                }else {
+                  return data.refereeUser.email;
+                }
             } else {
                 return "-"
             }
@@ -176,7 +180,7 @@ $(function() {
         }
         window.location.href = "customer_account.html?&c=1&userId=" + selRecords[0].userId;
     });
-	
+
 	//添加备注
     $('#remarkBtn').click(function() {
         var selRecords = $('#tableList').bootstrapTable('getSelections');
@@ -286,5 +290,5 @@ $(function() {
         dw.__center();
 
     });
-	
+
 });

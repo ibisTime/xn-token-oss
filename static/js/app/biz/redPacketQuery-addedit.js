@@ -4,7 +4,10 @@ $(function() {
 
     var fields = [{
         title: '红包编号',
-        field: 'code'
+        field: 'code1',
+        formatter(v, data) {
+          return data.code;
+        }
     }, {
         title: '用户',
         field: 'userId',
@@ -54,7 +57,7 @@ $(function() {
         field: 'bestHandCount',
         title: '手气最佳金额'
     }];
-    
+
     var options = {
         fields: fields,
         code: code,

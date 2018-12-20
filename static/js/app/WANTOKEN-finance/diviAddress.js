@@ -33,7 +33,11 @@ $(function() {
         field: "userId",
         formatter: function(v, data) {
             if (data.user) {
+              if(data.user.mobile) {
                 return data.user.mobile + '(' + data.user.nickname + ')';
+              }else {
+                return data.user.email + '(' + data.user.nickname + ')';
+              }
             }
         },
         type: "select",
@@ -71,7 +75,7 @@ $(function() {
             companyCode: OSS.company
         },
     });
-    
+
     },hideLoading);
 
     $('#diviLedgerBtn').click(function() {
@@ -82,7 +86,7 @@ $(function() {
         }
         window.location.href = "./diviAddress_ledger.html?address=" + selRecords[0].address;
     });
-    
+
     //发送
     $("#sendBtn").click(function(){
         var selRecords = $('#tableList').bootstrapTable('getSelections');
@@ -90,7 +94,7 @@ $(function() {
             toastr.info("请选择记录");
             return;
         }
-        
+
         if (selRecords[0].status == 2) {
             toastr.warning("无效地址，不能发送");
             return;
@@ -144,7 +148,7 @@ $(function() {
                         data.toUserId = selRecords[0].user.userId;
                         delete data.symbol1;
                         delete data.addressCode;
-                        
+
                         showLoading()
 		                reqApi({
 		                    code: '802304',

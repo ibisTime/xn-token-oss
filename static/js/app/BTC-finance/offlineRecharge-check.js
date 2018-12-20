@@ -125,9 +125,11 @@ $(function() {
         	if(data.user){
         		if (data.user.kind == 'P') {
                 	return data.user.loginName;
+	            } else if(data.user.mobile) {
+	                return data.user.interCode + data.user.mobile;
 	            } else {
-	                return data.user.mobile;
-	            }
+                return data.user.email;
+              }
         	}else{
         		return data.applyUser
         	}

@@ -9,6 +9,11 @@ $(function() {
         required: true,
         readonly: view
     }, {
+        field: 'email',
+        title: '邮箱',
+        required: true,
+        readonly: view
+    }, {
         title: "昵称",
         field: "nickname",
         readonly: view
@@ -39,7 +44,11 @@ $(function() {
         title: '推荐人',
         formatter: function(v, data) {
             if (data.refereeUser) {
-                return data.refereeUser.mobile;
+                if(data.refereeUser.mobile) {
+                  return data.refereeUser.mobile;
+                }else {
+                  return data.refereeUser.email;
+                }
             } else {
                 return "-"
             }

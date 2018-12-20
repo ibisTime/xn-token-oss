@@ -13,7 +13,11 @@ $(function() {
         field: "userId",
         formatter: function(v, data) {
             if (data.user) {
+              if(data.user.mobile) {
                 return data.user.mobile + '(' + data.user.nickname + ')';
+              }else {
+                return data.user.email + '(' + data.user.nickname + ')';
+              }
             }
         },
         type: "select",
@@ -58,7 +62,7 @@ $(function() {
         }
         window.location.href = "./diviAddress_ledger.html?address=" + selRecords[0].address;
     });
-    
+
     //手动归集
     $('#shoudongGuijiBtn').click(function() {
         var dw = dialog({
@@ -104,5 +108,5 @@ $(function() {
 
         dw.__center();
     });
-    
+
 });

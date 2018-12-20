@@ -22,10 +22,8 @@ $(function() {
         field: 'channelType',
         title: '支付渠道',
         type: 'select',
-        data:{
-        	"BTC" : '比特币',
-        	"90" : "人工线下"
-        },
+        key: 'channel_type',
+        formatter: Dict.getNameForList('channel_type'),
         search: true,
     }, {
         field: "bizNote",
