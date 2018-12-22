@@ -5,7 +5,7 @@ $(function() {
         checkbox: true
     }, {
         field: 'userId',
-        title: '户名',
+        title: '账号',
         type: 'select',
         pageCode: '802500',
         params: {
@@ -19,7 +19,7 @@ $(function() {
             return data.accountName;
         }
     }, {
-        title: "账号",
+        title: "账号编号",
         field: "accountNumber"
     }, {
         field: "currency",

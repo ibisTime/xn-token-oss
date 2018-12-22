@@ -53,7 +53,7 @@ $(function() {
     type: 'select',
     data: {
       'ZH_CN': '简体中文 ',
-      'ZN': '英语',
+      'EN': '英语',
       'KO': '韩语'
     }
   }, {

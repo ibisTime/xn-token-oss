@@ -30,6 +30,16 @@ $(function() {
     title: '顺序',
     field: 'orderNo'
   }, {
+    title: '语言',
+    field: "language",
+    search: true,
+    type: 'select',
+    data: {
+      'ZH_CN': '简体中文 ',
+      'EN': '英语',
+      'KO': '韩语'
+    }
+  }, {
     title: '显示状态',
     field: 'status',
     type: 'select',
