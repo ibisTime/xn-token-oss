@@ -85,6 +85,14 @@ $(function() {
         type:"textarea",
         normalArea: true
     }, {
+      title: "默认添加自选",
+      field: "isSelect",
+      type: 'select',
+      data: {
+        '0': '否',
+        '1': '是'
+      }
+    }, {
         title: "序号",
         field: "orderNo",
         number: true,
