@@ -2,6 +2,11 @@ $(function() {
     var symbol = getQueryString('symbol');
     var view = !!getQueryString('v');
     var isDetail = !!getQueryString('isDetail');
+    var isDdit = !!getQueryString('isDdit');
+    var selectData = {
+      '0': '否',
+      '1': '是'
+    };
 
     var fields = [{
         title: "符号",
@@ -88,10 +93,9 @@ $(function() {
       title: "默认添加自选",
       field: "isSelect",
       type: 'select',
-      data: {
-        '0': '否',
-        '1': '是'
-      }
+      required: true,
+      readonly: isDdit || isDetail,
+      data: selectData
     }, {
         title: "序号",
         field: "orderNo",
@@ -133,6 +137,10 @@ $(function() {
         	delete data.updater;
         	delete data.updateDatetime;
         	delete data.status;
+        	switch($('#isSelect').text()) {
+            case '否': data.isSelect = '0';break;
+            case '是': data.isSelect = '1';break;
+          }
         	data.pic1 = data.icon;
         	data.pic2 = data.icon;
         	data.pic3 = data.icon;

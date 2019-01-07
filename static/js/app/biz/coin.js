@@ -44,6 +44,14 @@ $(function() {
         formatter: Dict.getNameForList("coin_status"),
         search: true
     }, {
+      title: "默认添加自选",
+      field: "isSelect",
+      type: 'select',
+      data: {
+        '0': '否',
+        '1': '是'
+      }
+    }, {
         title: "序号",
         field: "orderNo"
     }, {
@@ -61,7 +69,7 @@ $(function() {
             companyCode: OSS.company
         },
     });
-    
+
     //发布
     $('#upBtn').click(function() {
         var selRecords = $('#tableList').bootstrapTable('getSelections');
@@ -69,7 +77,7 @@ $(function() {
             toastr.info("请选择记录");
             return;
         }
-		
+
         if (selRecords[0].status == '0') {
             toastr.info("不是可发布状态！");
             return;
@@ -96,7 +104,7 @@ $(function() {
                 	if($('#popForm').valid()){
                         var data = $('#popForm').serializeObject();
                         data.symbol = selRecords[0].symbol
-                        
+
                         reqApi({
                             code: '802253',
                             json: data
@@ -118,7 +126,7 @@ $(function() {
         dw.__center();
 
     });
-    
+
     //撤下
     $('#downBtn').click(function() {
         var selRecords = $('#tableList').bootstrapTable('getSelections');
@@ -172,7 +180,7 @@ $(function() {
 
         dw.__center();
     });
-    
+
     //修改
     $('#editBtn').off("click").click(function(){
     	var selRecords = $('#tableList').bootstrapTable('getSelections');
@@ -180,10 +188,10 @@ $(function() {
             toastr.info("请选择记录");
             return;
         }
-        
-    	window.location.href = "./coin_addedit.html?symbol=" + selRecords[0].symbol;
+
+    	window.location.href = "./coin_addedit.html?isDdit=1&symbol=" + selRecords[0].symbol;
     })
-    
+
     //详情
     $('#detailBtn').off("click").click(function(){
     	var selRecords = $('#tableList').bootstrapTable('getSelections');
@@ -191,7 +199,7 @@ $(function() {
             toastr.info("请选择记录");
             return;
         }
-        
+
     	window.location.href = "./coin_addedit.html?v=1&isDetail=1&symbol=" + selRecords[0].symbol;
     })
 });
