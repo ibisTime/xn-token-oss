@@ -28,8 +28,7 @@ $(function() {
     title: '攻略名称',
     field: 'title',
     required: true,
-    readonly: view,
-    maxlength: 32
+    readonly: view
   }, {
     title: '作者',
     field: 'author',

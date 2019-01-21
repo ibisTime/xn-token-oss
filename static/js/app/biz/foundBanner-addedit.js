@@ -166,7 +166,6 @@ $(function() {
     title: '应用描述',
     field: 'desc',
     readonly: view,
-    maxlength: 255,
     type: 'textarea',
     normalArea: true
   }];
