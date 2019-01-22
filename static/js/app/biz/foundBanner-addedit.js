@@ -7,16 +7,17 @@ $(function() {
   var dappCategory = {};
   var actionData = {};
   reqApi({
-    code: '660906',
+    code: '625476',
     json: {
-      parentKey: 'dapp_label'
+      type: '0'
     },
     sync: true
   }).then(function(data) {
+    console.log(data);
     data.forEach(item => {
       dappLabel.push({
-        key: item.dkey,
-        value: item.dvalue
+        key: item.id,
+        value: item.name
       })
     })
   });

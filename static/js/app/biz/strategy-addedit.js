@@ -6,16 +6,16 @@ $(function() {
 
   var dappLabel = [];
   reqApi({
-    code: '660906',
+    code: '625476',
     json: {
-      parentKey: 'dapp_trategy_label'
+      type: '1'
     },
     sync: true
   }).then(function(data) {
     data.forEach(item => {
       dappLabel.push({
-        key: item.dkey,
-        value: item.dvalue
+        key: item.id,
+        value: item.name
       })
     })
   });

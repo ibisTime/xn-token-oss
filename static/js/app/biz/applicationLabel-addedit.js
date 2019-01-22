@@ -1,8 +1,8 @@
 $(function() {
   var detId = getQueryString('id');
-  var code = getQueryString('code') || '';
+  var code = getQueryString('id') || '';
   var view = getQueryString('v');
-
+  console.log(detId);
   var fields = [{
     title: '标签类型',
     field: 'type',
@@ -19,7 +19,7 @@ $(function() {
     required: true
   }, {
     title: '标签韩文名',
-    field: 'nameKr',
+    field: 'nameKo',
     required: true
   }];
 

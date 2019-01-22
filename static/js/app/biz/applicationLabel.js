@@ -35,11 +35,7 @@ $(function() {
     search: true
   }, {
     title: '标签韩文名',
-    field: 'nameKr',
-    search: true
-  }, {
-    title: '更新时间',
-    field: 'updateTime',
+    field: 'nameKo',
     search: true
   }];
   buildList({
@@ -57,11 +53,12 @@ $(function() {
 
   $('#editBtn').off('click').click(function() {
     var selRecords = $('#tableList').bootstrapTable('getSelections');
+    console.log(selRecords[0]);
     if (selRecords.length <= 0) {
       toastr.info("请选择记录");
       return;
     }
-    window.location.href = "../biz/applicationLabel-addedit.html?code=1&id=" + selRecords[0].id;
+    window.location.href = "../biz/applicationLabel-addedit.html?id=" + selRecords[0].id;
   });
 
   $('#deleteBtn').off('click').click(function() {
