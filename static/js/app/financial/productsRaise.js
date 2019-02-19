@@ -86,7 +86,7 @@ $(function() {
         	statusList:['4', '5', '6']
         }
     });
-    
+
     //详情
     $('#detailBtn').off("click").click(function(){
     	var selRecords = $('#tableList').bootstrapTable('getSelections');
@@ -94,10 +94,10 @@ $(function() {
             toastr.info("请选择记录");
             return;
         }
-        
+
     	window.location.href = "./products_detail.html?v=1&isDetail=1&code=" + selRecords[0].code;
-    })
-    
+    });
+
     //认购明细
     $('#investFlowAllBtn').click(function() {
         var selRecords = $('#tableList').bootstrapTable('getSelections');
@@ -110,7 +110,7 @@ $(function() {
             toastr.info("该产品还未开始募集！");
             return;
         }
-        
+
     	window.location.href = "./investFlowAll.html?code=" + selRecords[0].code+'&menu=raise';
     });
 });
